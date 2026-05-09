@@ -743,6 +743,7 @@
     "arguments": [
       "/usr/bin/c++",
       "-I/home/tom/dev/SauceEngine/Engine/src",
+      "-I/home/tom/dev/SauceEngine/Game/src",
       "-I/home/tom/dev/SauceEngine/Engine/vendor/glad/include",
       "-I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include",
       "-I/home/tom/dev/SauceEngine/build/_deps/glm-src",
@@ -765,6 +766,7 @@
     "arguments": [
       "/usr/bin/c++",
       "-I/home/tom/dev/SauceEngine/Engine/src",
+      "-I/home/tom/dev/SauceEngine/Game/src",
       "-I/home/tom/dev/SauceEngine/Engine/vendor/glad/include",
       "-I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include",
       "-I/home/tom/dev/SauceEngine/build/_deps/glm-src",
@@ -787,6 +789,7 @@
     "arguments": [
       "/usr/bin/c++",
       "-I/home/tom/dev/SauceEngine/Engine/src",
+      "-I/home/tom/dev/SauceEngine/Game/src",
       "-I/home/tom/dev/SauceEngine/Engine/vendor/glad/include",
       "-I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include",
       "-I/home/tom/dev/SauceEngine/build/_deps/glm-src",
@@ -809,6 +812,7 @@
     "arguments": [
       "/usr/bin/c++",
       "-I/home/tom/dev/SauceEngine/Engine/src",
+      "-I/home/tom/dev/SauceEngine/Game/src",
       "-I/home/tom/dev/SauceEngine/Engine/vendor/glad/include",
       "-I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include",
       "-I/home/tom/dev/SauceEngine/build/_deps/glm-src",
@@ -831,6 +835,7 @@
     "arguments": [
       "/usr/bin/c++",
       "-I/home/tom/dev/SauceEngine/Engine/src",
+      "-I/home/tom/dev/SauceEngine/Game/src",
       "-I/home/tom/dev/SauceEngine/Engine/vendor/glad/include",
       "-I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include",
       "-I/home/tom/dev/SauceEngine/build/_deps/glm-src",
@@ -853,6 +858,7 @@
     "arguments": [
       "/usr/bin/c++",
       "-I/home/tom/dev/SauceEngine/Engine/src",
+      "-I/home/tom/dev/SauceEngine/Game/src",
       "-I/home/tom/dev/SauceEngine/Engine/vendor/glad/include",
       "-I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include",
       "-I/home/tom/dev/SauceEngine/build/_deps/glm-src",
@@ -875,6 +881,7 @@
     "arguments": [
       "/usr/bin/c++",
       "-I/home/tom/dev/SauceEngine/Engine/src",
+      "-I/home/tom/dev/SauceEngine/Game/src",
       "-I/home/tom/dev/SauceEngine/Engine/vendor/glad/include",
       "-I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include",
       "-I/home/tom/dev/SauceEngine/build/_deps/glm-src",
@@ -897,6 +904,7 @@
     "arguments": [
       "/usr/bin/c++",
       "-I/home/tom/dev/SauceEngine/Engine/src",
+      "-I/home/tom/dev/SauceEngine/Game/src",
       "-I/home/tom/dev/SauceEngine/Engine/vendor/glad/include",
       "-I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include",
       "-I/home/tom/dev/SauceEngine/build/_deps/glm-src",
@@ -919,6 +927,7 @@
     "arguments": [
       "/usr/bin/c++",
       "-I/home/tom/dev/SauceEngine/Engine/src",
+      "-I/home/tom/dev/SauceEngine/Game/src",
       "-I/home/tom/dev/SauceEngine/Engine/vendor/glad/include",
       "-I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include",
       "-I/home/tom/dev/SauceEngine/build/_deps/glm-src",
@@ -935,5 +944,28 @@
     ],
     "directory": "/home/tom/dev/SauceEngine/build",
     "output": "CMakeFiles/SauceEngine.dir/Engine/src/Render/OrthographicCamera.cpp.o"
+  },
+  {
+    "file": "/home/tom/dev/SauceEngine/Game/src/Scenes/TestScene.cpp",
+    "arguments": [
+      "/usr/bin/c++",
+      "-I/home/tom/dev/SauceEngine/Engine/src",
+      "-I/home/tom/dev/SauceEngine/Game/src",
+      "-I/home/tom/dev/SauceEngine/Engine/vendor/glad/include",
+      "-I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include",
+      "-I/home/tom/dev/SauceEngine/build/_deps/glm-src",
+      "-std=gnu++20",
+      "-MD",
+      "-MT",
+      "CMakeFiles/SauceEngine.dir/Game/src/Scenes/TestScene.cpp.o",
+      "-MF",
+      "CMakeFiles/SauceEngine.dir/Game/src/Scenes/TestScene.cpp.o.d",
+      "-o",
+      "CMakeFiles/SauceEngine.dir/Game/src/Scenes/TestScene.cpp.o",
+      "-c",
+      "/home/tom/dev/SauceEngine/Game/src/Scenes/TestScene.cpp"
+    ],
+    "directory": "/home/tom/dev/SauceEngine/build",
+    "output": "CMakeFiles/SauceEngine.dir/Game/src/Scenes/TestScene.cpp.o"
   }
 ]

@@ -3,11 +3,13 @@
 #include <cassert>
 #include <functional>
 #include <string>
+#include <iostream>
 
 namespace Sauce
 {
   void Window::Init()
   {
+    std::cout << "win";
     if(!glfwInit())
       assert("Error: Failed to initialize GLFW");
 
@@ -47,11 +49,12 @@ namespace Sauce
   Window::Window()
     : m_Title("test"), m_Width(800), m_Height(800), m_Window(nullptr)
   {
-
+    m_OnShouldClose = [](){};
   }
 
   Window::Window(std::string title, uint32_t width, uint32_t height, std::function<void()> onShouldClose)
     : m_Title(title), m_Width(width), m_Height(height), m_Window(nullptr), m_OnShouldClose(onShouldClose)
   {
+    std::cout << "constructor";
   }
 }

@@ -39,7 +39,7 @@ namespace Sauce
   }
 
   template<typename T>
-  std::shared_ptr<Component> Entity::GetComponent() const
+  std::shared_ptr<T> Entity::GetComponent() const
   {
     static_assert(!std::is_base_of<Component, T>(), "Error, in GetComponent(): demanded type is not base of struct Component");
     if(!HasComponent<T>()) { assert("Error, in GetComponent(): demanded type doesn't exist in Components"); }
@@ -50,6 +50,24 @@ namespace Sauce
   bool Entity::HasComponent() const
   {
     return m_Components.find(typeid(T)) != nullptr;
+  }
+
+  void Entity::Start()
+  {
+    for(auto &c : m_Components)
+    {
+      c.second->Start();
+    }
+    UserStart();
+  }
+
+  void Entity::Update(float deltaTime)
+  {
+    for(auto &c : m_Components)
+    {
+      c.second->Update(deltaTime);
+    }
+    UserUpdate(deltaTime);
   }
 }
 

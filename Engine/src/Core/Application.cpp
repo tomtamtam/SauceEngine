@@ -4,16 +4,17 @@
 namespace Sauce
 {
   Application::Application()
+      : m_IsRunning(true)
   {
-    m_IsRunning = true;
-    auto self = shared_from_this();
-    auto onShouldClose = [self](){self->Terminate();};
-    m_CurrentWindow = {"test", 800, 800, onShouldClose};
+    m_CurrentScene = std::make_shared(TestScene);
   }
 
 
   void Application::Setup()
   {
+    auto self = shared_from_this();
+    auto onShouldClose = [self](){self->Terminate();};
+    m_CurrentWindow = {"test", 800, 800, onShouldClose};
     m_CurrentWindow.Init();
   }
 
@@ -29,6 +30,7 @@ namespace Sauce
     while (m_IsRunning)
     {
       m_CurrentWindow.Update();
+      m_CurrentScene->Update(0.0f);
     }
 
     m_CurrentWindow.Destroy();

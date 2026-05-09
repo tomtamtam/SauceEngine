@@ -36,18 +36,21 @@ FetchContent_MakeAvailable(glm)
 add_executable(SauceEngine
   Engine/src/Main.cpp
   Engine/src/Core/UUID.h Engine/src/Core/UUID.cpp
-  Engine/src/Scene/Components.h
-  Engine/src/Scene/Scene.h Engine/src/Scene/Scene.cpp
-  Engine/src/Scene/Entity.h Engine/src/Scene/Entity.cpp
+  Engine/src/ECS/Components.h
+  Engine/src/ECS/Scene.h Engine/src/ECS/Scene.cpp
+  Engine/src/ECS/Entity.h Engine/src/ECS/Entity.cpp
   Engine/src/Render/Window.h Engine/src/Render/Window.cpp
   Engine/src/Core/Application.h Engine/src/Core/Application.cpp
   Engine/src/Render/Renderer.h Engine/src/Render/Renderer.cpp
   Engine/src/Render/Viewport.h Engine/src/Render/Viewport.cpp
   Engine/src/Render/OrthographicCamera.h Engine/src/Render/OrthographicCamera.cpp
+  Game/src/Scenes/TestScene.h Game/src/Scenes/TestScene.cpp
+  Engine/src/ECS/ECS.h Engine/src/ECS/ECS.cpp 
 )
 
 target_include_directories(SauceEngine PRIVATE
   ${CMAKE_SOURCE_DIR}/Engine/src
+  ${CMAKE_SOURCE_DIR}/Game/src
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

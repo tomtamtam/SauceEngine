@@ -14,6 +14,7 @@ namespace Sauce
   public:
 
     Application();
+    virtual ~Application() = default;
 
     void Run();
     void Terminate();
@@ -24,8 +25,8 @@ namespace Sauce
     bool m_IsRunning;
     std::string m_Name;
 
-    Scene m_CurrentScene;
-    std::unordered_map<uint64_t, Scene> m_Scenes;
+    std::shared_ptr<Scene> m_CurrentScene;
+    std::unordered_map<uint64_t, std::shared_ptr<Scene>> m_Scenes;
 
     Window m_CurrentWindow;
   };

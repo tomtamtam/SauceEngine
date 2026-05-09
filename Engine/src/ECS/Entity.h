@@ -29,9 +29,16 @@ namespace Sauce
     bool HasComponent() const;
 
     template<typename T>
-    std::shared_ptr<Component> GetComponent() const;
+    std::shared_ptr<T> GetComponent() const;
+
+    void Start();
+    void Update(float deltaTime);
+
 
   private:
+    virtual void UserStart() = 0;
+    virtual void UserUpdate(float deltaTime) = 0;
+
     std::string m_Name;
     std::unordered_map<std::type_index, std::shared_ptr<Component>> m_Components;
   };
