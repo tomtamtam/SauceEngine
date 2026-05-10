@@ -1,33 +1,32 @@
 #include "Scene.h"
 #include "Core/UUID.h"
+#include "ECS/Entity.h"
 #include "Render/Viewport.h"
-#include "Scene/Entity.h"
+#include <cstdint>
+#include <iostream>
 #include <memory>
 #include <string>
 
-namespace Sauce
-{
-  Scene::Scene(const std::string &name)
-    : m_ID(), m_Name(name)
-  {
-    m_Entities = {};
-    m_Viewports = {};
-  }
+namespace Sauce {
 
-  Scene::Scene(const UUID &id)
-    : m_ID(id), m_Name("Scene")
-  {
-    m_Entities = {};
-    m_Viewports = {};
-  }
+    uint32_t s_ComponentCounter = 0;
 
-  std::shared_ptr<Entity> Scene::GetEntityByID(UUID &&id)
-  {
-    return m_Entities.at(id);
-  }
+    Scene::Scene(std::string name)
+    {
+        m_ID = UUID();
+        m_Name = name;
+    }
 
-  std::shared_ptr<Viewport> Scene::GetViewportByID(UUID &&id)
-  {
-    return m_Viewports.at(id);
-  }
+    Scene::Scene(UUID id)
+    {
+        m_ID = id;
+    }
+
+    uint32_t Scene::AddEntity() 
+    {
+        std::cout << "added entity\n";
+
+        m_Entities.push_back({m_Entities.size(), ComponentMask()});
+        return m_Entities.back().ID;
+    }
 }

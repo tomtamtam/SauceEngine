@@ -1,2 +1,7 @@
 build/*
 compile_commands.json
+
+.idea
+cmake-build-debub
+.cache
+.vscode
