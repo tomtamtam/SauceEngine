@@ -2,6 +2,7 @@
 #include <bitset>
 #include <cstddef>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <sys/types.h>
 #include <unordered_map>
@@ -21,40 +22,48 @@ namespace Sauce
     public:
         Scene(std::string name);
         Scene(UUID id);
-        uint32_t AddEntity();
+        uint64_t AddEntity();
 
         template<typename T>
-        T* AttachComponent(uint32_t enttID)
+        T* AttachComponent(uint64_t id)
         {
-            uint32_t componentId = GetComponentID<T>();
-            if(m_ComponentPools.size() < componentId)
+            if(m_Entities[GetEntityIndex(id)].ID != id)
+                return nullptr;
+
+            int componentId = GetComponentID<T>();
+
+            if (m_ComponentPools.size() <= componentId) // Not enough component pool
             {
                 m_ComponentPools.resize(componentId + 1, nullptr);
             }
-            if(m_ComponentPools[componentId] == nullptr)
+            if (m_ComponentPools[componentId] == nullptr) // New component, make a new pool
             {
                 m_ComponentPools[componentId] = new ComponentPool(sizeof(T));
             }
 
-            T* component = new (m_ComponentPools[componentId]->get(enttID)) T();
-            
-            m_Entities[componentId].Mask.set(componentId);
-            m_Entities[componentId].ID = componentId;
+            // Looks up the component in the pool, and initializes it with placement new
+            T* pComponent = new (m_ComponentPools[componentId]->get(id)) T();
 
-            return component;
-        }
+            m_Entities[id].Mask.set(componentId);
+            std::cout << "Attaching component at entt (id) " << id << " component (id) " << componentId << '\n';
+            return pComponent;
+        } 
+
 
         template<typename T>
-        void RemoveComponent(uint32_t id)
+        void RemoveComponent(uint64_t id)
         {
+            if(m_Entities[GetEntityIndex(id)].ID != id)
+                return; 
             uint32_t componentId = GetComponentID<T>();
-            m_Entities[componentId].Mask.reset(componentId);
-            m_Entities[componentId].ID = componentId;
+            m_Entities[GetEntityIndex(id)].Mask.reset(componentId);
         }
 
         template<typename T>
-        T* GetComponent(uint32_t enttID)
+        T* GetComponent(uint64_t enttID)
         {
+            if(m_Entities[GetEntityIndex(enttID)].ID != enttID)
+                return nullptr;
             uint32_t componentID = GetComponentID<T>();
 
             if(!m_Entities[enttID].Mask.test(componentID))
@@ -62,14 +71,16 @@ namespace Sauce
                 return nullptr;
             }
 
-            T* component = static_cast<T>(m_ComponentPools[componentID]->get(enttID));
+            T* component = static_cast<T*>(m_ComponentPools[componentID]->get(enttID));
             return component;
         }
+
+        void DestroyEntity(uint64_t id);
 
     private:
         struct EntityDesc
         {
-            UUID ID;
+            uint64_t ID;
             ComponentMask Mask;
         };
 
@@ -103,6 +114,30 @@ namespace Sauce
             static uint32_t s_ComponentID = s_ComponentCounter++; //static means 1 per T
             return s_ComponentID;
         }
+
+        inline uint64_t CreateEntityID(uint32_t index, uint32_t version)
+        {
+            return ((uint64_t)index << 32) | ((uint64_t)version);
+        }
+
+        inline uint32_t GetEntityIndex(uint64_t id)
+        {
+            return id >> 32;
+        }
+
+        inline uint32_t GetEntityVersion(uint64_t id)
+        {
+            return (uint32_t)id;
+        }
+
+        inline bool IsEntityValid(uint64_t id)
+        {
+            return (id >> 32) != uint32_t(-1);
+        }
+
+        #define INVALID_ENTITY CreateEntityID(EntityIndex(-1), 0)
+
+        std::vector<uint32_t> m_FreeEntities;
 
         UUID m_ID;
         std::string m_Name;

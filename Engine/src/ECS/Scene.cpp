@@ -22,11 +22,30 @@ namespace Sauce {
         m_ID = id;
     }
 
-    uint32_t Scene::AddEntity() 
+    uint64_t Scene::AddEntity() 
     {
-        std::cout << "added entity\n";
-
-        m_Entities.push_back({m_Entities.size(), ComponentMask()});
+        if(!m_FreeEntities.empty())
+        {
+            uint32_t newIdx = m_FreeEntities.back();
+            m_FreeEntities.pop_back();
+            uint32_t newID = CreateEntityID(newIdx, GetEntityVersion(m_Entities[newIdx].ID));
+            m_Entities[newIdx].ID = newID;
+            std::cout << "new entt at idx: " << newIdx << '\n';
+            return m_Entities[newIdx].ID;
+        }
+        m_Entities.push_back({CreateEntityID(m_Entities.size(), 0), ComponentMask()});
+        std::cout << "new entt at idx: " << GetEntityIndex(m_Entities.size()) << '\n';
         return m_Entities.back().ID;
+    }
+
+    void Scene::DestroyEntity(uint64_t id)
+    {
+        if(m_Entities[GetEntityIndex(id)].ID != id)
+            return;
+
+        uint64_t newID = CreateEntityID(uint32_t(-1), GetEntityVersion(id) + 1);
+        m_Entities[GetEntityIndex(id)].ID = newID;
+        m_Entities[GetEntityIndex(id)].Mask.reset();
+        m_FreeEntities.push_back(GetEntityIndex(id));
     }
 }
