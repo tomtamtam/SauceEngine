@@ -32,6 +32,20 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(glm)
 
+# JSON
+FetchContent_Declare(
+    nlohmann_json
+    GIT_REPOSITORY https://github.com/nlohmann/json.git
+    GIT_TAG        v3.11.3
+)
+FetchContent_MakeAvailable(nlohmann_json)
+
+# STB IMAGE
+add_library(stb_image STATIC
+  Engine/vendor/stb_image/stb_image.cpp
+)
+target_include_directories(stb_image PUBLIC Engine/vendor/stb_image)
+
 #ENGINE (Static Library)
 add_library(SauceEngine STATIC
     Engine/src/Core/UUID.cpp
@@ -41,6 +55,11 @@ add_library(SauceEngine STATIC
     Engine/src/Render/Renderer.cpp
     Engine/src/Render/Viewport.cpp
     Engine/src/Render/OrthographicCamera.cpp
+    Engine/src/Render/Buffers/IndexBuffer.cpp
+    Engine/src/Render/Buffers/VertexArray.cpp
+    Engine/src/Render/Buffers/VertexBuffer.cpp
+    Engine/src/Render/Texture.cpp
+    Engine/src/Render/Shader.cpp
 )
 
 target_include_directories(SauceEngine PUBLIC
@@ -48,19 +67,12 @@ target_include_directories(SauceEngine PUBLIC
     ${CMAKE_SOURCE_DIR}
 )
 
-# JSON
-FetchContent_Declare(
-    nlohmann_json
-    GIT_REPOSITORY https://github.com/nlohmann/json.git
-    GIT_TAG        v3.11.3
-)
-FetchContent_MakeAvailable(nlohmann_json)
-
 target_link_libraries(SauceEngine PUBLIC
     glad
     glfw
     glm::glm
     nlohmann_json::nlohmann_json
+    stb_image
 )
 
 #OpenGL

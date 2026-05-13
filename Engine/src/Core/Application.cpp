@@ -7,7 +7,7 @@
 #include <dlfcn.h>
 #include <iostream>
 #include <memory>
-#include "ECS/Entity.h"
+#include "Render/Shader.h"
 #include "Util/Json.h"
 
 namespace Sauce
@@ -26,6 +26,8 @@ namespace Sauce
         m_CurrentWindow.Init();
 
         m_CurrentScene = LoadScene("../Game/Scenes/TestScene.json");
+
+        Shader shader("../Game/Shaders/Default.glsl");
     }
 
     void Application::Terminate()
