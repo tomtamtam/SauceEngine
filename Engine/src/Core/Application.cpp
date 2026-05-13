@@ -7,6 +7,7 @@
 #include <dlfcn.h>
 #include <iostream>
 #include <memory>
+#include "GLFW/glfw3.h"
 #include "Render/Shader.h"
 #include "Util/Json.h"
 
@@ -39,11 +40,23 @@ namespace Sauce
     void Application::Run()
     {
         Setup();
-        std::cout << "finished\n";
+
+        m_BeginTime = glfwGetTime();
+        m_EndTime = glfwGetTime();
+        m_DT = -1.0f;
 
         while (m_IsRunning)
         {
           m_CurrentWindow.Update();
+
+          if(m_DT >= 0.0f)
+          {
+              //update scene ect
+          }
+
+          m_EndTime = glfwGetTime();
+          m_DT = m_EndTime - m_BeginTime;
+          m_BeginTime = m_EndTime;
         }
 
         m_CurrentWindow.Destroy();

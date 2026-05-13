@@ -30,7 +30,7 @@ namespace Sauce
         void Setup();
 
 
-
+        float m_DT, m_BeginTime, m_EndTime;
 
         bool m_IsRunning;
         std::string m_Name;
