@@ -26,9 +26,9 @@ namespace Sauce
         uint64_t AddEntity();
 
         template<typename T>
-        T* AttachComponent(UUID id)
+        T* AttachComponent(UUID uuid)
         {
-            std::cout << "uuid: " << id << '\n';
+            uint64_t id = EntityByUUID(uuid);
             if(m_Entities[GetEntityIndex(id)].ID != id)
                 return nullptr;
 
@@ -43,16 +43,17 @@ namespace Sauce
                 m_ComponentPools[componentId] = new ComponentPool(sizeof(T));
             }
 
-            T* pComponent = new (m_ComponentPools[componentId]->get(id)) T();
+            T* pComponent = new (m_ComponentPools[componentId]->get(GetEntityIndex(id))) T();
 
-            m_Entities[id].Mask.set(componentId);
+            m_Entities[GetEntityIndex(id)].Mask.set(componentId);
             std::cout << "Attaching component at entt (id) " << id << " component (id) " << componentId << '\n';
             return pComponent;
         }
 
         template<typename T>
-        void RemoveComponent(uint64_t id)
+        void RemoveComponent(UUID uuid)
         {
+            uint64_t id = EntityByUUID(uuid);
             if(m_Entities[GetEntityIndex(id)].ID != id)
                 return; 
             uint32_t componentId = GetComponentID<T>();
@@ -60,18 +61,19 @@ namespace Sauce
         }
 
         template<typename T>
-        T* GetComponent(uint64_t enttID)
+        T* GetComponent(UUID uuid)
         {
+            uint64_t enttID = EntityByUUID(uuid);
             if(m_Entities[GetEntityIndex(enttID)].ID != enttID)
                 return nullptr;
             uint32_t componentID = GetComponentID<T>();
 
-            if(!m_Entities[enttID].Mask.test(componentID))
+            if(!m_Entities[GetEntityIndex(enttID)].Mask.test(componentID))
             {
                 return nullptr;
             }
 
-            T* component = static_cast<T*>(m_ComponentPools[componentID]->get(enttID));
+            T* component = static_cast<T*>(m_ComponentPools[componentID]->get(GetEntityIndex(enttID)));
             return component;
         }
 

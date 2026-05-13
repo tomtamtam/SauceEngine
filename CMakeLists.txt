@@ -33,7 +33,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(glm)
 
 #ENGINE (Static Library)
-add_library(SauceEngine SHARED
+add_library(SauceEngine STATIC
     Engine/src/Core/UUID.cpp
     Engine/src/Core/Application.cpp
     Engine/src/ECS/Scene.cpp
@@ -45,12 +45,22 @@ add_library(SauceEngine SHARED
 
 target_include_directories(SauceEngine PUBLIC
     ${CMAKE_SOURCE_DIR}/Engine/src
+    ${CMAKE_SOURCE_DIR}
 )
+
+# JSON
+FetchContent_Declare(
+    nlohmann_json
+    GIT_REPOSITORY https://github.com/nlohmann/json.git
+    GIT_TAG        v3.11.3
+)
+FetchContent_MakeAvailable(nlohmann_json)
 
 target_link_libraries(SauceEngine PUBLIC
     glad
     glfw
     glm::glm
+    nlohmann_json::nlohmann_json
 )
 
 #OpenGL
@@ -85,7 +95,10 @@ add_executable(App
 target_include_directories(App PRIVATE
     ${CMAKE_SOURCE_DIR}/Game/Code
 )
-target_link_libraries(App PRIVATE SauceEngine)
+target_link_libraries(App PRIVATE 
+  SauceEngine
+  nlohmann_json::nlohmann_json
+)
 
 target_link_options(App PRIVATE -rdynamic)
 

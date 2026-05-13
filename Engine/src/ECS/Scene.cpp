@@ -31,11 +31,11 @@ namespace Sauce {
             m_FreeEntities.pop_back();
             uint32_t newID = CreateEntityID(newIdx, GetEntityVersion(m_Entities[newIdx].ID));
             m_Entities[newIdx].ID = newID;
-            std::cout << "new entt at idx: " << newIdx << '\n';
+            std::cout << "added entity (idx) " << GetEntityIndex(newID) << '\n';
             return m_Entities[newIdx].ID;
         }
         m_Entities.push_back({CreateEntityID(m_Entities.size(), 0), ComponentMask()});
-        std::cout << "new entt at idx: " << GetEntityIndex(m_Entities.size()) << '\n';
+        std::cout << "added entity (idx) " << m_Entities.size() << '\n';
         return m_Entities.back().ID;
     }
 
@@ -65,7 +65,7 @@ namespace Sauce {
 
     UUID Scene::AddEntityUUID(UUID uuid)
     {
-        uint64_t ent =  AddEntity();
+        uint64_t ent = AddEntity();
         m_UUIDMap[uuid] = ent;
         return uuid;
     }

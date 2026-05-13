@@ -1,12 +1,13 @@
 #pragma once
 
 #include "Core/UUID.h"
+#include "ECS/Components.h"
 #include "Render/Window.h"
-#include "ECS/Scene.h"
 #include <memory>
+#include <nlohmann/json.hpp>
 #include <string>
-#include <unordered_map>
-#include <cstdint>
+
+using json = nlohmann::json;
 
 namespace Sauce
 {
@@ -28,8 +29,8 @@ namespace Sauce
         const std::string ENTITY_DLL_PATH = ".";
         void Setup();
 
-        void LoadScene(const std::string &path, Scene *scene);
-        void LoadEntity(const std::string &dllName, UUID uuid);
+
+
 
         bool m_IsRunning;
         std::string m_Name;
@@ -39,7 +40,11 @@ namespace Sauce
         Scene m_CurrentScene;
     };
 
+    Scene LoadScene(const std::string &path);
+
     Application *CreateApplication();
+    Transform GetTransformFromJson(json comp);
+    Code GetCodeFromJson(json j, UUID uuid, Scene *scene);
 }
 
 extern Sauce::Application *s_App;

@@ -1,9 +1,21 @@
 #pragma once
 
 #include "glm/ext/vector_float3.hpp"
+#include <cassert>
+#include <ECS/Scene.h>
 #include <iostream>
+#include <nlohmann/json.hpp>
+#include <string>
+#include <dlfcn.h>
+
+#define CODE_ID 0
+#define TRANSFORM_ID 1
+
+using json = nlohmann::json;
+
 namespace Sauce
 {
+    const std::string ENTITY_DLL_PATH = ".";
     struct Transform
     {
         Transform()
