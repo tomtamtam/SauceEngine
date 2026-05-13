@@ -1,21 +1,7 @@
-#pragma once
-
-#include "Core/UUID.h"
-#include "ECS/Components.h"
-
-#include <memory>
-#include <string>
-#include <typeindex>
-#include <unordered_map>
-
-
-namespace Sauce
+class Entity
 {
-
-  class Entity
-  {
-  public:
-  
-  private:
-  };
-}
+public:
+    virtual ~Entity() = default;
+    virtual void Start();
+    virtual void Update(float deltaTime);
+};

@@ -18,22 +18,9 @@ namespace Sauce
   }
 
   UUID::UUID(uint64_t uuid)
+    : m_UUID(uuid)
   {
 
   }
 
-}
-
-namespace std {
-  
-  template<typename T> struct hash;
-
-  template<>
-    struct hash<Sauce::UUID>
-    {
-      std::size_t operator()(const Sauce::UUID &uuid) const
-      {
-        return (uint64_t) uuid;
-      }
-    };
 }

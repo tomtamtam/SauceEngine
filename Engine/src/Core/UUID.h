@@ -10,7 +10,6 @@ namespace Sauce
   public:
     UUID();
     UUID(uint64_t uuid);
-    UUID(const UUID &) = default;
 
     operator uint64_t() const {return m_UUID;}
 
@@ -19,4 +18,18 @@ namespace Sauce
 
   };
 
-} // namespace Sauce
+}
+
+namespace std {
+  
+  template<typename T> struct hash;
+
+  template<>
+    struct hash<Sauce::UUID>
+    {
+      std::size_t operator()(const Sauce::UUID &uuid) const
+      {
+        return (uint64_t) uuid;
+      }
+    };
+}

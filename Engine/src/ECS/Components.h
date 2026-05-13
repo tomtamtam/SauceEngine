@@ -21,4 +21,11 @@ namespace Sauce
             std::cout << "transform component\n";
         }
     };
+
+    struct Code
+    {
+        void (*Start)();
+        void (*Update)(float deltaTime);
+        void (*OnDestroy)();
+    };
 }

@@ -22,33 +22,33 @@ namespace Sauce
     public:
         Scene(std::string name);
         Scene(UUID id);
+        ~Scene();
         uint64_t AddEntity();
 
         template<typename T>
-        T* AttachComponent(uint64_t id)
+        T* AttachComponent(UUID id)
         {
+            std::cout << "uuid: " << id << '\n';
             if(m_Entities[GetEntityIndex(id)].ID != id)
                 return nullptr;
 
             int componentId = GetComponentID<T>();
 
-            if (m_ComponentPools.size() <= componentId) // Not enough component pool
+            if (m_ComponentPools.size() <= componentId)
             {
                 m_ComponentPools.resize(componentId + 1, nullptr);
             }
-            if (m_ComponentPools[componentId] == nullptr) // New component, make a new pool
+            if (m_ComponentPools[componentId] == nullptr)
             {
                 m_ComponentPools[componentId] = new ComponentPool(sizeof(T));
             }
 
-            // Looks up the component in the pool, and initializes it with placement new
             T* pComponent = new (m_ComponentPools[componentId]->get(id)) T();
 
             m_Entities[id].Mask.set(componentId);
             std::cout << "Attaching component at entt (id) " << id << " component (id) " << componentId << '\n';
             return pComponent;
-        } 
-
+        }
 
         template<typename T>
         void RemoveComponent(uint64_t id)
@@ -77,7 +77,12 @@ namespace Sauce
 
         void DestroyEntity(uint64_t id);
 
+        UUID AddEntityUUID();
+        UUID AddEntityUUID(UUID uuid);
+        uint64_t EntityByUUID(UUID uuid);
+
     private:
+
         struct EntityDesc
         {
             uint64_t ID;
@@ -138,6 +143,8 @@ namespace Sauce
         #define INVALID_ENTITY CreateEntityID(EntityIndex(-1), 0)
 
         std::vector<uint32_t> m_FreeEntities;
+
+        std::unordered_map<UUID, uint64_t> m_UUIDMap;
 
         UUID m_ID;
         std::string m_Name;

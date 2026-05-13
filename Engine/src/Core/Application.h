@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/UUID.h"
 #include "Render/Window.h"
 #include "ECS/Scene.h"
 #include <memory>
@@ -19,8 +20,16 @@ namespace Sauce
         void Run();
         void Terminate();
 
+        UUID AddScene(UUID uuid);
+        void RemoveScene(UUID uuid);
+        void SwitchScene(UUID uuid);
+
     private:
+        const std::string ENTITY_DLL_PATH = ".";
         void Setup();
+
+        void LoadScene(const std::string &path, Scene *scene);
+        void LoadEntity(const std::string &dllName, UUID uuid);
 
         bool m_IsRunning;
         std::string m_Name;
@@ -29,4 +38,8 @@ namespace Sauce
 
         Scene m_CurrentScene;
     };
+
+    Application *CreateApplication();
 }
+
+extern Sauce::Application *s_App;

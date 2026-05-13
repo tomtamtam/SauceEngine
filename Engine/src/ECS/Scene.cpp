@@ -1,11 +1,9 @@
 #include "Scene.h"
 #include "Core/UUID.h"
-#include "ECS/Entity.h"
-#include "Render/Viewport.h"
 #include <cstdint>
 #include <iostream>
-#include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace Sauce {
 
@@ -21,6 +19,9 @@ namespace Sauce {
     {
         m_ID = id;
     }
+
+    Scene::~Scene()
+    {}
 
     uint64_t Scene::AddEntity() 
     {
@@ -47,5 +48,25 @@ namespace Sauce {
         m_Entities[GetEntityIndex(id)].ID = newID;
         m_Entities[GetEntityIndex(id)].Mask.reset();
         m_FreeEntities.push_back(GetEntityIndex(id));
+    }
+
+    uint64_t Scene::EntityByUUID(UUID uuid)
+    {
+        return m_UUIDMap[uuid];
+    }
+
+    UUID Scene::AddEntityUUID()
+    {
+        uint64_t ent =  AddEntity();
+        UUID uuid = {};
+        m_UUIDMap[uuid] = ent;
+        return uuid;
+    }
+
+    UUID Scene::AddEntityUUID(UUID uuid)
+    {
+        uint64_t ent =  AddEntity();
+        m_UUIDMap[uuid] = ent;
+        return uuid;
     }
 }

@@ -1,5 +1,4 @@
-cmake_minimum_required(VERSION 4.0)
-
+cmake_minimum_required(VERSION 3.20)
 project(SauceEngine)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -7,66 +6,96 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# GLAD
+#GLAD
 add_library(glad STATIC
-  Engine/vendor/glad/src/glad.c
+    Engine/vendor/glad/src/glad.c
 )
 target_include_directories(glad PUBLIC Engine/vendor/glad/include)
 
-# GLFW
+#GLFW
 include(FetchContent)
-
 FetchContent_Declare(
-  glfw
-  GIT_REPOSITORY https://github.com/glfw/glfw.git
-  GIT_TAG 3.4
+    glfw
+    GIT_REPOSITORY https://github.com/glfw/glfw.git
+    GIT_TAG        3.4
 )
 set(GLFW_BUILD_DOCS     OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS    OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(glfw)
 
-# GLM
+#GLM
 FetchContent_Declare(
-  glm
-  GIT_REPOSITORY https://github.com/g-truc/glm.git
-  GIT_TAG 1.0.1
+    glm
+    GIT_REPOSITORY https://github.com/g-truc/glm.git
+    GIT_TAG        1.0.1
 )
 FetchContent_MakeAvailable(glm)
 
-# EXECUTABLES
-add_executable(SauceEngine
-  Engine/src/Main.cpp
-  Engine/src/Core/UUID.h Engine/src/Core/UUID.cpp
-  Engine/src/ECS/Components.h
-  Engine/src/ECS/Scene.h Engine/src/ECS/Scene.cpp
-  Engine/src/ECS/Entity.h Engine/src/ECS/Entity.cpp
-  Engine/src/Render/Window.h Engine/src/Render/Window.cpp
-  Engine/src/Core/Application.h Engine/src/Core/Application.cpp
-  Engine/src/Render/Renderer.h Engine/src/Render/Renderer.cpp
-  Engine/src/Render/Viewport.h Engine/src/Render/Viewport.cpp
-  Engine/src/Render/OrthographicCamera.h Engine/src/Render/OrthographicCamera.cpp
-  Game/src/Scenes/TestScene.h Game/src/Scenes/TestScene.cpp
+#ENGINE (Static Library)
+add_library(SauceEngine SHARED
+    Engine/src/Core/UUID.cpp
+    Engine/src/Core/Application.cpp
+    Engine/src/ECS/Scene.cpp
+    Engine/src/Render/Window.cpp
+    Engine/src/Render/Renderer.cpp
+    Engine/src/Render/Viewport.cpp
+    Engine/src/Render/OrthographicCamera.cpp
 )
 
-target_include_directories(SauceEngine PRIVATE
-  ${CMAKE_SOURCE_DIR}/Engine/src
-  ${CMAKE_SOURCE_DIR}/Game/src
+target_include_directories(SauceEngine PUBLIC
+    ${CMAKE_SOURCE_DIR}/Engine/src
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
-  glad
-  glfw
-  glm::glm
+target_link_libraries(SauceEngine PUBLIC
+    glad
+    glfw
+    glm::glm
 )
 
-# OPENGL
+#OpenGL
 if(WIN32)
-    target_link_libraries(${PROJECT_NAME} PRIVATE opengl32)
+    target_link_libraries(SauceEngine PUBLIC opengl32)
 elseif(APPLE)
     find_library(OPENGL_LIBRARY OpenGL REQUIRED)
-    target_link_libraries(${PROJECT_NAME} PRIVATE ${OPENGL_LIBRARY})
-else()  # Linux
+    target_link_libraries(SauceEngine PUBLIC ${OPENGL_LIBRARY})
+else()
     find_package(OpenGL REQUIRED)
-    target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL)
+    target_link_libraries(SauceEngine PUBLIC OpenGL::GL)
 endif()
+
+#GAME (Shared Library / Plugin)
+add_library(Game SHARED
+    Game/Code/Player.cpp
+)
+target_include_directories(Game PUBLIC
+    ${CMAKE_SOURCE_DIR}/Game/Code
+)
+target_link_libraries(Game PRIVATE SauceEngine)
+
+set_target_properties(Game PROPERTIES
+    BUILD_RPATH "$ORIGIN"
+)
+
+#App (Executable)
+
+add_executable(App
+    Game/Code/Main.cpp
+)
+target_include_directories(App PRIVATE
+    ${CMAKE_SOURCE_DIR}/Game/Code
+)
+target_link_libraries(App PRIVATE SauceEngine)
+
+target_link_options(App PRIVATE -rdynamic)
+
+
+# Nach dem Game-Target:
+set_target_properties(Game PROPERTIES
+    BUILD_RPATH "$ORIGIN"
+)
+
+# Nach dem App-Target:
+set_target_properties(App PROPERTIES
+    BUILD_RPATH "$ORIGIN"
+)
