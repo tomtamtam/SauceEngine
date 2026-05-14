@@ -1,12 +1,6 @@
 #pragma once
 
-#include "Core/Application.h"
-#include <memory>
-
-namespace Sauce
-{
-    auto s_App = std::make_shared<Sauce::Application>();
-}
+#include "SauceEngine.h"
 
 int main(int argc, char** argv)
 {

@@ -4,7 +4,7 @@
   "objects": [
     {
       "id": 10802008899556115984,
-      "name": "Game",
+      "name": "Player",
       "components": [
         {
           "id": 0,

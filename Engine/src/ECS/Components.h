@@ -3,6 +3,7 @@
 #include "glm/ext/vector_float3.hpp"
 #include <cassert>
 #include <ECS/Scene.h>
+#include <functional>
 #include <iostream>
 #include <nlohmann/json.hpp>
 #include <string>
@@ -36,8 +37,8 @@ namespace Sauce
 
     struct Code
     {
-        void (*Start)();
-        void (*Update)(float deltaTime);
-        void (*OnDestroy)();
+        std::function<void()> Start;
+        std::function<void()> Update;
+        std::function<void()> OnDestroy;
     };
 }

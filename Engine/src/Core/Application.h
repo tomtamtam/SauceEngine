@@ -16,7 +16,7 @@ namespace Sauce
     {
     public:
         Application();
-        virtual ~Application() = default;
+        virtual ~Application();
 
         void Run();
         void Terminate();
@@ -33,7 +33,7 @@ namespace Sauce
         UUID GetSceneByName(const std::string &name);
         void ChangeSceneName(UUID uuid, const std::string &newName);
     private:
-        const std::string ENTITY_DLL_PATH = ".";
+        const std::string ENTITY_DLL_PATH = "./libGame.so";
         void Setup();
 
 
@@ -43,6 +43,8 @@ namespace Sauce
         std::string m_Name;
 
         Window m_CurrentWindow;
+
+        void *m_HandleGameDll;
 
         Scene *m_CurrentScene;
         std::unordered_map<std::string, UUID> m_SceneNames;

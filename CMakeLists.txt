@@ -63,6 +63,7 @@ add_library(SauceEngine SHARED
     Engine/src/Core/Application.cpp
     Engine/src/Core/SauceEngine.cpp
     Engine/src/ECS/Scene.cpp
+    Engine/src/ECS/Entity.cpp
     Engine/src/Render/Window.cpp
     Engine/src/Render/Renderer.cpp
     Engine/src/Render/Viewport.cpp

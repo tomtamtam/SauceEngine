@@ -21,7 +21,10 @@ namespace Sauce {
     }
 
     Scene::~Scene()
-    {}
+    {
+        for(auto p : m_ComponentPools)
+            delete p;
+    }
 
     uint64_t Scene::AddEntity() 
     {
@@ -79,10 +82,5 @@ namespace Sauce {
     void Scene::SetName(const std::string &name)
     { 
         m_Name = name;
-    }
-
-    inline UUID Scene::GetUUID() const
-    {
-        return m_ID;
     }
 }

@@ -1,8 +1,11 @@
 #include "SauceEngine.h"
-#include "Core/EntryPoint.h"
+#include "Core/Application.h"
+#include <memory>
 
 namespace Sauce
 {
+    std::shared_ptr<Application> s_App = std::make_shared<Application>();
+
     void SwitchScene(UUID uuid)
     {
         s_App->SwitchScene(uuid);

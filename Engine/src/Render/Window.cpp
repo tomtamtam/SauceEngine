@@ -33,6 +33,7 @@ namespace Sauce {
             glfwTerminate();
             assert(false && "Error: failed to load GLAD");
         }
+        glfwSwapInterval(0);
     }
 
     void Window::Update() 

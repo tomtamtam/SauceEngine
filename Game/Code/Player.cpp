@@ -1,19 +1,39 @@
-#include "Render/Buffers/VertexBufferLayout.h"
+#include "Core/UUID.h"
+#include "ECS/Components.h"
+#include "ECS/Entity.h"
 #include <iostream>
 
-extern "C" void Update(float deltaTime)
-{
-    std::cout << "Update\n";
-}
+using namespace Sauce;
 
-extern "C" void Start()
+class Player : public Entity
 {
-    VertexBufferLayout vbl;
-    std::cout << "start\n";
-}
+public:
+    Player(UUID uuid)
+    {
+        ID = uuid;
+    }
+    ~Player()
+    {}
+    void Start()
+    {
+        std::cout << "Start Player (uuid) " << ID << "\n";
+        if(GetComponent<Code>() == NULL)
+        {
+            std::cout << "NULL (code comp) \n";
+        }
+    }
+    void Update()
+    {
+        std::cout << "Player Update\n";
 
+    }
+    void OnDestroy()
+    {
+        std::cout << "destroying player\n";
+    }
+};
 
-extern "C" void OnDestroy()
+extern "C" Sauce::Entity* GetPlayer(UUID uuid)
 {
-    std::cout << "on OnDestroy\n";
+    return new Player(uuid);
 }

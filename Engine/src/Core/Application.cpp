@@ -7,6 +7,7 @@
 #include <dlfcn.h>
 #include <iostream>
 #include <memory>
+#include "ECS/Entity.h"
 #include "GLFW/glfw3.h"
 #include "Render/Shader.h"
 #include "Util/Json.h"
@@ -16,6 +17,18 @@ namespace Sauce
     Application::Application()
         : m_IsRunning(true), m_CurrentScene(nullptr)
     {
+        m_HandleGameDll = dlopen(ENTITY_DLL_PATH.c_str(), RTLD_NOW);
+        if(!m_HandleGameDll)
+        {
+            std::cerr << "Failed to open libGame dll\n";
+        }
+    }
+
+    Application::~Application()
+    {
+        delete m_CurrentScene;
+        for (auto &pair : m_Scenes)
+            delete pair.second;
     }
 
 
@@ -111,7 +124,6 @@ namespace Sauce
                     scene.GetComponent<Code>(id)->OnDestroy = c.OnDestroy;
                     scene.GetComponent<Code>(id)->Start = c.Start;
                     scene.GetComponent<Code>(id)->Update = c.Update;
-                    scene.GetComponent<Code>(id)->Start();
                     break;
                 }
                 case TRANSFORM_ID:
@@ -121,6 +133,7 @@ namespace Sauce
                     scene.GetComponent<Transform>(id)->Position = t.Position;
                     scene.GetComponent<Transform>(id)->Scale = t.Scale;
                     scene.GetComponent<Transform>(id)->Rotation = t.Rotation;
+                    break;
                 }
                 default:
                     break;
@@ -170,54 +183,28 @@ namespace Sauce
 
     Code GetCodeFromJson(json j, UUID uuid, Scene *scene)
     {
-        std::string dllName = j["name"];
-        dllName = "lib" + dllName + ".so";
+        std::string oName = j["name"];
+        std::string dllName = "lib" + oName + ".so";
 
-
-        std::string dllPath = ENTITY_DLL_PATH + '/' + dllName;
-        void* h = dlopen(dllPath.c_str(), RTLD_NOW);
-
-        if(!h)
+        using FactorryEntity = Entity*(*)(UUID uuid);
+        std::string oFuncName = "Get" + oName;
+        std::cout << "ofuncname: " << oFuncName << '\n';
+        void *h = dlopen("./libGame.so", RTLD_NOW);
+        auto eFunc = (FactorryEntity) dlsym(h, oFuncName.c_str());
+        if(!eFunc)
         {
-            std::cerr << "dlopen: " << dlerror() << '\n';
+            std::cerr << "Entity factorry returned nullptr\n";
             assert(false);
         }
-
-        using FactorryStart = void(*)();
-
-        auto start = (FactorryStart) dlsym(h, "Start");
-
-        if(!start)
-        {
-            std::cerr << "start factorry returned nullptr\n";
-            assert(false);
-        }
-
-        using FactorryUpdate = void(*)(float deltaTime);
-
-        auto update = (FactorryUpdate) dlsym(h, "Update");
-
-        if(!update)
-        {
-            std::cerr << "update factorry returned nullptr\n";
-            assert(false);
-        }
-
-        using FactorryonDestroy = void(*)();
-        auto onDestroy = (FactorryonDestroy) dlsym(h, "OnDestroy");
-
-        if(!onDestroy)
-        {
-            std::cerr << "destroy factorry returned nullptr\n";
-            assert(false);
-        }
-
-        Code code;
-        code.Start = start;
-        code.Update = update;
-        code.OnDestroy = onDestroy;
-
-        return code;
+        std::cout << "e\n";
+        auto e = eFunc(uuid);
+        std::cout << "e\n";
+        Code c;
+        c.Start     = [e](){ e->Start(); };
+        c.Update    = [e](){ e->Update(); };
+        c.OnDestroy = [e](){ e->OnDestroy(); };
+        std::cout << "exit code\n";
+        return c;
     }
 
 

@@ -46,7 +46,7 @@ namespace Sauce
             T* pComponent = new (m_ComponentPools[componentId]->get(GetEntityIndex(id))) T();
 
             m_Entities[GetEntityIndex(id)].Mask.set(componentId);
-            std::cout << "Attaching component at entt (id) " << id << " component (id) " << componentId << '\n';
+            std::cout << "Attaching component at entt (uuid) " << uuid << " component (id) " << componentId << '\n';
             return pComponent;
         }
 
@@ -84,7 +84,10 @@ namespace Sauce
         uint64_t EntityByUUID(UUID uuid);
         inline std::string GetName() const;
         void SetName(const std::string &name);
-        inline UUID GetUUID() const;
+        inline UUID GetUUID() const
+        {
+            return m_ID;
+        }
 
     private:
 
