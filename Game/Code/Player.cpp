@@ -1,3 +1,4 @@
+#include "Render/Buffers/VertexBufferLayout.h"
 #include <iostream>
 
 extern "C" void Update(float deltaTime)
@@ -7,7 +8,7 @@ extern "C" void Update(float deltaTime)
 
 extern "C" void Start()
 {
-
+    VertexBufferLayout vbl;
     std::cout << "start\n";
 }
 

@@ -82,6 +82,9 @@ namespace Sauce
         UUID AddEntityUUID();
         UUID AddEntityUUID(UUID uuid);
         uint64_t EntityByUUID(UUID uuid);
+        inline std::string GetName() const;
+        void SetName(const std::string &name);
+        inline UUID GetUUID() const;
 
     private:
 

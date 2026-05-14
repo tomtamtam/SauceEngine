@@ -14,7 +14,7 @@
 namespace Sauce
 {
     Application::Application()
-        : m_IsRunning(true), m_CurrentScene("Main Scene")
+        : m_IsRunning(true), m_CurrentScene(nullptr)
     {
     }
 
@@ -26,9 +26,27 @@ namespace Sauce
         m_CurrentWindow = {"test", 800, 800, onShouldClose};
         m_CurrentWindow.Init();
 
-        m_CurrentScene = LoadScene("../Game/Scenes/TestScene.json");
+        auto mainScene = AddScene(LoadScene("../Game/Scenes/TestScene.json"));
+
+        SwitchScene(mainScene);
 
         Shader shader("../Game/Shaders/Default.glsl");
+    }
+
+    UUID Application::AddScene(Scene scene)
+    {
+        m_Scenes[scene.GetUUID()] = &scene;
+        return scene.GetUUID();
+    }
+
+    void Application::RemoveScene(UUID uuid)
+    {
+        m_Scenes[uuid] = nullptr;
+    }
+
+    void Application::SwitchScene(UUID uuid)
+    {
+        m_CurrentScene = m_Scenes[uuid];
     }
 
     void Application::Terminate()
@@ -67,6 +85,7 @@ namespace Sauce
         json jScene = ParseJsonFromFile(path);
         uint64_t id = jScene["id"].get<uint64_t>();
         Scene scene((UUID) id);
+        scene.SetName(jScene["name"]);
         size_t nObjects = jScene["objects"].size();
         for(int i = 0; i < nObjects; i++)
         {
@@ -199,5 +218,16 @@ namespace Sauce
         code.OnDestroy = onDestroy;
 
         return code;
+    }
+
+
+    UUID Application::GetSceneByName(const std::string &name)
+    {
+        return m_SceneNames[name];
+    }
+
+    void Application::ChangeSceneName(UUID uuid, const std::string &newName)
+    {
+        m_SceneNames.at(newName) = uuid;
     }
 }

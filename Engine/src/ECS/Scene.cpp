@@ -69,4 +69,20 @@ namespace Sauce {
         m_UUIDMap[uuid] = ent;
         return uuid;
     }
+
+
+    inline std::string Scene::GetName() const
+    {
+        return m_Name;
+    }
+
+    void Scene::SetName(const std::string &name)
+    { 
+        m_Name = name;
+    }
+
+    inline UUID Scene::GetUUID() const
+    {
+        return m_ID;
+    }
 }

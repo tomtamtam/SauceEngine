@@ -11,6 +11,7 @@ add_library(glad STATIC
     Engine/vendor/glad/src/glad.c
 )
 target_include_directories(glad PUBLIC Engine/vendor/glad/include)
+set_target_properties(glad PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 #GLFW
 include(FetchContent)
@@ -40,16 +41,27 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(nlohmann_json)
 
+# LUA
+FetchContent_Declare(
+    lua
+    GIT_REPOSITORY "https://github.com/marovira/lua"
+    GIT_TAG 5.4.8
+  )
+
+FetchContent_MakeAvailable(lua)
+
 # STB IMAGE
 add_library(stb_image STATIC
   Engine/vendor/stb_image/stb_image.cpp
 )
 target_include_directories(stb_image PUBLIC Engine/vendor/stb_image)
+set_target_properties(stb_image PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 #ENGINE (Static Library)
-add_library(SauceEngine STATIC
+add_library(SauceEngine SHARED
     Engine/src/Core/UUID.cpp
     Engine/src/Core/Application.cpp
+    Engine/src/Core/SauceEngine.cpp
     Engine/src/ECS/Scene.cpp
     Engine/src/Render/Window.cpp
     Engine/src/Render/Renderer.cpp
@@ -73,6 +85,7 @@ target_link_libraries(SauceEngine PUBLIC
     glm::glm
     nlohmann_json::nlohmann_json
     stb_image
+    lua::lua
 )
 
 #OpenGL
@@ -109,18 +122,15 @@ target_include_directories(App PRIVATE
 )
 target_link_libraries(App PRIVATE 
   SauceEngine
-  nlohmann_json::nlohmann_json
 )
 
 target_link_options(App PRIVATE -rdynamic)
 
 
-# Nach dem Game-Target:
 set_target_properties(Game PROPERTIES
     BUILD_RPATH "$ORIGIN"
 )
 
-# Nach dem App-Target:
 set_target_properties(App PROPERTIES
     BUILD_RPATH "$ORIGIN"
 )

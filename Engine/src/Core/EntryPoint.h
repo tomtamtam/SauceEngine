@@ -3,9 +3,12 @@
 #include "Core/Application.h"
 #include <memory>
 
+namespace Sauce
+{
+    auto s_App = std::make_shared<Sauce::Application>();
+}
 
 int main(int argc, char** argv)
 {
-    auto app = std::make_shared<Sauce::Application>();
-    app->Run();
+    Sauce::s_App->Run();
 }
