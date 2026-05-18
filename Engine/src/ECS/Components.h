@@ -1,38 +1,27 @@
 #pragma once
 
-#include "glm/ext/vector_float3.hpp"
-#include <cassert>
-#include <ECS/Scene.h>
+#include "glm/glm.hpp"
 #include <functional>
 #include <iostream>
-#include <nlohmann/json.hpp>
 #include <string>
 #include <dlfcn.h>
 
 #define CODE_ID 0
 #define TRANSFORM_ID 1
 
-using json = nlohmann::json;
-
 namespace Sauce
 {
-    const std::string ENTITY_DLL_PATH = ".";
-    struct Transform
+    struct TransformComponent
     {
-        Transform()
-        {
-            Position = {0.0f, 0.0f, 0.0f};
-            Scale = {1.0f, 1.0f, 1.0f};
-            Rotation = {0.0f, 0.0f, 0.0f};
-        }
-        glm::vec3 Position;
-        glm::vec3 Scale;
-        glm::vec3 Rotation;
+        glm::mat4 Transform;
 
-        void print()
-        {
-            std::cout << "transform component\n";
-        }
+        TransformComponent() = default;
+        TransformComponent(const TransformComponent&) = default;
+        TransformComponent(const glm::mat4 &transform) : Transform(transform) {}
+
+        operator const glm::mat4&() const { return Transform; }
+
+
     };
 
     struct Code

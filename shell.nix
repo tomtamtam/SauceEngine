@@ -14,7 +14,7 @@ pkgs.mkShell {
     xorg.libXi
     xorg.libXext
 
-    # Wayland (required by GLFW 3.4)
+    # Wayland
     wayland
     wayland-protocols
     libxkbcommon
@@ -24,6 +24,9 @@ pkgs.mkShell {
     cmake
     ninja
     gcc
+
+    clang-tools
+
   ];
 
   shellHook = ''

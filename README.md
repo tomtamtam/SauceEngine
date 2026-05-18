@@ -13,12 +13,15 @@ Fetched through CMake:
 - glm
 - nlohman/json
 - lua
+- entt
 - (opengl)
 
 ### How to build
+```
 git clone https://github.com/tomtamtam/SauceEngine.git
 cd SauceEngine
 mkdir build && cd build
 cmake ..
 make
+```
 **NOTE: Right now compiling is only possible on Linux devices**

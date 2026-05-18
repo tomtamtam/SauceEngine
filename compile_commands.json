@@ -1,248 +1,464 @@
 [
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/cc  -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include  -o CMakeFiles/glad.dir/Engine/vendor/glad/src/glad.c.o -c /home/tom/dev/SauceEngine/Engine/vendor/glad/src/glad.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -fPIC -o CMakeFiles/glad.dir/Engine/vendor/glad/src/glad.c.o -c /home/tom/dev/SauceEngine/Engine/vendor/glad/src/glad.c",
   "file": "/home/tom/dev/SauceEngine/Engine/vendor/glad/src/glad.c",
   "output": "CMakeFiles/glad.dir/Engine/vendor/glad/src/glad.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -std=gnu++20 -o CMakeFiles/stb_image.dir/Engine/vendor/stb_image/stb_image.cpp.o -c /home/tom/dev/SauceEngine/Engine/vendor/stb_image/stb_image.cpp",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++  -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -std=gnu++20 -fPIC -o CMakeFiles/stb_image.dir/Engine/vendor/stb_image/stb_image.cpp.o -c /home/tom/dev/SauceEngine/Engine/vendor/stb_image/stb_image.cpp",
   "file": "/home/tom/dev/SauceEngine/Engine/vendor/stb_image/stb_image.cpp",
   "output": "CMakeFiles/stb_image.dir/Engine/vendor/stb_image/stb_image.cpp.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -std=gnu++20 -o CMakeFiles/SauceEngine.dir/Engine/src/Core/UUID.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Core/UUID.cpp",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++ -DSauceEngine_EXPORTS -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -fPIC -o CMakeFiles/SauceEngine.dir/Engine/src/Core/UUID.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Core/UUID.cpp",
   "file": "/home/tom/dev/SauceEngine/Engine/src/Core/UUID.cpp",
   "output": "CMakeFiles/SauceEngine.dir/Engine/src/Core/UUID.cpp.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -std=gnu++20 -o CMakeFiles/SauceEngine.dir/Engine/src/Core/Application.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Core/Application.cpp",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++ -DSauceEngine_EXPORTS -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -fPIC -o CMakeFiles/SauceEngine.dir/Engine/src/Core/Application.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Core/Application.cpp",
   "file": "/home/tom/dev/SauceEngine/Engine/src/Core/Application.cpp",
   "output": "CMakeFiles/SauceEngine.dir/Engine/src/Core/Application.cpp.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -std=gnu++20 -o CMakeFiles/SauceEngine.dir/Engine/src/ECS/Scene.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/ECS/Scene.cpp",
-  "file": "/home/tom/dev/SauceEngine/Engine/src/ECS/Scene.cpp",
-  "output": "CMakeFiles/SauceEngine.dir/Engine/src/ECS/Scene.cpp.o"
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++ -DSauceEngine_EXPORTS -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -fPIC -o CMakeFiles/SauceEngine.dir/Engine/src/Core/SauceEngine.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Core/SauceEngine.cpp",
+  "file": "/home/tom/dev/SauceEngine/Engine/src/Core/SauceEngine.cpp",
+  "output": "CMakeFiles/SauceEngine.dir/Engine/src/Core/SauceEngine.cpp.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -std=gnu++20 -o CMakeFiles/SauceEngine.dir/Engine/src/Render/Window.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Render/Window.cpp",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++ -DSauceEngine_EXPORTS -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -fPIC -o CMakeFiles/SauceEngine.dir/Engine/src/Render/Window.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Render/Window.cpp",
   "file": "/home/tom/dev/SauceEngine/Engine/src/Render/Window.cpp",
   "output": "CMakeFiles/SauceEngine.dir/Engine/src/Render/Window.cpp.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -std=gnu++20 -o CMakeFiles/SauceEngine.dir/Engine/src/Render/Renderer.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Render/Renderer.cpp",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++ -DSauceEngine_EXPORTS -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -fPIC -o CMakeFiles/SauceEngine.dir/Engine/src/Render/Renderer.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Render/Renderer.cpp",
   "file": "/home/tom/dev/SauceEngine/Engine/src/Render/Renderer.cpp",
   "output": "CMakeFiles/SauceEngine.dir/Engine/src/Render/Renderer.cpp.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -std=gnu++20 -o CMakeFiles/SauceEngine.dir/Engine/src/Render/Viewport.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Render/Viewport.cpp",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++ -DSauceEngine_EXPORTS -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -fPIC -o CMakeFiles/SauceEngine.dir/Engine/src/Render/Viewport.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Render/Viewport.cpp",
   "file": "/home/tom/dev/SauceEngine/Engine/src/Render/Viewport.cpp",
   "output": "CMakeFiles/SauceEngine.dir/Engine/src/Render/Viewport.cpp.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -std=gnu++20 -o CMakeFiles/SauceEngine.dir/Engine/src/Render/OrthographicCamera.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Render/OrthographicCamera.cpp",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++ -DSauceEngine_EXPORTS -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -fPIC -o CMakeFiles/SauceEngine.dir/Engine/src/Render/OrthographicCamera.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Render/OrthographicCamera.cpp",
   "file": "/home/tom/dev/SauceEngine/Engine/src/Render/OrthographicCamera.cpp",
   "output": "CMakeFiles/SauceEngine.dir/Engine/src/Render/OrthographicCamera.cpp.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -std=gnu++20 -o CMakeFiles/SauceEngine.dir/Engine/src/Render/Buffers/IndexBuffer.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Render/Buffers/IndexBuffer.cpp",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++ -DSauceEngine_EXPORTS -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -fPIC -o CMakeFiles/SauceEngine.dir/Engine/src/Render/Buffers/IndexBuffer.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Render/Buffers/IndexBuffer.cpp",
   "file": "/home/tom/dev/SauceEngine/Engine/src/Render/Buffers/IndexBuffer.cpp",
   "output": "CMakeFiles/SauceEngine.dir/Engine/src/Render/Buffers/IndexBuffer.cpp.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -std=gnu++20 -o CMakeFiles/SauceEngine.dir/Engine/src/Render/Buffers/VertexArray.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Render/Buffers/VertexArray.cpp",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++ -DSauceEngine_EXPORTS -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -fPIC -o CMakeFiles/SauceEngine.dir/Engine/src/Render/Buffers/VertexArray.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Render/Buffers/VertexArray.cpp",
   "file": "/home/tom/dev/SauceEngine/Engine/src/Render/Buffers/VertexArray.cpp",
   "output": "CMakeFiles/SauceEngine.dir/Engine/src/Render/Buffers/VertexArray.cpp.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -std=gnu++20 -o CMakeFiles/SauceEngine.dir/Engine/src/Render/Buffers/VertexBuffer.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Render/Buffers/VertexBuffer.cpp",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++ -DSauceEngine_EXPORTS -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -fPIC -o CMakeFiles/SauceEngine.dir/Engine/src/Render/Buffers/VertexBuffer.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Render/Buffers/VertexBuffer.cpp",
   "file": "/home/tom/dev/SauceEngine/Engine/src/Render/Buffers/VertexBuffer.cpp",
   "output": "CMakeFiles/SauceEngine.dir/Engine/src/Render/Buffers/VertexBuffer.cpp.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/c++ -DGame_EXPORTS -I/home/tom/dev/SauceEngine/Game/Code -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -std=gnu++20 -fPIC -o CMakeFiles/Game.dir/Game/Code/Player.cpp.o -c /home/tom/dev/SauceEngine/Game/Code/Player.cpp",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++ -DSauceEngine_EXPORTS -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -fPIC -o CMakeFiles/SauceEngine.dir/Engine/src/Render/Texture.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Render/Texture.cpp",
+  "file": "/home/tom/dev/SauceEngine/Engine/src/Render/Texture.cpp",
+  "output": "CMakeFiles/SauceEngine.dir/Engine/src/Render/Texture.cpp.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++ -DSauceEngine_EXPORTS -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -fPIC -o CMakeFiles/SauceEngine.dir/Engine/src/Render/Shader.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Render/Shader.cpp",
+  "file": "/home/tom/dev/SauceEngine/Engine/src/Render/Shader.cpp",
+  "output": "CMakeFiles/SauceEngine.dir/Engine/src/Render/Shader.cpp.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++ -DSauceEngine_EXPORTS -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -fPIC -o CMakeFiles/SauceEngine.dir/Engine/src/ECS/Scene.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/ECS/Scene.cpp",
+  "file": "/home/tom/dev/SauceEngine/Engine/src/ECS/Scene.cpp",
+  "output": "CMakeFiles/SauceEngine.dir/Engine/src/ECS/Scene.cpp.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++ -DSauceEngine_EXPORTS -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -fPIC -o CMakeFiles/SauceEngine.dir/Engine/src/ECS/Entity.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/ECS/Entity.cpp",
+  "file": "/home/tom/dev/SauceEngine/Engine/src/ECS/Entity.cpp",
+  "output": "CMakeFiles/SauceEngine.dir/Engine/src/ECS/Entity.cpp.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++ -DGame_EXPORTS -I/home/tom/dev/SauceEngine/Game/Code -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -fPIC -o CMakeFiles/Game.dir/Game/Code/Player.cpp.o -c /home/tom/dev/SauceEngine/Game/Code/Player.cpp",
   "file": "/home/tom/dev/SauceEngine/Game/Code/Player.cpp",
   "output": "CMakeFiles/Game.dir/Game/Code/Player.cpp.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/Game/Code -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -std=gnu++20 -o CMakeFiles/App.dir/Game/Code/Main.cpp.o -c /home/tom/dev/SauceEngine/Game/Code/Main.cpp",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++  -I/home/tom/dev/SauceEngine/Game/Code -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -o CMakeFiles/App.dir/Game/Code/Main.cpp.o -c /home/tom/dev/SauceEngine/Game/Code/Main.cpp",
   "file": "/home/tom/dev/SauceEngine/Game/Code/Main.cpp",
   "output": "CMakeFiles/App.dir/Game/Code/Main.cpp.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/context.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/context.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/context.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/context.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/context.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/context.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/init.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/init.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/init.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/init.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/init.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/init.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/input.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/input.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/input.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/input.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/input.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/input.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/monitor.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/monitor.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/monitor.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/monitor.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/monitor.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/monitor.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/platform.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/platform.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/platform.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/platform.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/platform.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/platform.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/vulkan.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/vulkan.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/vulkan.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/vulkan.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/vulkan.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/vulkan.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/window.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/window.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/window.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/window.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/window.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/window.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/egl_context.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/egl_context.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/egl_context.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/egl_context.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/egl_context.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/egl_context.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/osmesa_context.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/osmesa_context.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/osmesa_context.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/osmesa_context.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/osmesa_context.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/osmesa_context.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/null_init.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/null_init.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/null_init.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/null_init.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/null_init.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/null_init.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/null_monitor.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/null_monitor.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/null_monitor.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/null_monitor.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/null_monitor.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/null_monitor.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/null_window.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/null_window.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/null_window.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/null_window.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/null_window.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/null_window.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/null_joystick.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/null_joystick.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/null_joystick.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/null_joystick.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/null_joystick.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/null_joystick.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/posix_module.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/posix_module.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/posix_module.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/posix_module.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/posix_module.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/posix_module.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/posix_time.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/posix_time.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/posix_time.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/posix_time.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/posix_time.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/posix_time.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/posix_thread.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/posix_thread.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/posix_thread.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/posix_thread.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/posix_thread.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/posix_thread.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/x11_init.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/x11_init.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/x11_init.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/x11_init.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/x11_init.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/x11_init.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/x11_monitor.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/x11_monitor.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/x11_monitor.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/x11_monitor.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/x11_monitor.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/x11_monitor.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/x11_window.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/x11_window.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/x11_window.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/x11_window.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/x11_window.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/x11_window.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/xkb_unicode.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/xkb_unicode.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/xkb_unicode.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/xkb_unicode.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/xkb_unicode.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/xkb_unicode.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/glx_context.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/glx_context.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/glx_context.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/glx_context.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/glx_context.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/glx_context.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/wl_init.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/wl_init.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/wl_init.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/wl_init.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/wl_init.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/wl_init.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/wl_monitor.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/wl_monitor.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/wl_monitor.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/wl_monitor.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/wl_monitor.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/wl_monitor.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/wl_window.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/wl_window.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/wl_window.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/wl_window.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/wl_window.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/wl_window.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/linux_joystick.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/linux_joystick.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/linux_joystick.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/linux_joystick.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/linux_joystick.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/linux_joystick.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",
-  "command": "/usr/bin/cc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/posix_poll.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/posix_poll.c",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc -DHAVE_MEMFD_CREATE -D_DEFAULT_SOURCE -D_GLFW_WAYLAND -D_GLFW_X11 -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/src -I/home/tom/dev/SauceEngine/build/_deps/glfw-build/src -std=c99 -fPIC -Wall -o CMakeFiles/glfw.dir/posix_poll.c.o -c /home/tom/dev/SauceEngine/build/_deps/glfw-src/src/posix_poll.c",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glfw-src/src/posix_poll.c",
   "output": "_deps/glfw-build/src/CMakeFiles/glfw.dir/posix_poll.c.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glm-build/glm",
-  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/build/_deps/glm-src -std=c++20 -o CMakeFiles/glm.dir/detail/glm.cpp.o -c /home/tom/dev/SauceEngine/build/_deps/glm-src/glm/detail/glm.cpp",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++  -I/home/tom/dev/SauceEngine/build/_deps/glm-src -std=c++20 -o CMakeFiles/glm.dir/detail/glm.cpp.o -c /home/tom/dev/SauceEngine/build/_deps/glm-src/glm/detail/glm.cpp",
   "file": "/home/tom/dev/SauceEngine/build/_deps/glm-src/glm/detail/glm.cpp",
   "output": "_deps/glm-build/glm/CMakeFiles/glm.dir/detail/glm.cpp.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lapi.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lapi.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lapi.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lapi.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lauxlib.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lauxlib.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lauxlib.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lauxlib.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lbaselib.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lbaselib.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lbaselib.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lbaselib.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lcode.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lcode.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lcode.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lcode.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lcorolib.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lcorolib.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lcorolib.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lcorolib.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lctype.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lctype.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lctype.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lctype.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/ldblib.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/ldblib.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/ldblib.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/ldblib.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/ldebug.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/ldebug.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/ldebug.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/ldebug.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/ldo.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/ldo.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/ldo.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/ldo.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/ldump.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/ldump.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/ldump.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/ldump.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lfunc.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lfunc.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lfunc.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lfunc.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lgc.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lgc.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lgc.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lgc.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/linit.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/linit.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/linit.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/linit.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/liolib.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/liolib.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/liolib.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/liolib.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/llex.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/llex.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/llex.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/llex.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lmathlib.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lmathlib.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lmathlib.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lmathlib.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lmem.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lmem.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lmem.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lmem.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/loadlib.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/loadlib.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/loadlib.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/loadlib.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lobject.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lobject.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lobject.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lobject.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lopcodes.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lopcodes.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lopcodes.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lopcodes.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/loslib.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/loslib.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/loslib.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/loslib.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lparser.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lparser.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lparser.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lparser.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lstate.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lstate.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lstate.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lstate.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lstring.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lstring.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lstring.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lstring.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lstrlib.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lstrlib.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lstrlib.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lstrlib.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/ltable.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/ltable.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/ltable.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/ltable.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/ltablib.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/ltablib.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/ltablib.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/ltablib.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/ltm.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/ltm.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/ltm.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/ltm.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lundump.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lundump.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lundump.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lundump.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lutf8lib.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lutf8lib.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lutf8lib.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lutf8lib.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lvm.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lvm.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lvm.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lvm.c.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build/_deps/lua-build/src",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/gcc  -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src  -o CMakeFiles/liblua.dir/lzio.c.o -c /home/tom/dev/SauceEngine/build/_deps/lua-src/src/lzio.c",
+  "file": "/home/tom/dev/SauceEngine/build/_deps/lua-src/src/lzio.c",
+  "output": "_deps/lua-build/src/CMakeFiles/liblua.dir/lzio.c.o"
 }
 ]

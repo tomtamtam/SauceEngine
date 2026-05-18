@@ -17,13 +17,7 @@ json ParseJsonFromFile(const std::string &path)
     }
 
     std::string res;
-    std::string line;
-
-    while (std::getline(FILE, line)) {
-      res += line += '\n';
-    }
-
-    FILE.close();
+    FILE >> res;
     json j = json::parse(res);
     return j;
 }

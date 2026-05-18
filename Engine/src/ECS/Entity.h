@@ -1,36 +1,39 @@
 #pragma once
 
-#include "Core/SauceEngine.h"
-#include "Core/UUID.h"
+#include "ECS/Scene.h"
+#include "entt/entity/fwd.hpp"
 
 namespace Sauce
 {
     class Entity
     {
     public:
-        Entity();
-        ~Entity();
+
+        Entity(entt::entity handle, Scene *scene, UUID uuid, std::string name);
+        Entity(const Entity &other) = default;
+
         template<typename T>
-        T* GetComponent()
+        bool HasComponent()
         {
-            return s_App->GetCurrentScene()->GetComponent<T>(ID);
+            return m_Scene->m_Registry.all_of<T>(m_EntityHandle);
+        }
+
+        template<typename T, typename ... Args>
+        void AddComponent()
+        {
+            m_Scene->m_Registry.emplace<T>(m_EntityHandle);
         }
 
         template<typename T>
-        void AttachComponent()
+        T GetComponent()
         {
-            s_App->GetCurrentScene()->AttachComponent<T>(ID);
+            return m_Scene->m_Registry.get<T>(m_EntityHandle);
         }
-
-        template<typename T>
-        void RemoveComponent()
-        {
-            s_App->GetCurrentScene()->RemoveComponent<T>(ID);
-        }
-
-        virtual void Update();
-        virtual void Start();
-        virtual void OnDestroy();
-        UUID ID;
+        
+    private:
+        UUID m_ID;
+        std::string m_Name;
+        entt::entity m_EntityHandle;
+        Scene* m_Scene;
     };
 }

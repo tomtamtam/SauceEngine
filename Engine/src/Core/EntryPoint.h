@@ -1,8 +1,11 @@
 #pragma once
 
-#include "SauceEngine.h"
+#include "Core/Application.h"
+#include <iostream>
+#include <memory>
 
 int main(int argc, char** argv)
 {
-    Sauce::s_App->Run();
+    std::shared_ptr<Sauce::Application> app = std::make_shared<Sauce::Application>();
+    app->Run();
 }

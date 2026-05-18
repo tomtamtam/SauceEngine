@@ -50,6 +50,14 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(lua)
 
+# ENTT
+FetchContent_Declare(
+    entt
+    GIT_REPOSITORY https://github.com/skypjack/entt.git
+    GIT_TAG        v3.14.0
+)
+FetchContent_MakeAvailable(entt)
+
 # STB IMAGE
 add_library(stb_image STATIC
   Engine/vendor/stb_image/stb_image.cpp
@@ -61,9 +69,6 @@ set_target_properties(stb_image PROPERTIES POSITION_INDEPENDENT_CODE ON)
 add_library(SauceEngine SHARED
     Engine/src/Core/UUID.cpp
     Engine/src/Core/Application.cpp
-    Engine/src/Core/SauceEngine.cpp
-    Engine/src/ECS/Scene.cpp
-    Engine/src/ECS/Entity.cpp
     Engine/src/Render/Window.cpp
     Engine/src/Render/Renderer.cpp
     Engine/src/Render/Viewport.cpp
@@ -73,6 +78,9 @@ add_library(SauceEngine SHARED
     Engine/src/Render/Buffers/VertexBuffer.cpp
     Engine/src/Render/Texture.cpp
     Engine/src/Render/Shader.cpp
+    Engine/src/ECS/Scene.cpp
+    Engine/src/ECS/Entity.cpp
+
 )
 
 target_include_directories(SauceEngine PUBLIC
@@ -87,6 +95,7 @@ target_link_libraries(SauceEngine PUBLIC
     nlohmann_json::nlohmann_json
     stb_image
     lua::lua
+    EnTT::EnTT
 )
 
 #OpenGL
@@ -107,7 +116,10 @@ add_library(Game SHARED
 target_include_directories(Game PUBLIC
     ${CMAKE_SOURCE_DIR}/Game/Code
 )
-target_link_libraries(Game PRIVATE SauceEngine)
+target_link_libraries(Game PRIVATE
+    SauceEngine
+    EnTT::EnTT
+)
 
 set_target_properties(Game PROPERTIES
     BUILD_RPATH "$ORIGIN"
