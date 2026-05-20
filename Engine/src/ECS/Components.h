@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ECS/Entity.h"
 #include "glm/glm.hpp"
 #include <functional>
 #include <iostream>
@@ -26,6 +27,13 @@ namespace Sauce
 
     struct Code
     {
+        Code() {}
+        Code(Entity e)
+        {
+            Start = [e]() mutable {e.Start();};
+            Update = [e]() mutable {e.Update();};
+            OnDestroy = [e]() mutable {e.OnDestroy();};
+        }
         std::function<void()> Start;
         std::function<void()> Update;
         std::function<void()> OnDestroy;

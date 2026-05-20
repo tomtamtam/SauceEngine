@@ -1,7 +1,6 @@
 #include "Application.h"
 #include <array>
 #include <cassert>
-#include <cmath>
 #include <cstdint>
 #include <dlfcn.h>
 #include <memory>
@@ -92,6 +91,35 @@ namespace Sauce
         return transform;
     }
 
+    Code GetCodeByName(const std::string &className)
+    {
+        void *handle = dlopen("./libGame.so", RTLD_NOW); 
+
+        if (!handle)
+        {
+            throw std::runtime_error(dlerror());
+        }
+
+        dlerror();
+
+        using GetFunc = Entity(*)();
+
+        std::string name = "Get" + className;
+        GetFunc getEnt = reinterpret_cast<GetFunc>(dlsym(handle, name.c_str()));
+
+        Entity e = getEnt();
+
+        const char* err = dlerror();
+        if (err)
+        {
+            dlclose(handle);
+            throw std::runtime_error(err);
+        }
+
+        Code c(e);
+
+    }
+
     std::shared_ptr<Scene> Application::LoadScene(const std::string &path)
     {
         json j = ParseJsonFromFile(path);
@@ -124,10 +152,10 @@ namespace Sauce
                 case 1:
                     ent.AddComponent<TransformComponent>();
                     ent.GetComponent<TransformComponent>() = GetTransformFromJson(component);
-										break;
+                    break;
                 case 0:
-                    ent.AddComponent<Code>();
-										break;
+                    ent.AddComponent<Code>(ent);
+                    break;
                 }
             }
         }

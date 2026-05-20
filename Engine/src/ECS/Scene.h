@@ -12,7 +12,7 @@ namespace Sauce
     class Scene
     {
     public:
-        Scene(UUID &uuid, const std::string &name);
+        Scene(const UUID &uuid, const std::string &name);
         ~Scene();
 
         Entity CreateEntity();

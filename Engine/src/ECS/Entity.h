@@ -2,6 +2,7 @@
 
 #include "ECS/Scene.h"
 #include "entt/entity/fwd.hpp"
+#include <utility>
 
 namespace Sauce
 {
@@ -18,10 +19,10 @@ namespace Sauce
             return m_Scene->m_Registry.all_of<T>(m_EntityHandle);
         }
 
-        template<typename T, typename ... Args>
-        void AddComponent()
+        template<typename T, typename... Args>
+        void AddComponent(Args&&... args)
         {
-            m_Scene->m_Registry.emplace<T>(m_EntityHandle);
+            m_Scene->m_Registry.emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
         }
 
         template<typename T>
@@ -29,6 +30,10 @@ namespace Sauce
         {
             return m_Scene->m_Registry.get<T>(m_EntityHandle);
         }
+
+        virtual void Start();
+        virtual void Update();
+        virtual void OnDestroy();
         
     private:
         UUID m_ID;

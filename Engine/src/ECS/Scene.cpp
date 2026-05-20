@@ -3,7 +3,7 @@
 
 namespace Sauce
 {
-    Scene::Scene(UUID &uuid, const std::string &name)
+    Scene::Scene(const UUID &uuid, const std::string &name)
         : m_Name(name), m_ID(uuid)
     {
         entt::entity entity = m_Registry.create();
