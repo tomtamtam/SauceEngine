@@ -80,7 +80,8 @@ add_library(SauceEngine SHARED
     Engine/src/Render/Shader.cpp
     Engine/src/ECS/Scene.cpp
     Engine/src/ECS/Entity.cpp
-
+    Engine/src/ECS/ScriptableEntity.cpp
+    Engine/src/Core/ScriptEngine.cpp
 )
 
 target_include_directories(SauceEngine PUBLIC
@@ -116,7 +117,7 @@ add_library(Game SHARED
 target_include_directories(Game PUBLIC
     ${CMAKE_SOURCE_DIR}/Game/Code
 )
-target_link_libraries(Game PRIVATE
+target_link_libraries(Game PUBLIC
     SauceEngine
     EnTT::EnTT
 )
@@ -136,8 +137,6 @@ target_include_directories(App PRIVATE
 target_link_libraries(App PRIVATE 
   SauceEngine
 )
-
-target_link_options(App PRIVATE -rdynamic)
 
 
 set_target_properties(Game PROPERTIES

@@ -1,9 +1,8 @@
 #pragma once
 
-#include "ECS/Entity.h"
-#include "glm/glm.hpp"
+#include "ScriptableEntity.h"
+#include "glm/ext/matrix_float4x4.hpp"
 #include <functional>
-#include <iostream>
 #include <string>
 #include <dlfcn.h>
 
@@ -25,17 +24,12 @@ namespace Sauce
 
     };
 
-    struct Code
+    struct Script
     {
-        Code() {}
-        Code(Entity e)
-        {
-            Start = [e]() mutable {e.Start();};
-            Update = [e]() mutable {e.Update();};
-            OnDestroy = [e]() mutable {e.OnDestroy();};
-        }
-        std::function<void()> Start;
-        std::function<void()> Update;
-        std::function<void()> OnDestroy;
+        std::shared_ptr<ScriptableEntity> Instance = nullptr;
+        std::string ScriptName;
+
+        std::function<std::shared_ptr<ScriptableEntity>()> InitializeScript;
+        std::function<void(ScriptableEntity*)> DestroyScript;
     };
 }

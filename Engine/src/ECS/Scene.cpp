@@ -1,5 +1,12 @@
 #include "Scene.h"
+#include "ECS/Components.h"
 #include "Entity.h"
+#include "glm/ext/matrix_transform.hpp"
+#include "nlohmann/json.hpp"
+#include <iostream>
+#include <memory>
+
+using json = nlohmann::json;
 
 namespace Sauce
 {
@@ -25,5 +32,37 @@ namespace Sauce
     Entity Scene::CreateEntity(const std::string &name, UUID uuid)
     {
         return { m_Registry.create(), this, uuid, name};
+    }
+
+    void Scene::Init()
+    {
+        auto scriptView = m_Registry.view<Script>();
+        for (auto entity : scriptView)
+        {
+            auto& script = scriptView.get<Script>(entity);
+
+            script.Instance = script.InitializeScript();
+
+            if (script.Instance)
+                script.Instance->OnInit();
+        }
+    }
+
+    void Scene::Start()
+    {
+        auto scriptView = m_Registry.view<Script>();
+        for(auto entity : scriptView)
+        {
+            scriptView->get(entity).Instance->OnStart();
+        }
+    }
+
+    void Scene::Update()
+    {
+        auto scriptView = m_Registry.view<Script>();
+        for(auto entity : scriptView)
+        {
+            scriptView->get(entity).Instance->OnUpdate();
+        }
     }
 }

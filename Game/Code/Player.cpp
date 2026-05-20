@@ -1,18 +1,34 @@
-#include "ECS/Entity.h"
+#include "ECS/ScriptableEntity.h"
 #include <iostream>
+#include <memory>
 
-class Player : Sauce::Entity
+class Player : public Sauce::ScriptableEntity
 {
-    void Start() override
+public:
+    void OnInit() override
     {
-        std::cout << "test\n";
+        std::cout << "Init Player\n";
     }
-    void Update() override
-    {
 
+    void OnStart() override
+    {
+        std::cout << "Start Player\n";
     }
-    void OnDestroy() override
-    {
 
+    void OnUpdate() override
+    {
     }
 };
+
+extern "C"
+{
+    std::shared_ptr<Sauce::ScriptableEntity> CreatePlayer()
+    {
+        return std::make_shared<Player>();
+    }
+
+    void DeletePlayer(Sauce::ScriptableEntity* script)
+    {
+        delete script;
+    }
+}

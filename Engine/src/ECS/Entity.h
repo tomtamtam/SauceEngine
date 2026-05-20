@@ -11,6 +11,7 @@ namespace Sauce
     public:
 
         Entity(entt::entity handle, Scene *scene, UUID uuid, std::string name);
+        Entity();
         Entity(const Entity &other) = default;
 
         template<typename T>
@@ -26,14 +27,10 @@ namespace Sauce
         }
 
         template<typename T>
-        T GetComponent()
+        T &GetComponent()
         {
             return m_Scene->m_Registry.get<T>(m_EntityHandle);
         }
-
-        virtual void Start();
-        virtual void Update();
-        virtual void OnDestroy();
         
     private:
         UUID m_ID;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ECS/Components.h"
 #include "ECS/Scene.h"
 #include "Render/Window.h"
 #include <memory>

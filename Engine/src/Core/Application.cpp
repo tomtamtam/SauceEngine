@@ -5,6 +5,7 @@
 #include <dlfcn.h>
 #include <memory>
 #include <string>
+#include "Core/ScriptEngine.h"
 #include "ECS/Components.h"
 #include "ECS/Scene.h"
 #include "GLFW/glfw3.h"
@@ -15,7 +16,6 @@
 #include "nlohmann/json.hpp"
 #include "ECS/Entity.h"
 
-using json = nlohmann::json;
 
 namespace Sauce
 {
@@ -37,6 +37,7 @@ namespace Sauce
         m_CurrentWindow.Init();
 
         m_CurrentScene = LoadScene("../Game/Scenes/TestScene.json");
+        m_CurrentScene->Init();
 
 
         Shader shader("../Game/Shaders/Default.glsl");
@@ -56,12 +57,15 @@ namespace Sauce
         m_EndTime = glfwGetTime();
         m_DT = -1.0f;
 
+        m_CurrentScene->Start();
+
         while (m_IsRunning)
         {
             m_CurrentWindow.Update();
 
             if(m_DT >= 0.0f)
             {
+                m_CurrentScene->Update();
             }
 
             m_EndTime = glfwGetTime();
@@ -93,34 +97,15 @@ namespace Sauce
         return transform;
     }
 
-    Code GetCodeByName(const std::string &className)
+    Script LoadScriptFromJson(json j)
     {
-        void *handle = dlopen("./libGame.so", RTLD_NOW); 
-
-        if (!handle)
-        {
-            throw std::runtime_error(dlerror());
-        }
-
-        dlerror();
-
-        using GetFunc = Entity(*)();
-
-        std::string name = "Get" + className;
-        GetFunc getEnt = reinterpret_cast<GetFunc>(dlsym(handle, name.c_str()));
-
-        Entity e = getEnt();
-
-        const char* err = dlerror();
-        if (err)
-        {
-            dlclose(handle);
-            throw std::runtime_error(err);
-        }
-
-        Code c(e);
-
+        std::string name = j["values"][0];
+        Script t = ScriptEngine::AttachScript(ScriptEngine::LoadScript(name, "./libGame.so"), name);
+        return t;
     }
+
+
+
 
     std::shared_ptr<Scene> Application::LoadScene(const std::string &path)
     {
@@ -130,8 +115,10 @@ namespace Sauce
 
         auto scene = std::make_shared<Scene>(uuid, name);
 
+
         //objects
         uint32_t nObjects = j["objects"].size();
+
 
         for(int i = 0; i < nObjects; i++)
         {
@@ -139,7 +126,8 @@ namespace Sauce
             std::string objName = obj["name"];
             UUID objUUID = (UUID)obj["id"].get<uint64_t>();
 
-            Entity ent(scene->CreateEntity(name, uuid));
+            Entity ent(scene->CreateEntity(objName, objUUID));
+
 
             //components
             uint32_t nComponents = obj["components"].size();
@@ -156,10 +144,12 @@ namespace Sauce
                     ent.GetComponent<TransformComponent>() = GetTransformFromJson(component);
                     break;
                 case 0:
-                    ent.AddComponent<Code>(ent);
+                    ent.AddComponent<Script>();
+                    ent.GetComponent<Script>() = LoadScriptFromJson(component);
                     break;
                 }
             }
         }
+        return scene;
     }
 }

@@ -18,7 +18,11 @@ namespace Sauce
         Entity CreateEntity();
         Entity CreateEntity(const std::string &name);
         Entity CreateEntity(const std::string &name, UUID uuid);
-    
+        
+        void Init();
+        void Start();
+        void Update();
+
     private:
         entt::registry m_Registry;
         UUID m_ID;

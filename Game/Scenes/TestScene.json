@@ -8,7 +8,7 @@
       "components": [
         {
           "id": 0,
-          "values": [{}, {}]
+          "values": ["Player"]
         },
         {
           "id": 1,
