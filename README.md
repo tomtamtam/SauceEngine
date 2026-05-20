@@ -8,6 +8,7 @@ Releases will be pushed to the "main" branch, the current development is inside 
 Inside repo (Engine/vendor):
 - glad
 - stb_image
+
 Fetched through CMake:
 - glfw
 - glm
