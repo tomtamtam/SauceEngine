@@ -36,6 +36,8 @@ namespace Sauce
         m_CurrentWindow = {"test", 800, 800, onShouldClose};
         m_CurrentWindow.Init();
 
+        m_CurrentScene = LoadScene("../Game/Scenes/TestScene.json");
+
 
         Shader shader("../Game/Shaders/Default.glsl");
     }
@@ -124,7 +126,7 @@ namespace Sauce
     {
         json j = ParseJsonFromFile(path);
         std::string name = j["name"];
-        UUID uuid = j["id"].get<uint64_t>();
+        UUID uuid = (UUID)j["id"].get<uint64_t>();
 
         auto scene = std::make_shared<Scene>(uuid, name);
 
@@ -135,7 +137,7 @@ namespace Sauce
         {
             json obj = j["objects"][i];
             std::string objName = obj["name"];
-            UUID objUUID = obj["id"].get<uint64_t>();
+            UUID objUUID = (UUID)obj["id"].get<uint64_t>();
 
             Entity ent(scene->CreateEntity(name, uuid));
 
