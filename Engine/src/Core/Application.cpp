@@ -121,11 +121,13 @@ namespace Sauce
 
                 switch (id)
                 {
-                case 0:
+                case 1:
                     ent.AddComponent<TransformComponent>();
                     ent.GetComponent<TransformComponent>() = GetTransformFromJson(component);
-                case 1:
+										break;
+                case 0:
                     ent.AddComponent<Code>();
+										break;
                 }
             }
         }
