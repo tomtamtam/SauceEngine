@@ -34,7 +34,7 @@
             cmake
             ninja
             gcc
-            make
+            gnumake
             clang-tools
           ];
 
