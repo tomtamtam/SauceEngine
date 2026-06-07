@@ -97,6 +97,12 @@
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
+  "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++ -DSauceEngine_EXPORTS -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -fPIC -o CMakeFiles/SauceEngine.dir/Engine/src/Core/ScriptEngine.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Core/ScriptEngine.cpp",
+  "file": "/home/tom/dev/SauceEngine/Engine/src/Core/ScriptEngine.cpp",
+  "output": "CMakeFiles/SauceEngine.dir/Engine/src/Core/ScriptEngine.cpp.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build",
   "command": "/nix/store/myvv172x2am72534zgn9wx0qp5amq6a8-gcc-wrapper-14.3.0/bin/g++ -DGame_EXPORTS -I/home/tom/dev/SauceEngine/Game/Code -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -fPIC -o CMakeFiles/Game.dir/Game/Code/Player.cpp.o -c /home/tom/dev/SauceEngine/Game/Code/Player.cpp",
   "file": "/home/tom/dev/SauceEngine/Game/Code/Player.cpp",
   "output": "CMakeFiles/Game.dir/Game/Code/Player.cpp.o"
