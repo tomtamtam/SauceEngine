@@ -1,12 +1,10 @@
 #pragma once
 
-#include "ECS/Components.h"
 #include "ECS/Scene.h"
-#include "Render/Window.h"
+#include "Render/Renderer.h"
 #include <memory>
 #include <nlohmann/json.hpp>
 #include <string>
-#include <vector>
 
 using json = nlohmann::json;
 
@@ -34,9 +32,9 @@ namespace Sauce
         bool m_IsRunning;
         std::string m_Name;
 
-        Window m_CurrentWindow;
-
         void *m_HandleGameDll;
+
+        std::unique_ptr<Renderer> m_Renderer;
 
         std::shared_ptr<Scene> m_CurrentScene;
     };

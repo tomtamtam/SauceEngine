@@ -1,9 +1,7 @@
 #include "Scene.h"
 #include "ECS/Components.h"
 #include "Entity.h"
-#include "glm/ext/matrix_transform.hpp"
 #include "nlohmann/json.hpp"
-#include <iostream>
 #include <memory>
 
 using json = nlohmann::json;

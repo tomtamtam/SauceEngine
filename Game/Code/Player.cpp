@@ -18,6 +18,8 @@ public:
     void OnUpdate() override
     {
     }
+private:
+    
 };
 
 extern "C"

@@ -1,11 +1,9 @@
-#include <iostream>
 #include <glad/glad.h>
 
 #include "VertexBuffer.h"
 
 VertexBuffer::VertexBuffer(void *data, uint32_t size)
 {
-  std::cout << size << '\n';
   glGenBuffers(1, &m_BufferID);
   glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);
   glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);

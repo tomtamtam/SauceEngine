@@ -3,12 +3,17 @@
 #include <cassert>
 #include <cstdint>
 #include <dlfcn.h>
+#include <iostream>
 #include <memory>
 #include <string>
 #include "Core/ScriptEngine.h"
 #include "ECS/Components.h"
 #include "ECS/Scene.h"
 #include "GLFW/glfw3.h"
+#include "Render/Buffers/IndexBuffer.h"
+#include "Render/Buffers/VertexArray.h"
+#include "Render/Buffers/VertexBufferLayout.h"
+#include "Render/Renderer.h"
 #include "Render/Shader.h"
 #include "Util/Json.h"
 #include "glm/ext/matrix_transform.hpp"
@@ -20,7 +25,7 @@
 namespace Sauce
 {
     Application::Application()
-        : m_IsRunning(true)
+        : m_IsRunning(true), m_Renderer(nullptr)
     {
     }
 
@@ -33,14 +38,17 @@ namespace Sauce
     {
         auto self = shared_from_this();
         auto onShouldClose = [self](){self->Terminate();};
-        m_CurrentWindow = {"test", 800, 800, onShouldClose};
-        m_CurrentWindow.Init();
+
+        m_Renderer = std::make_unique<Renderer>(onShouldClose);
+        m_Renderer->CreateWindow("Game", 800, 800);
+        std::cout << "after renderer\n";
 
         m_CurrentScene = LoadScene("../Game/Scenes/TestScene.json");
         m_CurrentScene->Init();
+        std::cout << "after Scene\n";
 
-
-        Shader shader("../Game/Shaders/Default.glsl");
+        auto shader = std::make_shared<Shader>("../Game/Shaders/Default.glsl");
+        m_Renderer->SetShader(shader);
     }
 
     void Application::Terminate()
@@ -51,7 +59,9 @@ namespace Sauce
 
     void Application::Run()
     {
+        std::cout << "Run\n";
         Setup();
+        std::cout << "after Setup()\n";
 
         m_BeginTime = glfwGetTime();
         m_EndTime = glfwGetTime();
@@ -59,9 +69,35 @@ namespace Sauce
 
         m_CurrentScene->Start();
 
+        float vertices[] = 
+        {
+            -0.5f, -0.5f, 0.0f,  // links unten
+             0.5f, -0.5f, 0.0f,  // rechts unten
+             0.0f,  0.5f, 0.0f   // oben mitte
+        };
+ 
+        VertexBuffer vertexBuffer(vertices, sizeof(vertices));
+ 
+        uint32_t indices[] =
+        {
+            0, 1, 2
+        };
+ 
+        IndexBuffer indexBuffer(indices, sizeof(indices));
+ 
+        VertexBufferLayout bufferLayout;
+        bufferLayout.Push<float>(3);
+ 
+        VertexArray vertexArray;
+        vertexArray.AddBuffer(vertexBuffer, bufferLayout);
+
         while (m_IsRunning)
         {
-            m_CurrentWindow.Update();
+            m_Renderer->BeginDraw();
+            vertexBuffer.Bind();
+            indexBuffer.Bind();
+            glDrawElements(GL_TRIANGLES, indexBuffer.getCount(),GL_UNSIGNED_INT, 0);
+            m_Renderer->Draw();
 
             if(m_DT >= 0.0f)
             {
@@ -73,7 +109,7 @@ namespace Sauce
             m_BeginTime = m_EndTime;
         }
 
-        m_CurrentWindow.Destroy();
+        m_Renderer->KillWindow();
     }
 
     glm::mat4 GetTransformFromJson(json component)
@@ -85,7 +121,7 @@ namespace Sauce
 
         //position
         transform = glm::translate(transform, glm::vec3(px, py, pz));
-        
+
         //rotation
         transform = glm::rotate(transform, glm::radians(rx), glm::vec3(1, 0, 0));
         transform = glm::rotate(transform, glm::radians(ry), glm::vec3(0, 1, 0));

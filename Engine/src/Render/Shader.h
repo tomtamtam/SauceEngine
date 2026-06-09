@@ -4,24 +4,27 @@
 #include <glad/glad.h>
 #include <string>
 
-struct Shader
+namespace Sauce
 {
-  uint32_t ShaderId;
 
-  Shader(const std::string &shaderPath);
-  virtual ~Shader();
+    struct Shader
+    {
+        uint32_t ShaderId;
 
-  void Bind() const;
-  void Unbind() const;
+        Shader(const std::string &shaderPath);
+        virtual ~Shader();
 
-  void SetUniform4f(const std::string &name, float x, float y, float z, float w);
-  void SetUniform2f(const std::string &name, float x, float y);
-  void SetUniform1f(const std::string &name, float f);
-  void SetUniform1i(const std::string &name, int i);
-  void SetUniform1b(const std::string &name, bool value);
-private:
+        void Bind() const;
+        void Unbind() const;
 
-  uint32_t Compile(const std::string &shaderSource, GLenum type);
-  std::string Parse(const char* filename);
-  GLuint CreateShader(const std::string &shaderPath);
-};
+        void SetUniform4f(const std::string &name, float x, float y, float z, float w);
+        void SetUniform2f(const std::string &name, float x, float y);
+        void SetUniform1f(const std::string &name, float f);
+        void SetUniform1i(const std::string &name, int i);
+        void SetUniform1b(const std::string &name, bool value);
+    private:
+        uint32_t Compile(const std::string &shaderSource, GLenum type);
+        std::string Parse(const char* filename);
+        GLuint CreateShader(const std::string &shaderPath);
+    };
+}
