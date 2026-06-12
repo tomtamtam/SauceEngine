@@ -48,7 +48,7 @@ namespace Sauce
         std::cout << "after Scene\n";
 
         auto shader = std::make_shared<Shader>("../Game/Shaders/Default.glsl");
-        m_Renderer->SetShader(shader);
+        m_Renderer->Set<ShaderType>(shader);
     }
 
     void Application::Terminate()
@@ -97,6 +97,7 @@ namespace Sauce
             vertexBuffer.Bind();
             indexBuffer.Bind();
             glDrawElements(GL_TRIANGLES, indexBuffer.getCount(),GL_UNSIGNED_INT, 0);
+            m_Renderer->Set<RenderType>(BATCH);
             m_Renderer->Draw();
 
             if(m_DT >= 0.0f)

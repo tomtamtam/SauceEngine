@@ -4,10 +4,18 @@
 #include "Window.h"
 #include <cstdint>
 #include <functional>
+#include <iostream>
 #include <memory>
 
 namespace Sauce
 {
+    enum RenderType
+    {
+        BATCH
+    };
+
+    #define ShaderType std::shared_ptr<Shader>
+
     class Renderer
     {
     public:
@@ -20,10 +28,16 @@ namespace Sauce
         void BeginDraw();
         void Draw();
 
-        void SetShader(std::shared_ptr<Shader> shader);
+
+        template<typename T>
+        void Set(T t)
+        {
+            std::cerr << "Unsupported Renderer::Set() Type\n";
+        }
     private:
         std::function<void()> m_OnShouldClose;
         std::unique_ptr<Window> m_Window;
         std::shared_ptr<Shader> m_CurrentShader;
+        RenderType m_CurrentType;
     };
 }

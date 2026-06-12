@@ -18,11 +18,6 @@ namespace Sauce
         m_Window->Destroy();
     }
  
-    void Renderer::SetShader(std::shared_ptr<Shader> shader)
-    {
-        m_CurrentShader = std::move(shader);
-    }
-
     void Renderer::BeginDraw()
     {
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -43,5 +38,17 @@ namespace Sauce
  
     Renderer::~Renderer()
     {
+    }
+
+    template<>
+    void Renderer::Set<std::shared_ptr<Shader>>(std::shared_ptr<Shader> shader)
+    {
+        m_CurrentShader = std::move(shader);
+    }
+
+    template<>
+    void Renderer::Set<RenderType>(RenderType type)
+    {
+        m_CurrentType = type;
     }
 }
