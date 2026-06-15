@@ -1,4 +1,5 @@
 #include "ECS/ScriptableEntity.h"
+#include "ECS/Components.h"
 #include <iostream>
 #include <memory>
 
@@ -17,9 +18,9 @@ public:
 
     void OnUpdate() override
     {
+        GetComponent<Sauce::TransformComponent>().Translation.x += 0.01;
     }
 private:
-    
 };
 
 extern "C"

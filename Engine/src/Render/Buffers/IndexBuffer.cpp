@@ -2,7 +2,7 @@
 
 #include "IndexBuffer.h"
 
-IndexBuffer::IndexBuffer(uint32_t *data, uint32_t count)
+IndexBuffer::IndexBuffer(const void *data, uint32_t count)
   : m_Count(count)
 {
   glGenBuffers(1, &m_IBO);

@@ -10,13 +10,10 @@
 #include "ECS/Components.h"
 #include "ECS/Scene.h"
 #include "GLFW/glfw3.h"
-#include "Render/Buffers/IndexBuffer.h"
-#include "Render/Buffers/VertexArray.h"
-#include "Render/Buffers/VertexBufferLayout.h"
+#include "Render/Mesh.h"
 #include "Render/Renderer.h"
 #include "Render/Shader.h"
 #include "Util/Json.h"
-#include "glm/ext/matrix_transform.hpp"
 #include "glm/fwd.hpp"
 #include "nlohmann/json.hpp"
 #include "ECS/Entity.h"
@@ -48,7 +45,7 @@ namespace Sauce
         std::cout << "after Scene\n";
 
         auto shader = std::make_shared<Shader>("../Game/Shaders/Default.glsl");
-        m_Renderer->Set<ShaderType>(shader);
+        m_Renderer->SetMainShader(shader);
     }
 
     void Application::Terminate()
@@ -59,9 +56,7 @@ namespace Sauce
 
     void Application::Run()
     {
-        std::cout << "Run\n";
         Setup();
-        std::cout << "after Setup()\n";
 
         m_BeginTime = glfwGetTime();
         m_EndTime = glfwGetTime();
@@ -69,37 +64,10 @@ namespace Sauce
 
         m_CurrentScene->Start();
 
-        float vertices[] = 
-        {
-            -0.5f, -0.5f, 0.0f,  // links unten
-             0.5f, -0.5f, 0.0f,  // rechts unten
-             0.0f,  0.5f, 0.0f   // oben mitte
-        };
- 
-        VertexBuffer vertexBuffer(vertices, sizeof(vertices));
- 
-        uint32_t indices[] =
-        {
-            0, 1, 2
-        };
- 
-        IndexBuffer indexBuffer(indices, sizeof(indices));
- 
-        VertexBufferLayout bufferLayout;
-        bufferLayout.Push<float>(3);
- 
-        VertexArray vertexArray;
-        vertexArray.AddBuffer(vertexBuffer, bufferLayout);
+
 
         while (m_IsRunning)
         {
-            m_Renderer->BeginDraw();
-            vertexBuffer.Bind();
-            indexBuffer.Bind();
-            glDrawElements(GL_TRIANGLES, indexBuffer.getCount(),GL_UNSIGNED_INT, 0);
-            m_Renderer->Set<RenderType>(BATCH);
-            m_Renderer->Draw();
-
             if(m_DT >= 0.0f)
             {
                 m_CurrentScene->Update();
@@ -113,25 +81,19 @@ namespace Sauce
         m_Renderer->KillWindow();
     }
 
-    glm::mat4 GetTransformFromJson(json component)
+    TransformComponent GetTransformFromJson(json component)
     {
         json values = component["values"];
         glm::mat4 transform = glm::mat4(1.0f);
 
         auto [px, py, pz, rx, ry, rz, sx, sy, sz] = values.get<std::array<float, 9>>();
 
-        //position
-        transform = glm::translate(transform, glm::vec3(px, py, pz));
+        TransformComponent t;
+        t.Translation = {px, py, pz};
+        t.Rotation = {rx, ry, rz};
+        t.Scale = {sx, sy, sz};
 
-        //rotation
-        transform = glm::rotate(transform, glm::radians(rx), glm::vec3(1, 0, 0));
-        transform = glm::rotate(transform, glm::radians(ry), glm::vec3(0, 1, 0));
-        transform = glm::rotate(transform, glm::radians(rz), glm::vec3(0, 0, 1));
-
-        //scale
-        transform = glm::scale(transform, glm::vec3(sx, sy, sz));
-
-        return transform;
+        return t;
     }
 
     Script LoadScriptFromJson(json j)
@@ -139,6 +101,22 @@ namespace Sauce
         std::string name = j["values"][0];
         Script t = ScriptEngine::AttachScript(ScriptEngine::LoadScript(name, "./libGame.so"), name);
         return t;
+    }
+
+    MeshInstance LoadMeshInstanceFromJson(json j)
+    {
+        MeshInstance i;
+        i.IsVisible = true;
+        i.PMesh = CreateCubeMesh();
+        return i;
+    }
+
+    CameraComponent LoadCamFromJson(json j)
+    {
+        CameraComponent c;
+        c.IsMain = true;
+        c.View = glm::mat4(1);
+        return c;
     }
 
 
@@ -150,7 +128,7 @@ namespace Sauce
         std::string name = j["name"];
         UUID uuid = (UUID)j["id"].get<uint64_t>();
 
-        auto scene = std::make_shared<Scene>(uuid, name);
+        auto scene = std::make_shared<Scene>(uuid, name, m_Renderer);
 
 
         //objects
@@ -176,14 +154,21 @@ namespace Sauce
 
                 switch (id)
                 {
-                case 1:
+                case SCRIPT_CIDX:
+                    ent.AddComponent<Script>();
+                    ent.GetComponent<Script>() = LoadScriptFromJson(component);
+                    ent.GetComponent<Script>().InitializeScript();
+                    break;
+                case TRANSFORM_CIDX:
                     ent.AddComponent<TransformComponent>();
                     ent.GetComponent<TransformComponent>() = GetTransformFromJson(component);
                     break;
-                case 0:
-                    ent.AddComponent<Script>();
-                    ent.GetComponent<Script>() = LoadScriptFromJson(component);
-                    break;
+                case MESH_INSTANCE_CIDX:
+                    ent.AddComponent<MeshInstance>();
+                    ent.GetComponent<MeshInstance>() = LoadMeshInstanceFromJson(component);
+                case CAMERA_CIDX:
+                    ent.AddComponent<CameraComponent>();
+                    ent.GetComponent<CameraComponent>() = LoadCamFromJson(component);
                 }
             }
         }

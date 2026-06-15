@@ -6,7 +6,7 @@
 
 struct VertexBuffer
 {
-  VertexBuffer(void* data, uint32_t size);
+  VertexBuffer(const void* data, uint32_t size);
 
   virtual ~VertexBuffer();
 

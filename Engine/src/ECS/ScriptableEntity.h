@@ -1,3 +1,5 @@
+#pragma once
+
 #include "ECS/Entity.h"
 
 namespace Sauce
@@ -13,7 +15,7 @@ namespace Sauce
         virtual void OnDestroy(){}
 
         template<typename T>
-        T* GetComponent()
+        T &GetComponent()
         {
             return m_Entity.GetComponent<T>();
         }

@@ -3,9 +3,16 @@
 #version 330 core
 
 layout (location = 0) in vec3 aPosition;
+layout (location = 1) in vec4 aColor;
+layout (location = 2) in vec2 aUV;
+
+uniform mat4 u_Transform;
+uniform mat4 u_CamTransform;
+uniform mat4 u_View;
 
 void main()
 {
+    //gl_Position = u_CamTransform * u_View * u_CamTransform * vec4(aPosition, 1.0f);
     gl_Position = vec4(aPosition, 1.0f);
 }
 

@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <cstdint>
 #include <iostream>
 #include <sstream>
@@ -5,6 +6,10 @@
 #include <sys/types.h>
 
 #include "Shader.h"
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Sauce
 {
@@ -57,6 +62,12 @@ namespace Sauce
     {
         int location = glGetUniformLocation(ShaderId, name.c_str());
         glUniform1i(location, value);
+    }
+
+    void Shader::SetMatrix4(const std::string &name, glm::mat4 value)
+    {
+        int location = glGetUniformLocation(ShaderId, name.c_str());
+        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
     }
 
     GLuint Shader::Compile(const std::string &shaderSource, GLenum type)

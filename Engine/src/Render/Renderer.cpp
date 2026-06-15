@@ -1,8 +1,11 @@
 #include "Renderer.h"
+#include "Render/Buffers/IndexBuffer.h"
+#include "Render/Buffers/VertexArray.h"
+#include "Render/Buffers/VertexBuffer.h"
 #include "Render/Shader.h"
 #include "Render/Window.h"
+#include "glm/ext/matrix_float4x4.hpp"
 #include <cstdint>
-#include <iostream>
 #include <memory>
 
 namespace Sauce
@@ -18,11 +21,10 @@ namespace Sauce
         m_Window->Destroy();
     }
  
-    void Renderer::BeginDraw()
+    void Renderer::Clear()
     {
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-        m_CurrentShader->Bind();
     }
  
     void Renderer::Draw()
@@ -33,22 +35,26 @@ namespace Sauce
     Renderer::Renderer(std::function<void()> onShouldClose)
         : m_OnShouldClose(onShouldClose)
     {
-        std::cout << "c0onstructor\n";
+    }
+
+    void Renderer::SetMainShader(std::shared_ptr<Shader> shader)
+    {
+        m_MainShader = shader;
     }
  
     Renderer::~Renderer()
     {
     }
 
-    template<>
-    void Renderer::Set<std::shared_ptr<Shader>>(std::shared_ptr<Shader> shader)
+    void Renderer::Submit(const glm::mat4 &transform, const glm::mat4 &cam, const glm::mat4 &camTransform, Mesh *mesh)
     {
-        m_CurrentShader = std::move(shader);
-    }
+        mesh->Vao.Bind();
+        mesh->Ibo.Bind();
+        m_MainShader->Bind();
+        m_MainShader->SetMatrix4("u_Transform", transform);
+        m_MainShader->SetMatrix4("u_View", cam);
+        m_MainShader->SetMatrix4("u_CamTransform", camTransform);
 
-    template<>
-    void Renderer::Set<RenderType>(RenderType type)
-    {
-        m_CurrentType = type;
+        glDrawElements(GL_TRIANGLES, mesh->Ibo.getCount(), GL_UNSIGNED_INT, nullptr);
     }
 }

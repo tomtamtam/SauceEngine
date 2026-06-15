@@ -1,10 +1,13 @@
 #pragma once
 
+#include "Render/Buffers/IndexBuffer.h"
+#include "Render/Buffers/VertexArray.h"
+#include "Render/Mesh.h"
 #include "Render/Shader.h"
 #include "Window.h"
+#include "glm/ext/matrix_float4x4.hpp"
 #include <cstdint>
 #include <functional>
-#include <iostream>
 #include <memory>
 
 namespace Sauce
@@ -25,19 +28,15 @@ namespace Sauce
         void CreateWindow(const std::string &name, uint32_t width, uint32_t height);
         void KillWindow();
 
-        void BeginDraw();
+        void Clear();
         void Draw();
 
+        void SetMainShader(std::shared_ptr<Shader>);
 
-        template<typename T>
-        void Set(T t)
-        {
-            std::cerr << "Unsupported Renderer::Set() Type\n";
-        }
+        void Submit(const glm::mat4 &transform, const glm::mat4 &cam, const glm::mat4 &camTransform, Mesh *mesh);
     private:
         std::function<void()> m_OnShouldClose;
         std::unique_ptr<Window> m_Window;
-        std::shared_ptr<Shader> m_CurrentShader;
-        RenderType m_CurrentType;
+        std::shared_ptr<Shader> m_MainShader;
     };
 }

@@ -34,7 +34,7 @@ namespace Sauce
 
         void *m_HandleGameDll;
 
-        std::unique_ptr<Renderer> m_Renderer;
+        std::shared_ptr<Renderer> m_Renderer;
 
         std::shared_ptr<Scene> m_CurrentScene;
     };

@@ -4,7 +4,7 @@
 
 struct IndexBuffer
 {
-  IndexBuffer(uint32_t *data, uint32_t i_count);
+  IndexBuffer(const void *data, uint32_t i_count);
   virtual ~IndexBuffer();
   void Bind() const;
   void Unbind() const;

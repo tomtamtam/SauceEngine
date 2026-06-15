@@ -31,7 +31,7 @@ namespace Sauce
         {
             return m_Scene->m_Registry.get<T>(m_EntityHandle);
         }
-        
+
     private:
         UUID m_ID;
         std::string m_Name;
