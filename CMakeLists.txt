@@ -72,7 +72,6 @@ add_library(SauceEngine SHARED
     Engine/src/Render/Window.cpp
     Engine/src/Render/Renderer.cpp
     Engine/src/Render/Viewport.cpp
-    Engine/src/Render/OrthographicCamera.cpp
     Engine/src/Render/Buffers/IndexBuffer.cpp
     Engine/src/Render/Buffers/VertexArray.cpp
     Engine/src/Render/Buffers/VertexBuffer.cpp

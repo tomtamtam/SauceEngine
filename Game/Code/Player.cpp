@@ -18,7 +18,9 @@ public:
 
     void OnUpdate() override
     {
-        GetComponent<Sauce::TransformComponent>().Translation.x += 0.01;
+        GetComponent<Sauce::TransformComponent>().Rotation.x += 0.0001;
+        GetComponent<Sauce::TransformComponent>().Rotation.y += 0.0001;
+        GetComponent<Sauce::TransformComponent>().Rotation.z += 0.0001;
     }
 private:
 };

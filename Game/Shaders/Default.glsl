@@ -13,7 +13,7 @@ uniform mat4 u_View;
 void main()
 {
     //gl_Position = u_CamTransform * u_View * u_CamTransform * vec4(aPosition, 1.0f);
-    gl_Position = vec4(aPosition, 1.0f);
+    gl_Position = u_Transform * vec4(aPosition, 1.0f);
 }
 
 #define fragment
