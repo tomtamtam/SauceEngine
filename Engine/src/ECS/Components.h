@@ -2,9 +2,12 @@
 
 #include "Render/Mesh.h"
 #include "ScriptableEntity.h"
+#include "glm/ext/vector_float3.hpp"
 
+#include <cstdint>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <memory>
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/quaternion.hpp>
@@ -53,9 +56,13 @@ namespace Sauce
 
     struct CameraComponent
     {
-        glm::mat4 View;
+        glm::vec3 Up = {0.0f, 1.f, 0.0f};
+
+        float FOV;
+        uint32_t Width;
+        uint32_t Height;
+
         bool IsMain;
-        operator const glm::mat4 &() { return View; }
     };
 
     struct MeshInstance

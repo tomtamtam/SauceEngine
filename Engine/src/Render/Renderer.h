@@ -20,10 +20,10 @@ namespace Sauce
     class Renderer
     {
     public:
-        Renderer(std::function<void()> onShouldClose);
+        Renderer();
         ~Renderer();
 
-        void CreateWindow(const std::string &name, uint32_t width, uint32_t height);
+        void CreateWindow(const std::string &name, uint32_t width, uint32_t height, std::function<void()> onShouldClose, std::function<void(GLFWwindow *window, int key, int scancode, int action, int mod)> onKeyCallback);
         void KillWindow();
 
         void Clear();
@@ -31,9 +31,8 @@ namespace Sauce
 
         void SetMainShader(std::shared_ptr<Shader>);
 
-        void Submit(const glm::mat4 &transform, const glm::mat4 &cam, const glm::mat4 &camTransform, Mesh *mesh);
+        void Submit(const glm::mat4 &transform, const glm::mat4 &view, const glm::mat4 &proj, Mesh *mesh);
     private:
-        std::function<void()> m_OnShouldClose;
         std::unique_ptr<Window> m_Window;
         std::shared_ptr<Shader> m_MainShader;
     };

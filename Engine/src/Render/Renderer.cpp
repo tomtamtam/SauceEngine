@@ -10,9 +10,9 @@
 
 namespace Sauce
 {
-    void Renderer::CreateWindow(const std::string &name, uint32_t width, uint32_t height)
+    void Renderer::CreateWindow(const std::string &name, uint32_t width, uint32_t height, std::function<void()> onShouldClose, std::function<void(GLFWwindow *window, int key, int scancode, int action, int mod)> onKeyCallback)
     {
-        m_Window = std::make_unique<Window>(name, width, height, m_OnShouldClose);;
+        m_Window = std::make_unique<Window>(name, width, height, onShouldClose, onKeyCallback);
         m_Window->Init();
     }
 
@@ -24,7 +24,7 @@ namespace Sauce
     void Renderer::Clear()
     {
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
  
     void Renderer::Draw()
@@ -32,8 +32,7 @@ namespace Sauce
         m_Window->Update();
     }
 
-    Renderer::Renderer(std::function<void()> onShouldClose)
-        : m_OnShouldClose(onShouldClose)
+    Renderer::Renderer()
     {
     }
 
@@ -46,14 +45,14 @@ namespace Sauce
     {
     }
 
-    void Renderer::Submit(const glm::mat4 &transform, const glm::mat4 &cam, const glm::mat4 &camTransform, Mesh *mesh)
+    void Renderer::Submit(const glm::mat4 &transform, const glm::mat4 &view, const glm::mat4 &proj, Mesh *mesh)
     {
         mesh->Vao.Bind();
         mesh->Ibo.Bind();
         m_MainShader->Bind();
         m_MainShader->SetMatrix4("u_Transform", transform);
-        m_MainShader->SetMatrix4("u_View", cam);
-        m_MainShader->SetMatrix4("u_CamTransform", camTransform);
+        m_MainShader->SetMatrix4("u_View", view);
+        m_MainShader->SetMatrix4("u_Proj", proj);
 
         glDrawElements(GL_TRIANGLES, mesh->Ibo.getCount(), GL_UNSIGNED_INT, nullptr);
     }

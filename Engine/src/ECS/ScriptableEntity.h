@@ -1,6 +1,8 @@
 #pragma once
 
 #include "ECS/Entity.h"
+#include "Input/InputSystem.h"
+#include <memory>
 
 namespace Sauce
 {
@@ -11,7 +13,7 @@ namespace Sauce
 
         virtual void OnInit(){}
         virtual void OnStart(){}
-        virtual void OnUpdate(){}
+        virtual void OnUpdate(float dt){}
         virtual void OnDestroy(){}
 
         template<typename T>
@@ -25,7 +27,8 @@ namespace Sauce
         {
             return m_Entity.HasComponent<T>();
         }
-        
+
+        std::shared_ptr<InputSystem> Input;
     private:
         Entity m_Entity;
         friend class Scene;

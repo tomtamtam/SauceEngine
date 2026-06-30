@@ -2,7 +2,11 @@
 #include "ECS/Components.h"
 #include "Entity.h"
 #include "Render/Renderer.h"
+#include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_float4x4.hpp"
+#include "glm/ext/matrix_transform.hpp"
+#include "glm/trigonometric.hpp"
+#include <iostream>
 #include <memory>
 #include <nlohmann/json.hpp>
 
@@ -14,6 +18,7 @@ namespace Sauce
         : m_Name(name), m_ID(uuid), m_Renderer(renderer)
     {
         entt::entity entity = m_Registry.create();
+        m_InputSystem = std::make_shared<InputSystem>();
     }
 
     Scene::~Scene()
@@ -41,8 +46,6 @@ namespace Sauce
         {
             auto& script = scriptView.get<Script>(entity);
 
-            script.Instance = script.InitializeScript();
-
             if (script.Instance)
             {
                 script.Instance->m_Entity = Entity(entity, this, UUID(), script.ScriptName);
@@ -60,7 +63,7 @@ namespace Sauce
         }
     }
 
-    void Scene::Update()
+    void Scene::Update(float dt)
     {
         m_Renderer->Clear();
 
@@ -68,19 +71,25 @@ namespace Sauce
         auto scriptView = m_Registry.view<Script>();
         for(auto entity : scriptView)
         {
-            scriptView->get(entity).Instance->OnUpdate();
+            scriptView->get(entity).Instance->OnUpdate(dt);
         }
 
         //main cam
-        glm::mat4 cam;
-        glm::mat4 camTransform;
+        glm::mat4 view = {1.0f};
+        glm::mat4 proj = {1.0f};
         auto camView = m_Registry.view<CameraComponent>();
         for(auto entity : camView)
         {
-            if(camView->get(entity).IsMain)
+            auto cam = camView->get(entity);
+            if(cam.IsMain)
             {
-                cam = camView->get(entity);
-                camTransform = m_Registry.get<TransformComponent>(entity);
+                if(!m_Registry.all_of<TransformComponent>(entity))
+                {
+                    std::cerr << "Object with component <CameraComponent> has NO component of type <TransformComponent>.\n";
+                }
+                auto transform = m_Registry.get<TransformComponent>(entity);
+                view = glm::lookAt(transform.Translation, transform.Translation + transform.Rotation, cam.Up);
+                proj = glm::perspective(glm::radians(cam.FOV), (float)(cam.Width / cam.Height), F_NEAR, F_FAR);
             }
         }
 
@@ -88,9 +97,14 @@ namespace Sauce
         auto meshView = m_Registry.view<MeshInstance>();
         for(auto entity : meshView)
         {
-            m_Renderer->Submit(m_Registry.get<TransformComponent>(entity), cam, camTransform, meshView->get(entity).PMesh);
+            m_Renderer->Submit(m_Registry.get<TransformComponent>(entity), view, proj, meshView->get(entity).PMesh);
         }
 
         m_Renderer->Draw();
+    }
+
+    std::shared_ptr<InputSystem> Scene::GetInputSystem()
+    {
+        return m_InputSystem;
     }
 }

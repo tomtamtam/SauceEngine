@@ -10,6 +10,7 @@
 #include "ECS/Components.h"
 #include "ECS/Scene.h"
 #include "GLFW/glfw3.h"
+#include "Input/InputSystem.h"
 #include "Render/Mesh.h"
 #include "Render/Renderer.h"
 #include "Render/Shader.h"
@@ -36,13 +37,14 @@ namespace Sauce
         auto self = shared_from_this();
         auto onShouldClose = [self](){self->Terminate();};
 
-        m_Renderer = std::make_unique<Renderer>(onShouldClose);
-        m_Renderer->CreateWindow("Game", 800, 800);
+        auto onKeyCallback = [self](GLFWwindow *window, int key, int scancode, int action, int mods) {self->m_CurrentScene->GetInputSystem()->KeyCallback(window, key, scancode, action, mods);};
+
+        m_Renderer = std::make_unique<Renderer>();
+        m_Renderer->CreateWindow("Game", 800, 800, onShouldClose, onKeyCallback);
         std::cout << "after renderer\n";
 
         m_CurrentScene = LoadScene("../Game/Scenes/TestScene.json");
         m_CurrentScene->Init();
-        std::cout << "after Scene\n";
 
         auto shader = std::make_shared<Shader>("../Game/Shaders/Default.glsl");
         m_Renderer->SetMainShader(shader);
@@ -70,7 +72,7 @@ namespace Sauce
         {
             if(m_DT >= 0.0f)
             {
-                m_CurrentScene->Update();
+                m_CurrentScene->Update(m_DT);
             }
 
             m_EndTime = glfwGetTime();
@@ -115,7 +117,9 @@ namespace Sauce
     {
         CameraComponent c;
         c.IsMain = true;
-        c.View = glm::mat4(1);
+        c.Width = 500;//j["values"][0];
+        c.Height = 500;//j["values"][1];
+        c.FOV = 60.0f;//j["values"][2];
         return c;
     }
 
@@ -157,7 +161,8 @@ namespace Sauce
                 case SCRIPT_CIDX:
                     ent.AddComponent<Script>();
                     ent.GetComponent<Script>() = LoadScriptFromJson(component);
-                    ent.GetComponent<Script>().InitializeScript();
+                    ent.GetComponent<Script>().Instance = ent.GetComponent<Script>().InitializeScript();
+                    ent.GetComponent<Script>().Instance->Input = scene->GetInputSystem();
                     break;
                 case TRANSFORM_CIDX:
                     ent.AddComponent<TransformComponent>();
@@ -166,9 +171,11 @@ namespace Sauce
                 case MESH_INSTANCE_CIDX:
                     ent.AddComponent<MeshInstance>();
                     ent.GetComponent<MeshInstance>() = LoadMeshInstanceFromJson(component);
+                    break;
                 case CAMERA_CIDX:
                     ent.AddComponent<CameraComponent>();
                     ent.GetComponent<CameraComponent>() = LoadCamFromJson(component);
+                    break;
                 }
             }
         }

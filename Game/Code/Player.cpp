@@ -1,7 +1,10 @@
 #include "ECS/ScriptableEntity.h"
 #include "ECS/Components.h"
+#include "GLFW/glfw3.h"
 #include <iostream>
 #include <memory>
+
+using namespace Sauce;
 
 class Player : public Sauce::ScriptableEntity
 {
@@ -16,11 +19,9 @@ public:
         std::cout << "Start Player\n";
     }
 
-    void OnUpdate() override
+    void OnUpdate(float dt) override
     {
-        GetComponent<Sauce::TransformComponent>().Rotation.x += 0.0001;
-        GetComponent<Sauce::TransformComponent>().Rotation.y += 0.0001;
-        GetComponent<Sauce::TransformComponent>().Rotation.z += 0.0001;
+
     }
 private:
 };
