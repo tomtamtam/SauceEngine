@@ -10,7 +10,6 @@
 #include "ECS/Components.h"
 #include "ECS/Scene.h"
 #include "GLFW/glfw3.h"
-#include "Input/InputSystem.h"
 #include "Render/Mesh.h"
 #include "Render/Renderer.h"
 #include "Render/Shader.h"
@@ -35,8 +34,9 @@ namespace Sauce
     void Application::Setup()
     {
         auto self = shared_from_this();
-        auto onShouldClose = [self](){self->Terminate();};
 
+        auto onShouldClose = [self](){self->Terminate();};
+        auto onResizeCallback = [self](uint32_t width, uint32_t height) {};
         auto onKeyCallback = [self](GLFWwindow *window, int key, int scancode, int action, int mods) {self->m_CurrentScene->GetInputSystem()->KeyCallback(window, key, scancode, action, mods);};
 
         m_Renderer = std::make_unique<Renderer>();

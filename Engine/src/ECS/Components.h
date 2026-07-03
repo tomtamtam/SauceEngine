@@ -2,22 +2,19 @@
 
 #include "Render/Mesh.h"
 #include "ScriptableEntity.h"
-#include "glm/ext/vector_float3.hpp"
-
 #include <cstdint>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 #include <memory>
-
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/quaternion.hpp>
-
 #include <functional>
 #include <string>
 #include <dlfcn.h>
 
-#define CODE_ID 0
-#define TRANSFORM_ID 1
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include "glm/ext/vector_float3.hpp"
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/euler_angles.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 namespace Sauce
 {
@@ -25,6 +22,11 @@ namespace Sauce
     #define TRANSFORM_CIDX 1
     #define MESH_INSTANCE_CIDX 2
     #define CAMERA_CIDX 3
+    #define CODE_ID 0
+    #define TRANSFORM_ID 1
+
+
+
 
     struct TransformComponent
     {
@@ -42,6 +44,11 @@ namespace Sauce
 			return glm::translate(glm::mat4(1.0f), Translation)
 				* rotation
 				* glm::scale(glm::mat4(1.0f), Scale);
+        }
+
+        void Translate(glm::vec3 translation)
+        {
+            Translation += translation;
         }
     };
 
@@ -63,6 +70,7 @@ namespace Sauce
         uint32_t Height;
 
         bool IsMain;
+        bool IsAdjustable = true;
     };
 
     struct MeshInstance

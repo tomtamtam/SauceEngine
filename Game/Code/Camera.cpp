@@ -22,29 +22,33 @@ public:
 
     void OnUpdate(float dt) override
     {
-        if(Input->GetKeyJustPressed(GLFW_KEY_W))
+        if(Input->GetKeyDown(GLFW_KEY_W))
         {
-            GetComponent<TransformComponent>().Translation.z += 0.1 * dt;
+            GetComponent<TransformComponent>().Translate({0.0f, 0.0f, -1.0f*dt});
         }
-        if(Input->GetKeyJustPressed(GLFW_KEY_S))
+        else
         {
-            GetComponent<TransformComponent>().Translation.z -= 0.1 * dt;
         }
-        if(Input->GetKeyJustPressed(GLFW_KEY_D))
+        if(Input->GetKeyDown(GLFW_KEY_S))
         {
-            GetComponent<TransformComponent>().Translation.x += 0.1 * dt;
+            GetComponent<TransformComponent>().Translate({0.0f, 0.0f, 1.0f*dt});
         }
-        if(Input->GetKeyJustPressed(GLFW_KEY_A))
+        if(Input->GetKeyDown(GLFW_KEY_D))
         {
-            GetComponent<TransformComponent>().Translation.x -= 0.1 * dt;
+            GetComponent<TransformComponent>().Translate({1.0f*dt, 0.0f, 0.0f});
         }
-        if(Input->GetKeyJustPressed(GLFW_KEY_LEFT))
+        if(Input->GetKeyDown(GLFW_KEY_A))
         {
-            GetComponent<TransformComponent>().Rotation.x += 0.1 * dt;
+            GetComponent<TransformComponent>().Translate({-1.0f*dt, 0.0f, 0.0f});
+
         }
-        if(Input->GetKeyJustPressed(GLFW_KEY_RIGHT))
+        if(Input->GetKeyDown(GLFW_KEY_LEFT))
         {
-            GetComponent<TransformComponent>().Rotation.x -= 0.1 * dt;
+            GetComponent<TransformComponent>().Rotation.x += 2.0 * dt;
+        }
+        if(Input->GetKeyDown(GLFW_KEY_RIGHT))
+        {
+            GetComponent<TransformComponent>().Rotation.x -= 2.0 * dt;
         }
     }
 private:

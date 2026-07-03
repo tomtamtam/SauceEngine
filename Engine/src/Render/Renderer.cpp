@@ -56,4 +56,13 @@ namespace Sauce
 
         glDrawElements(GL_TRIANGLES, mesh->Ibo.getCount(), GL_UNSIGNED_INT, nullptr);
     }
+
+    uint32_t Renderer::GetWinWidth() const
+    {
+        return m_Window->GetWidth();
+    }
+    uint32_t Renderer::GetWinHeight() const
+    {
+        return m_Window->GetHeight();
+    }
 }

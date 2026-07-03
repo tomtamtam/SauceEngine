@@ -32,6 +32,9 @@ namespace Sauce
         void SetMainShader(std::shared_ptr<Shader>);
 
         void Submit(const glm::mat4 &transform, const glm::mat4 &view, const glm::mat4 &proj, Mesh *mesh);
+
+        uint32_t GetWinWidth() const;
+        uint32_t GetWinHeight() const;
     private:
         std::unique_ptr<Window> m_Window;
         std::shared_ptr<Shader> m_MainShader;

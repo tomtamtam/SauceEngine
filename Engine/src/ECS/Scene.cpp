@@ -4,7 +4,6 @@
 #include "Render/Renderer.h"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_float4x4.hpp"
-#include "glm/ext/matrix_transform.hpp"
 #include "glm/trigonometric.hpp"
 #include <iostream>
 #include <memory>
@@ -77,19 +76,31 @@ namespace Sauce
         //main cam
         glm::mat4 view = {1.0f};
         glm::mat4 proj = {1.0f};
+        uint32_t width, height = 0;
         auto camView = m_Registry.view<CameraComponent>();
         for(auto entity : camView)
         {
-            auto cam = camView->get(entity);
+            auto &cam = camView->get(entity);
+            if(cam.IsAdjustable)
+            {
+                if(cam.Width != m_Renderer->GetWinWidth())
+                {
+                    width = m_Renderer->GetWinWidth();
+                }
+
+                if(cam.Height != m_Renderer->GetWinHeight())
+                    height = m_Renderer->GetWinHeight();
+            }
+
             if(cam.IsMain)
             {
                 if(!m_Registry.all_of<TransformComponent>(entity))
                 {
                     std::cerr << "Object with component <CameraComponent> has NO component of type <TransformComponent>.\n";
                 }
-                auto transform = m_Registry.get<TransformComponent>(entity);
+                auto &transform = m_Registry.get<TransformComponent>(entity);
                 view = glm::lookAt(transform.Translation, transform.Translation + transform.Rotation, cam.Up);
-                proj = glm::perspective(glm::radians(cam.FOV), (float)(cam.Width / cam.Height), F_NEAR, F_FAR);
+                proj = glm::perspective(glm::radians(cam.FOV), (float)width / (float)height, F_NEAR, F_FAR);
             }
         }
 

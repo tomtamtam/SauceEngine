@@ -17,6 +17,8 @@ namespace Sauce
         void Init();
         void Update();
         void Destroy();
+        uint32_t GetWidth() const;
+        uint32_t GetHeight() const;
     private:
         uint32_t m_Width, m_Height;
         std::string m_Title;
