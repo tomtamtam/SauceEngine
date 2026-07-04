@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 #include <sys/types.h>
+#include <glad/glad.h>
 
 #include "Shader.h"
 
@@ -70,7 +71,7 @@ namespace Sauce
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
     }
 
-    GLuint Shader::Compile(const std::string &shaderSource, GLenum type)
+    uint32_t Shader::Compile(const std::string &shaderSource, uint32_t type)
     {
         GLuint id = glCreateShader(type);
         const char* src = shaderSource.c_str();
@@ -115,7 +116,7 @@ namespace Sauce
         return contents;
     }
 
-    GLuint Shader::CreateShader(const std::string &shaderPath)
+    uint32_t Shader::CreateShader(const std::string &shaderPath)
     {
         std::istringstream stream(Parse(shaderPath.c_str()));
         std::string line;

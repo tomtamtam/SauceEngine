@@ -105,7 +105,7 @@ int createProject(std::string name, std::string path)
     std::ofstream defaultScene(fp + "/Scenes/DefaultScene.json");
 
     json sj;
-    sj["name"] = "DefaultScene";
+    sj["name"] = "TestScene";
 
     defaultScene << sj;
     defaultScene.close();

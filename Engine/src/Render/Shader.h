@@ -2,7 +2,6 @@
 
 #include "glm/ext/matrix_float4x4.hpp"
 #include <cstdint>
-#include <glad/glad.h>
 #include <string>
 
 namespace Sauce
@@ -25,8 +24,8 @@ namespace Sauce
         void SetUniform1b(const std::string &name, bool value);
         void SetMatrix4(const std::string &name, glm::mat4 value);
     private:
-        uint32_t Compile(const std::string &shaderSource, GLenum type);
+        uint32_t Compile(const std::string &shaderSource, uint32_t type);
         std::string Parse(const char* filename);
-        GLuint CreateShader(const std::string &shaderPath);
+        uint32_t CreateShader(const std::string &shaderPath);
     };
 }

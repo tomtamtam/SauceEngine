@@ -69,6 +69,7 @@ set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "" FORCE)
 set(ASSIMP_INSTALL OFF CACHE BOOL "" FORCE)
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+set(ASSIMP_WARNINGS_AS_ERRORS OFF CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(assimp)
 
@@ -154,11 +155,20 @@ target_link_libraries(App PRIVATE
   SauceEngine
 )
 
-
 set_target_properties(Game PROPERTIES
     BUILD_RPATH "$ORIGIN"
 )
 
 set_target_properties(App PROPERTIES
     BUILD_RPATH "$ORIGIN"
+)
+
+# Terminal App
+
+add_executable(sauce-engine
+    ${CMAKE_SOURCE_DIR}/Editor/Terminal/SauceEngine.cpp
+)
+
+target_link_libraries(sauce-engine
+    nlohmann_json::nlohmann_json
 )
