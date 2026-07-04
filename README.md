@@ -23,6 +23,5 @@ git clone https://github.com/tomtamtam/SauceEngine.git
 cd SauceEngine
 chmod +x setup.sh
 ./setup.sh
-make
 ```
 **NOTE: Right now compiling is only possible on Linux devices**
