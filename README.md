@@ -21,8 +21,8 @@ Fetched through CMake:
 ```
 git clone https://github.com/tomtamtam/SauceEngine.git
 cd SauceEngine
-mkdir build && cd build
-cmake ..
+chmod +x setup.sh
+./setup.sh
 make
 ```
 **NOTE: Right now compiling is only possible on Linux devices**
