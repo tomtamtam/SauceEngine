@@ -15,6 +15,7 @@ Fetched through CMake:
 - nlohman/json
 - lua
 - entt
+- assimp
 - (opengl)
 
 ### How to build
