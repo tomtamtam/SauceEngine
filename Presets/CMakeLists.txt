@@ -12,19 +12,19 @@ set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # GAME MODULES
-add_library(Game SHARED
-    ${CMAKE_SOURCE_DIR}/Code/Player.cpp
-    ${CMAKE_SOURCE_DIR}/Code/Camera.cpp
-)
-
-target_include_directories(Game PUBLIC
-    ${CMAKE_SOURCE_DIR}/Code
-    ${INCLUDE_PATH}/src
-)
-
-target_link_libraries(Game PUBLIC
-    ${LIB_PATH}
-)
+# add_library(Game SHARED
+#     ${CMAKE_SOURCE_DIR}/Code/Player.cpp
+#     ${CMAKE_SOURCE_DIR}/Code/Camera.cpp
+# )
+# 
+# target_include_directories(Game PUBLIC
+#     ${CMAKE_SOURCE_DIR}/Code
+#     ${INCLUDE_PATH}/src
+# )
+# 
+# target_link_libraries(Game PUBLIC
+#     ${LIB_PATH}
+# )
 
 # Executable Game
 
