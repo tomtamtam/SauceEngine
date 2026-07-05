@@ -1,8 +1,9 @@
 #include "nlohmann/json_fwd.hpp"
-#include <cstddef>
+#include <cstdint>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <random>
 #include <string>
 #include <unordered_map>
 #include <nlohmann/json.hpp>
@@ -64,6 +65,15 @@ int main(int argc, char *argv[])
     return 0;
 }
 
+static std::random_device s_RandomDevice;
+static std::mt19937_64 s_Editor(s_RandomDevice());
+static std::uniform_int_distribution<uint64_t> s_UniformDistribution;
+
+uint64_t randUUID()
+{
+    return s_UniformDistribution(s_Editor);
+}
+
 void printArgError(int argc, char* argv[])
 {
     std::string args;
@@ -89,7 +99,8 @@ int createProject(std::string name, std::string path)
 
     json pj;
     pj["name"] = name;
-    pj["defaultScene"] = "DefaultScene";
+    pj["defaultScene"] = "Scenes/DefaultScene.json";
+    pj["defaultShader"] = "Shaders/Default.glsl";
 
     projInfo << pj;
     projInfo.close();
@@ -106,6 +117,8 @@ int createProject(std::string name, std::string path)
 
     json sj;
     sj["name"] = "TestScene";
+    sj["id"] = randUUID();
+    sj["objects"] = json::array();
 
     defaultScene << sj;
     defaultScene.close();

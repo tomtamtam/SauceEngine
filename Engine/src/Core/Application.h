@@ -31,6 +31,8 @@ namespace Sauce
 
         bool m_IsRunning;
         std::string m_Name;
+        std::string m_DefaultScene;
+        std::string m_DefaultShader;
 
         void *m_HandleGameDll;
 

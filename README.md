@@ -25,3 +25,12 @@ chmod +x setup.sh
 ./setup.sh
 ```
 **NOTE: Right now compiling is only possible on Linux devices**
+
+## Use the Engine
+Run
+```
+```bash
+sauce-engine create projname
+cd projname
+´´´
+

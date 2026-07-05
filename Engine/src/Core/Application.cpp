@@ -3,6 +3,7 @@
 #include <cassert>
 #include <cstdint>
 #include <dlfcn.h>
+#include <fstream>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -33,6 +34,16 @@ namespace Sauce
 
     void Application::Setup()
     {
+
+        //Load projinfo
+        std::ifstream info("../.project_info.json");
+        json jinfo;
+        info >> jinfo;
+
+        m_Name = jinfo["name"];
+        m_DefaultScene = jinfo["defaultScene"];
+        m_DefaultShader = jinfo["defaultShader"];
+
         auto self = shared_from_this();
 
         auto onShouldClose = [self](){self->Terminate();};
@@ -40,13 +51,12 @@ namespace Sauce
         auto onKeyCallback = [self](GLFWwindow *window, int key, int scancode, int action, int mods) {self->m_CurrentScene->GetInputSystem()->KeyCallback(window, key, scancode, action, mods);};
 
         m_Renderer = std::make_unique<Renderer>();
-        m_Renderer->CreateWindow("Game", 800, 800, onShouldClose, onKeyCallback);
-        std::cout << "after renderer\n";
+        m_Renderer->CreateWindow(m_Name, 800, 800, onShouldClose, onKeyCallback);
 
-        m_CurrentScene = LoadScene("../Game/Scenes/TestScene.json");
+        m_CurrentScene = LoadScene("../"+m_DefaultScene);
         m_CurrentScene->Init();
 
-        auto shader = std::make_shared<Shader>("../Game/Shaders/Default.glsl");
+        auto shader = std::make_shared<Shader>("../"+m_DefaultShader);
         m_Renderer->SetMainShader(shader);
     }
 
@@ -128,13 +138,18 @@ namespace Sauce
 
     std::shared_ptr<Scene> Application::LoadScene(const std::string &path)
     {
+        std::cout << "before objects\n";
         json j = ParseJsonFromFile(path);
         std::string name = j["name"];
         UUID uuid = (UUID)j["id"].get<uint64_t>();
 
         auto scene = std::make_shared<Scene>(uuid, name, m_Renderer);
 
-
+        if(j["objects"].size() == 0)
+        {
+            std::cout << "o objects\n";
+            return scene;
+        }
         //objects
         uint32_t nObjects = j["objects"].size();
 

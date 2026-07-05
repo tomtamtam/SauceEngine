@@ -126,43 +126,6 @@ else()
     target_link_libraries(SauceEngine PUBLIC OpenGL::GL)
 endif()
 
-#GAME (Shared Library / Plugin)
-add_library(Game SHARED
-    Game/Code/Player.cpp
-    Game/Code/Camera.cpp
-)
-target_include_directories(Game PUBLIC
-    ${CMAKE_SOURCE_DIR}/Game/Code
-)
-target_link_libraries(Game PUBLIC
-    SauceEngine
-    EnTT::EnTT
-)
-
-set_target_properties(Game PROPERTIES
-    BUILD_RPATH "$ORIGIN"
-)
-
-#App (Executable)
-
-add_executable(App
-    Game/Code/Main.cpp
-)
-target_include_directories(App PRIVATE
-    ${CMAKE_SOURCE_DIR}/Game/Code
-)
-target_link_libraries(App PRIVATE 
-  SauceEngine
-)
-
-set_target_properties(Game PROPERTIES
-    BUILD_RPATH "$ORIGIN"
-)
-
-set_target_properties(App PROPERTIES
-    BUILD_RPATH "$ORIGIN"
-)
-
 # Terminal App
 
 add_executable(sauce-engine
