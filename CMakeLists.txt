@@ -59,20 +59,20 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(entt)
 
 # ASSIMP
-FetchContent_Declare(
-    assimp
-    GIT_REPOSITORY https://github.com/assimp/assimp.git
-    GIT_TAG        v5.4.3        # oder eine andere Version/Branch
-)
-
-set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "" FORCE)
-set(ASSIMP_INSTALL OFF CACHE BOOL "" FORCE)
-set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
-set(ASSIMP_WARNINGS_AS_ERRORS OFF CACHE BOOL "" FORCE)
-
-FetchContent_MakeAvailable(assimp)
-
+# FetchContent_Declare(
+#     assimp
+#     GIT_REPOSITORY https://github.com/assimp/assimp.git
+#     GIT_TAG        v5.4.3        # oder eine andere Version/Branch
+# )
+# 
+# set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+# set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "" FORCE)
+# set(ASSIMP_INSTALL OFF CACHE BOOL "" FORCE)
+# set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+# set(ASSIMP_WARNINGS_AS_ERRORS OFF CACHE BOOL "" FORCE)
+# 
+# FetchContent_MakeAvailable(assimp)
+# 
 # STB IMAGE
 add_library(stb_image STATIC
   Engine/vendor/stb_image/stb_image.cpp
@@ -112,7 +112,7 @@ target_link_libraries(SauceEngine PUBLIC
     stb_image
     lua::lua
     EnTT::EnTT
-    assimp
+    # assimp
 )
 
 #OpenGL

@@ -36,6 +36,8 @@ target_include_directories(${PROJECT} PRIVATE
     ${CMAKE_SOURCE_DIR}/Code
     ${INCLUDE_PATH}/src
     ${INCLUDE_PATH}/vendor/json/include/single_include
+    ${INCLUDE_PATH}/vendor/glad/include/
+    ${INCLUDE_PATH}/vendor/entt/include/
 )
 
 target_link_libraries(${PROJECT} PRIVATE 

@@ -109,21 +109,21 @@ const std::unordered_map<std::string, std::string> aliases =
     {"list", "l"}
 };
 
-const std::unordered_map<std::string, std::function<void(const std::string &second)>> listMap = 
+const std::unordered_map<std::string, std::function<void()>> listMap = 
 {
-    {"h", [](const std::string &second){std::cout << "l $arg (list things)\nname: list project name\n";}},
-    {"name", [](const std::string &second){std::cout << editor->GetProjectName();}}
+    {"h", [](){std::cout << "l $arg (list things)\nname: list project name\n";}},
+    {"name", [](){std::cout << editor->GetProjectName();}}
 };
 
 void list(const std::string second)
 {
     if(aliases.contains(second))
     {
-        std::cout << listMap.at(aliases.at(second)) << '\n';
+        listMap.at(aliases.at(second))();
     }
-    else
+    else if(listMap.contains(second))
     {
-        std::cout << listMap.at(second) << '\n';
+        listMap.at(second)();
     }
 }
 
@@ -139,7 +139,7 @@ void getOutput(const std::string &first, const std::string &second)
     {
         cmndMap.at(aliases.at(first))(second);
     }
-    else
+    else if(cmndMap.contains(second))
     {
         cmndMap.at(first)(second);
     }
@@ -156,9 +156,13 @@ void processInput(std::string line)
     }
 
     if(tokens.size() == 1)
+    {
         getOutput(tokens.at(0), "");
+    }
     else if(tokens.size() == 2)
+    {
         getOutput(tokens.at(0), tokens.at(1));
+    }
 }
 
 void edit(const std::string &path)
