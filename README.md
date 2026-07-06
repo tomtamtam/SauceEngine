@@ -19,7 +19,7 @@ Fetched through CMake:
 - (opengl)
 
 ### How to build
-```
+```bash
 git clone https://github.com/tomtamtam/SauceEngine.git
 cd SauceEngine
 chmod +x setup.sh
@@ -29,7 +29,6 @@ chmod +x setup.sh
 
 ## Use the Engine
 Run
-```
 ```bash
 sauce-engine create projname
 cd projname
