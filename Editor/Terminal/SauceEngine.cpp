@@ -96,7 +96,8 @@ void printArgError(int argc, char* argv[])
     std::cerr << "Invalid set of arguments:" << args << '\n';
 }
 
-// Eddit
+// Edit
+std::shared_ptr<Editor> editor;
 void printHelp()
 {
     std::cout << "Help:\nh = help?\nl $any = list smth (l h to see all options)\n";
@@ -108,39 +109,21 @@ const std::unordered_map<std::string, std::string> aliases =
     {"list", "l"}
 };
 
-const std::unordered_map<std::string, std::string> helpMap =
+const std::unordered_map<std::string, std::function<void(const std::string &second)>> listMap = 
 {
-    {"h", "Help of Help?! (:"},
-    {"l", "l $arg\nname: Shows project name\n"}
+    {"h", [](const std::string &second){std::cout << "l $arg (list things)\nname: list project name\n";}},
+    {"name", [](const std::string &second){std::cout << editor->GetProjectName();}}
 };
 
 void list(const std::string second)
 {
     if(aliases.contains(second))
     {
-        std::cout << helpMap.at(aliases.at(second)) << '\n';
+        std::cout << listMap.at(aliases.at(second)) << '\n';
     }
     else
     {
-        std::cout << helpMap.at(second) << '\n';
-    }
-}
-
-void help(const std::string &second)
-{
-    if(second == "")
-    {
-        printHelp();
-        return;
-    }
-
-    if(aliases.contains(second))
-    {
-        std::cout << helpMap.at(aliases.at(second)) << '\n';
-    }
-    else
-    {
-        std::cout << helpMap.at(second) << '\n';
+        std::cout << listMap.at(second) << '\n';
     }
 }
 
@@ -180,7 +163,7 @@ void processInput(std::string line)
 
 void edit(const std::string &path)
 {
-    auto editor = std::make_shared<Editor>(path);
+    editor = std::make_shared<Editor>(path);
 
     std::system("clear");
 
