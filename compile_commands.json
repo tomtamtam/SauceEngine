@@ -85,27 +85,33 @@
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/c++ -DSauceEngine_EXPORTS -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -I/home/tom/dev/SauceEngine/build/_deps/assimp-src/code/../include -I/home/tom/dev/SauceEngine/build/_deps/assimp-build/code/../include -std=gnu++20 -fPIC -o CMakeFiles/SauceEngine.dir/Engine/src/ECS/ScriptableEntity.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/ECS/ScriptableEntity.cpp",
-  "file": "/home/tom/dev/SauceEngine/Engine/src/ECS/ScriptableEntity.cpp",
-  "output": "CMakeFiles/SauceEngine.dir/Engine/src/ECS/ScriptableEntity.cpp.o"
-},
-{
-  "directory": "/home/tom/dev/SauceEngine/build",
   "command": "/usr/bin/c++ -DSauceEngine_EXPORTS -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -I/home/tom/dev/SauceEngine/build/_deps/assimp-src/code/../include -I/home/tom/dev/SauceEngine/build/_deps/assimp-build/code/../include -std=gnu++20 -fPIC -o CMakeFiles/SauceEngine.dir/Engine/src/Core/ScriptEngine.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Core/ScriptEngine.cpp",
   "file": "/home/tom/dev/SauceEngine/Engine/src/Core/ScriptEngine.cpp",
   "output": "CMakeFiles/SauceEngine.dir/Engine/src/Core/ScriptEngine.cpp.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/c++ -DGame_EXPORTS -I/home/tom/dev/SauceEngine/Game/Code -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -I/home/tom/dev/SauceEngine/build/_deps/assimp-src/code/../include -I/home/tom/dev/SauceEngine/build/_deps/assimp-build/code/../include -std=gnu++20 -fPIC -o CMakeFiles/Game.dir/Game/Code/Player.cpp.o -c /home/tom/dev/SauceEngine/Game/Code/Player.cpp",
-  "file": "/home/tom/dev/SauceEngine/Game/Code/Player.cpp",
-  "output": "CMakeFiles/Game.dir/Game/Code/Player.cpp.o"
+  "command": "/usr/bin/c++ -DSauceEngine_EXPORTS -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -I/home/tom/dev/SauceEngine/build/_deps/assimp-src/code/../include -I/home/tom/dev/SauceEngine/build/_deps/assimp-build/code/../include -std=gnu++20 -fPIC -o CMakeFiles/SauceEngine.dir/Engine/src/Input/KeyboardListener.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Input/KeyboardListener.cpp",
+  "file": "/home/tom/dev/SauceEngine/Engine/src/Input/KeyboardListener.cpp",
+  "output": "CMakeFiles/SauceEngine.dir/Engine/src/Input/KeyboardListener.cpp.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/Game/Code -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -I/home/tom/dev/SauceEngine/build/_deps/assimp-src/code/../include -I/home/tom/dev/SauceEngine/build/_deps/assimp-build/code/../include -std=gnu++20 -o CMakeFiles/App.dir/Game/Code/Main.cpp.o -c /home/tom/dev/SauceEngine/Game/Code/Main.cpp",
-  "file": "/home/tom/dev/SauceEngine/Game/Code/Main.cpp",
-  "output": "CMakeFiles/App.dir/Game/Code/Main.cpp.o"
+  "command": "/usr/bin/c++ -DSauceEngine_EXPORTS -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -I/home/tom/dev/SauceEngine/build/_deps/assimp-src/code/../include -I/home/tom/dev/SauceEngine/build/_deps/assimp-build/code/../include -std=gnu++20 -fPIC -o CMakeFiles/SauceEngine.dir/Engine/src/Input/InputSystem.cpp.o -c /home/tom/dev/SauceEngine/Engine/src/Input/InputSystem.cpp",
+  "file": "/home/tom/dev/SauceEngine/Engine/src/Input/InputSystem.cpp",
+  "output": "CMakeFiles/SauceEngine.dir/Engine/src/Input/InputSystem.cpp.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build",
+  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -std=gnu++20 -o CMakeFiles/sauce-engine.dir/Editor/Terminal/SauceEngine.cpp.o -c /home/tom/dev/SauceEngine/Editor/Terminal/SauceEngine.cpp",
+  "file": "/home/tom/dev/SauceEngine/Editor/Terminal/SauceEngine.cpp",
+  "output": "CMakeFiles/sauce-engine.dir/Editor/Terminal/SauceEngine.cpp.o"
+},
+{
+  "directory": "/home/tom/dev/SauceEngine/build",
+  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -std=gnu++20 -o CMakeFiles/sauce-engine.dir/Editor/Shared/Shared.cpp.o -c /home/tom/dev/SauceEngine/Editor/Shared/Shared.cpp",
+  "file": "/home/tom/dev/SauceEngine/Editor/Shared/Shared.cpp",
+  "output": "CMakeFiles/sauce-engine.dir/Editor/Shared/Shared.cpp.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build/_deps/glfw-build/src",

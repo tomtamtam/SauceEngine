@@ -138,7 +138,6 @@ namespace Sauce
 
     std::shared_ptr<Scene> Application::LoadScene(const std::string &path)
     {
-        std::cout << "before objects\n";
         json j = ParseJsonFromFile(path);
         std::string name = j["name"];
         UUID uuid = (UUID)j["id"].get<uint64_t>();
@@ -147,7 +146,6 @@ namespace Sauce
 
         if(j["objects"].size() == 0)
         {
-            std::cout << "o objects\n";
             return scene;
         }
         //objects

@@ -1,26 +1,29 @@
+#include "../Shared/Shared.h"
+
 #include "nlohmann/json_fwd.hpp"
-#include <cstdint>
-#include <filesystem>
-#include <fstream>
+#include <cstdlib>
 #include <iostream>
-#include <random>
+#include <memory>
+#include <sstream>
 #include <string>
 #include <unordered_map>
 #include <nlohmann/json.hpp>
+#include <vector>
 
 using json = nlohmann::json;
 
 #define CREATE_ARG 0
 #define RUN_ARG 1
+#define EDIT_ARG 2
 
-int createProject(std::string name, std::string path);
 void printArgError(int argc, char* argv[]);
+void edit(const std::string &path);
 
 int main(int argc, char *argv[])
 {
 
-    const std::unordered_map<int, std::string> firstArgWrapperI{{0,"create"},{1,"run"}};
-    const std::unordered_map<std::string, int> firstArgWrapperS{{"create",0},{"run",1}};
+    const std::unordered_map<int, std::string> firstArgWrapperI{{0,"create"},{1,"run"}, {2, "edit"}};
+    const std::unordered_map<std::string, int> firstArgWrapperS{{"create",0},{"run",1}, {"edit", 2}};
 
     int firstArg = -1;
     for(int i = 0; i < argc - 1; i++)
@@ -34,6 +37,10 @@ int main(int argc, char *argv[])
             {
                 std::cout << "run\n";
             }
+            if(firstArg == EDIT_ARG && i == argc - 2)
+            {
+                edit("./");
+            }
         }
         else if(i == 1)
         {
@@ -45,6 +52,14 @@ int main(int argc, char *argv[])
                 break;
             case RUN_ARG:
                 printArgError(argc, argv);
+                break;
+            case EDIT_ARG:
+                if(i == argc - 2)
+                {
+                    if(!arg.ends_with('/'))
+                        arg.push_back('/');
+                    edit(arg);
+                }
                 break;
             }
         }
@@ -58,20 +73,14 @@ int main(int argc, char *argv[])
             case RUN_ARG:
                 printArgError(argc, argv);
                 return -1;
+            case EDIT_ARG:
+                printArgError(argc, argv);
+                break;
             }
         }
     }
 
     return 0;
-}
-
-static std::random_device s_RandomDevice;
-static std::mt19937_64 s_Editor(s_RandomDevice());
-static std::uniform_int_distribution<uint64_t> s_UniformDistribution;
-
-uint64_t randUUID()
-{
-    return s_UniformDistribution(s_Editor);
 }
 
 void printArgError(int argc, char* argv[])
@@ -87,42 +96,103 @@ void printArgError(int argc, char* argv[])
     std::cerr << "Invalid set of arguments:" << args << '\n';
 }
 
-int createProject(std::string name, std::string path)
+// Eddit
+void printHelp()
 {
-    if(!path.ends_with('/'))
-        path += '/';
+    std::cout << "Help:\nh = help?\nl $any = list smth (l h to see all options)\n";
+}
 
-    std::string fp = path + name;
-    std::filesystem::create_directory(fp);
+const std::unordered_map<std::string, std::string> aliases =
+{
+    {"help", "h"},
+    {"list", "l"}
+};
 
-    std::ofstream projInfo(fp + "/.project_info.json");
+const std::unordered_map<std::string, std::string> helpMap =
+{
+    {"h", "Help of Help?! (:"},
+    {"l", "l $arg\nname: Shows project name\n"}
+};
 
-    json pj;
-    pj["name"] = name;
-    pj["defaultScene"] = "Scenes/DefaultScene.json";
-    pj["defaultShader"] = "Shaders/Default.glsl";
+void list(const std::string second)
+{
+    if(aliases.contains(second))
+    {
+        std::cout << helpMap.at(aliases.at(second)) << '\n';
+    }
+    else
+    {
+        std::cout << helpMap.at(second) << '\n';
+    }
+}
 
-    projInfo << pj;
-    projInfo.close();
+void help(const std::string &second)
+{
+    if(second == "")
+    {
+        printHelp();
+        return;
+    }
 
-    std::filesystem::create_directory(fp + "/Code");
-    std::filesystem::create_directory(fp + "/Scenes");
-    std::filesystem::create_directory(fp + "/Shaders");
+    if(aliases.contains(second))
+    {
+        std::cout << helpMap.at(aliases.at(second)) << '\n';
+    }
+    else
+    {
+        std::cout << helpMap.at(second) << '\n';
+    }
+}
 
-    std::filesystem::copy_file("/usr/share/sauce-engine/presets/Main.cpp", fp + "/Code/Main.cpp");
-    std::filesystem::copy_file("/usr/share/sauce-engine/presets/Default.glsl", fp + "/Shaders/Default.glsl");
-    std::filesystem::copy_file("/usr/share/sauce-engine/presets/CMakeLists.txt", fp + "/CMakeLists.txt");
+const std::unordered_map<std::string, std::function<void(const std::string &second)>> cmndMap = 
+{
+    {"h", [](const std::string &second){printHelp();}},
+    {"l", [](const std::string &second){list(second);}}
+};
 
-    std::ofstream defaultScene(fp + "/Scenes/DefaultScene.json");
+void getOutput(const std::string &first, const std::string &second)
+{
+    if(aliases.contains(first))
+    {
+        cmndMap.at(aliases.at(first))(second);
+    }
+    else
+    {
+        cmndMap.at(first)(second);
+    }
+}
 
-    json sj;
-    sj["name"] = "TestScene";
-    sj["id"] = randUUID();
-    sj["objects"] = json::array();
+void processInput(std::string line)
+{
+    std::vector<std::string> tokens;
+    std::istringstream iss(line);
+    std::string token;
+    while (iss >> token)
+    {
+        tokens.push_back(token);
+    }
 
-    defaultScene << sj;
-    defaultScene.close();
+    if(tokens.size() == 1)
+        getOutput(tokens.at(0), "");
+    else if(tokens.size() == 2)
+        getOutput(tokens.at(0), tokens.at(1));
+}
 
-    std::cout << "\x1B[32mcreated project: \033[0m\t\t" << "\x1B[34m" << path << name << "\033[0m\t\t" << '\n';
-    return 0;
+void edit(const std::string &path)
+{
+    auto editor = std::make_shared<Editor>(path);
+
+    std::system("clear");
+
+    std::cout << "Welcome to SauceEngine's commandline editor!\n" << "\x1B[32mEditing\033[0m " << editor->GetProjectName() << '\n';
+
+    bool isEditing = true;
+
+    while(isEditing)
+    {
+        std::string cmnd;
+        std::cout << "> ";
+        std::getline(std::cin, cmnd);
+        processInput(cmnd);
+    }
 }

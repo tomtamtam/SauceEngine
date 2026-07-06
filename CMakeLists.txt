@@ -130,6 +130,7 @@ endif()
 
 add_executable(sauce-engine
     ${CMAKE_SOURCE_DIR}/Editor/Terminal/SauceEngine.cpp
+    ${CMAKE_SOURCE_DIR}/Editor/Shared/Shared.cpp
 )
 
 target_link_libraries(sauce-engine
