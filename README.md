@@ -32,6 +32,7 @@ Run
 ```bash
 sauce-engine create projname
 cd projname
+sauce-engine edit .
 ```
 
 
