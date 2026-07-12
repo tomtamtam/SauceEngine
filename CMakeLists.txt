@@ -136,3 +136,12 @@ add_executable(sauce-engine
 target_link_libraries(sauce-engine
     nlohmann_json::nlohmann_json
 )
+
+# UI Editor
+add_executable(sauce-editor
+  ${CMAKE_SOURCE_DIR}/Editor/UI/SauceEditor.cpp
+    ${CMAKE_SOURCE_DIR}/Editor/Shared/Shared.cpp
+)
+
+target_link_libraries(sauce-engine
+)
