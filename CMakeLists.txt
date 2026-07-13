@@ -111,6 +111,7 @@ add_library(SauceEngine SHARED
     Engine/src/ECS/Scene.cpp
     Engine/src/ECS/Entity.cpp
     Engine/src/Core/ScriptEngine.cpp
+    Engine/src/Core/SceneSerializer.cpp
     Engine/src/Input/KeyboardListener.cpp
     Engine/src/Input/InputSystem.cpp
 )

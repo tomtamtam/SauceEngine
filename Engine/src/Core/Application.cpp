@@ -134,8 +134,6 @@ namespace Sauce
     }
 
 
-
-
     std::shared_ptr<Scene> Application::LoadScene(const std::string &path)
     {
         json j = ParseJsonFromFile(path);
