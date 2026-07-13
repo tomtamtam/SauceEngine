@@ -7,10 +7,15 @@
 // - Documentation        https://dearimgui.com/docs (same as your local docs/ folder).
 // - Introduction, links and more at the top of imgui.cpp
 
+#include <complex>
+#include <filesystem>
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
+#include <iostream>
+#include <sstream>
 #include <stdio.h>
+#include <string>
 #define GL_SILENCE_DEPRECATION
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <GLES2/gl2.h>
@@ -28,6 +33,12 @@
 #ifdef __EMSCRIPTEN__
 #include "../libs/emscripten/emscripten_mainloop_stub.h"
 #endif
+
+
+
+
+std::string showOpenFolderDialog(char *buffer, bool *failed);
+
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -121,9 +132,16 @@ int main(int, char**)
     //IM_ASSERT(font != nullptr);
 
     // Our state
-    bool show_demo_window = true;
-    bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+    bool inProject = false;
+    std::string projPath;
+
+    //project selector
+    bool openDialog = false;
+
+    //open dialog
+    char buffer[200] = {};
+    bool failed = false;
 
     // Main loop
 #ifdef __EMSCRIPTEN__
@@ -152,41 +170,37 @@ int main(int, char**)
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-        if (show_demo_window)
-            ImGui::ShowDemoWindow(&show_demo_window);
-
-        // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
+        if(!inProject)
         {
-            static float f = 0.0f;
-            static int counter = 0;
+            ImGui::Begin("SauceEngine Edito");
 
-            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+            if(ImGui::Button("Create Project"))
+                std::cout << "Create Project\n";
 
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-            ImGui::Checkbox("Another Window", &show_another_window);
+            if(ImGui::Button("Open Project"))
+                openDialog = true;
 
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
-
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+            ImGui::End();
+        }
+        else
+        {
+            std::string name = "SauceEditor " + projPath;
+            ImGui::Begin(name.c_str());
+            ImGui::Text("Run");
+            if(ImGui::Button("Button"))
+                std::cout << "Pressed\n";
             ImGui::End();
         }
 
-        // 3. Show another simple window.
-        if (show_another_window)
+        if(openDialog)
         {
-            ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-            ImGui::Text("Hello from another window!");
-            if (ImGui::Button("Close Me"))
-                show_another_window = false;
-            ImGui::End();
+            std::string res = showOpenFolderDialog(buffer, &failed);
+            if(res != "")
+            {
+                openDialog = false;
+                inProject = true;
+                projPath = res;
+            }
         }
 
         // Rendering
@@ -213,4 +227,36 @@ int main(int, char**)
     glfwTerminate();
 
     return 0;
+}
+
+std::string showOpenFolderDialog(char *buffer, bool *failed)
+{
+    ImGui::Begin("Choose Folder");
+
+    ImGui::InputText("Path (using /home/user/...)", buffer, 200);
+
+    std::string s;
+
+    if(ImGui::Button("Open"))
+    {
+        s = std::string(buffer);
+        if(!std::filesystem::exists(s))
+        {
+            *failed = true;
+            s = "";
+        }
+        else
+        {
+            *failed = false;
+        }
+    }
+
+    if(failed)
+    {
+        ImGui::Text("Error: Directorry does not exists");
+    }
+
+    ImGui::End();
+
+    return s;
 }
