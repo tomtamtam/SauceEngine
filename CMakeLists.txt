@@ -33,6 +33,22 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(glm)
 
+#IMGUI
+add_library(imgui STATIC
+  ${CMAKE_SOURCE_DIR}/Engine/vendor/imgui/imgui.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/vendor/imgui/imgui_draw.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/vendor/imgui/imgui_widgets.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/vendor/imgui/imgui_tables.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/vendor/imgui/imgui_demo.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/vendor/imgui/backends/imgui_impl_glfw.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/vendor/imgui/backends/imgui_impl_opengl3.cpp
+)
+target_include_directories(imgui PUBLIC
+  ${CMAKE_SOURCE_DIR}/Engine/vendor/imgui
+    ${CMAKE_SOURCE_DIR}/Engine/vendor/imgui/backends
+)
+target_link_libraries(imgui PUBLIC glfw glad)
+
 # JSON
 FetchContent_Declare(
     nlohmann_json
@@ -116,15 +132,18 @@ target_link_libraries(SauceEngine PUBLIC
 )
 
 #OpenGL
+add_library(sauce_opengl INTERFACE)
 if(WIN32)
-    target_link_libraries(SauceEngine PUBLIC opengl32)
+    target_link_libraries(sauce_opengl INTERFACE opengl32)
 elseif(APPLE)
     find_library(OPENGL_LIBRARY OpenGL REQUIRED)
-    target_link_libraries(SauceEngine PUBLIC ${OPENGL_LIBRARY})
+    target_link_libraries(sauce_opengl INTERFACE ${OPENGL_LIBRARY})
 else()
     find_package(OpenGL REQUIRED)
-    target_link_libraries(SauceEngine PUBLIC OpenGL::GL)
+    target_link_libraries(sauce_opengl INTERFACE OpenGL::GL)
 endif()
+
+target_link_libraries(SauceEngine PUBLIC sauce_opengl)
 
 # Terminal App
 
@@ -139,9 +158,16 @@ target_link_libraries(sauce-engine
 
 # UI Editor
 add_executable(sauce-editor
-  ${CMAKE_SOURCE_DIR}/Editor/UI/SauceEditor.cpp
+    ${CMAKE_SOURCE_DIR}/Editor/UI/SauceEditor.cpp
     ${CMAKE_SOURCE_DIR}/Editor/Shared/Shared.cpp
 )
 
-target_link_libraries(sauce-engine
+target_link_libraries(sauce-editor
+    glad
+    glfw
+    glm::glm
+    nlohmann_json::nlohmann_json
+    stb_image
+    imgui
+    sauce_opengl
 )
