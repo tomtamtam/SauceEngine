@@ -22,6 +22,13 @@
 #endif
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
 
+#include "../Shared/Shared.h"
+#include "Editor.h"
+
+#define DL_SUCESS 1
+#define DL_PASS 0
+#define DL_CANCEL -1
+
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
 // To link with VS2010-era libraries, VS2015+ requires linking with legacy_stdio_definitions.lib, which we do using this pragma.
 // Your own project should not be affected, as you are likely to link with a newer binary of GLFW that is adequate for your version of Visual Studio.
@@ -37,8 +44,8 @@
 
 
 
-std::string showOpenFolderDialog(char *buffer, bool *failed);
-
+int showOpenFolderDialog(char *buffer, bool *failed);
+int showNameDialog(char *buffer);
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -46,7 +53,7 @@ static void glfw_error_callback(int error, const char* description)
 }
 
 // Main code
-int main(int, char**)
+int main(int argc, char** argv)
 {
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit())
@@ -134,7 +141,6 @@ int main(int, char**)
     // Our state
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
     bool inProject = false;
-    std::string projPath;
 
     //project selector
     bool openDialog = false;
@@ -142,6 +148,23 @@ int main(int, char**)
     //open dialog
     char buffer[200] = {};
     bool failed = false;
+
+    //name dialog
+    char nameBuffer[200] = {};
+    bool nameDialog = false;
+    bool creating = false;
+
+    EditorState state = {};
+    state.first = true;
+
+    if(argc == 2)
+    {
+        if(std::filesystem::exists(argv[1]))
+        {
+            state.projectPath = std::string(argv[1]);
+            inProject = true;
+        }
+    }
 
     // Main loop
 #ifdef __EMSCRIPTEN__
@@ -170,37 +193,74 @@ int main(int, char**)
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
+        ImGuiViewport* viewport = ImGui::GetMainViewport();
+
         if(!inProject)
         {
+            // main
+            ImGui::SetNextWindowPos(viewport->WorkPos);
+            ImGui::SetNextWindowSize(viewport->WorkSize);
             ImGui::Begin("SauceEngine Edito");
 
             if(ImGui::Button("Create Project"))
-                std::cout << "Create Project\n";
+            {
+                openDialog = true;
+                creating = true;
+            }
 
             if(ImGui::Button("Open Project"))
                 openDialog = true;
 
             ImGui::End();
+
+            //folder open
+            if(openDialog)
+            {
+                ImGui::SetNextWindowPos(ImVec2(viewport->WorkSize.x / 2 - 350, viewport->WorkSize.y / 2 - 100));
+                int dialog = showOpenFolderDialog(buffer, &failed);
+                if(dialog == DL_SUCESS)
+                {
+                    openDialog = false;
+                    state.projectPath = std::string(buffer);
+                    if(creating)
+                    {
+                        nameDialog = true;
+                    }
+                    else
+                    {
+                        inProject = true;
+                    }
+                }
+                else if(dialog == DL_CANCEL)
+                {
+                    openDialog = false;
+                    creating = false;
+                    std::cout << "cancel\n";
+                }
+            }
+
+            //name dialog
+            if(nameDialog)
+            {
+                ImGui::SetNextWindowPos(ImVec2(viewport->WorkSize.x / 2 - 350, viewport->WorkSize.y / 2 - 100));
+                int dialog = showNameDialog(nameBuffer);
+                if(dialog == DL_SUCESS)
+                {
+                    createProject(std::string(nameBuffer), std::string(buffer));
+                    inProject = true;
+                    nameDialog = false;
+                    state.projectPath += "/" + std::string(nameBuffer);
+                }
+                else if(dialog == DL_CANCEL)
+                {
+                    nameDialog = false;
+                    creating = false;
+                }
+            }
         }
         else
         {
-            std::string name = "SauceEditor " + projPath;
-            ImGui::Begin(name.c_str());
-            ImGui::Text("Run");
-            if(ImGui::Button("Button"))
-                std::cout << "Pressed\n";
-            ImGui::End();
-        }
-
-        if(openDialog)
-        {
-            std::string res = showOpenFolderDialog(buffer, &failed);
-            if(res != "")
-            {
-                openDialog = false;
-                inProject = true;
-                projPath = res;
-            }
+            Editor(&state);
         }
 
         // Rendering
@@ -229,8 +289,10 @@ int main(int, char**)
     return 0;
 }
 
-std::string showOpenFolderDialog(char *buffer, bool *failed)
+int showOpenFolderDialog(char *buffer, bool *failed)
 {
+    int finished = 0;
+    ImGui::SetNextWindowSize(ImVec2(700, 200), ImGuiCond_Always);
     ImGui::Begin("Choose Folder");
 
     ImGui::InputText("Path (using /home/user/...)", buffer, 200);
@@ -243,20 +305,42 @@ std::string showOpenFolderDialog(char *buffer, bool *failed)
         if(!std::filesystem::exists(s))
         {
             *failed = true;
-            s = "";
         }
         else
         {
+            finished = 1;
             *failed = false;
         }
     }
+    if(ImGui::Button("Cancel"))
+        finished = -1;
 
-    if(failed)
+
+    if(*failed)
     {
         ImGui::Text("Error: Directorry does not exists");
     }
 
     ImGui::End();
 
-    return s;
+    return finished;
+}
+
+int showNameDialog(char *buffer)
+{
+    ImGui::SetNextWindowSize(ImVec2(700, 200), ImGuiCond_Always);
+    int finished = 0;
+    ImGui::Begin("Choose Name");
+
+    ImGui::InputText("Project Name", buffer, 200);
+    if(ImGui::Button("Submit") && buffer[0] != 0)
+    {
+        finished = 1;
+    }
+    if(ImGui::Button("Cancel"))
+        finished = -1;
+
+
+    ImGui::End();
+    return finished;
 }

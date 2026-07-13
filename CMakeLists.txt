@@ -159,6 +159,7 @@ target_link_libraries(sauce-engine
 # UI Editor
 add_executable(sauce-editor
     ${CMAKE_SOURCE_DIR}/Editor/UI/SauceEditor.cpp
+    ${CMAKE_SOURCE_DIR}/Editor/UI/Editor.cpp
     ${CMAKE_SOURCE_DIR}/Editor/Shared/Shared.cpp
 )
 
