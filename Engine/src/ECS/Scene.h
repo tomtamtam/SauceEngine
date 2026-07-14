@@ -7,7 +7,6 @@
 #include "entt/entt.hpp"
 #include <cstdint>
 #include <memory>
-#include <string>
 #include "Core/SceneSerializer.h"
 
 #define F_NEAR 1.0f
@@ -25,7 +24,6 @@ namespace Sauce
 
         Entity CreateEntity();
         Entity CreateEntity(const std::string &name);
-        Entity CreateEntity(const std::string &name, UUID uuid);
 
         void Init();
         void Start();

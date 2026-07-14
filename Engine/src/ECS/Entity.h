@@ -10,7 +10,7 @@ namespace Sauce
     {
     public:
 
-        Entity(entt::entity handle, Scene *scene, UUID uuid, std::string name);
+        Entity(entt::entity handle, Scene *scene);
         Entity();
         Entity(const Entity &other) = default;
 
@@ -33,8 +33,6 @@ namespace Sauce
         }
 
     private:
-        UUID m_ID;
-        std::string m_Name;
         entt::entity m_EntityHandle;
         Scene* m_Scene;
     };

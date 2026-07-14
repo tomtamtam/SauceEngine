@@ -2,6 +2,7 @@
 #include "ECS/Components.h"
 #include "ECS/Entity.h"
 #include "Render/Mesh.h"
+#include "entt/entity/fwd.hpp"
 #include <cstdint>
 #include <fstream>
 #include <nlohmann/json.hpp>
@@ -18,7 +19,85 @@ namespace Sauce
 
     void SceneSerializer::Serialze(const std::string &path)
     {
-        // Scene => JSON
+        json jScene;
+        jScene["name"] = m_Scene->m_Name;
+        jScene["id"] = (uint64_t)m_Scene->m_ID;
+
+        if(jScene["objects"].size() == 0)
+            return;
+
+        auto view = m_Scene->m_Registry.view<UUIDComponent>();
+
+        int i = 0;
+        for(auto e : view)
+        {
+        int compCount = 0;
+            //UUID
+            json jUUID;
+            jUUID["id"] = UUID_CIDX;
+            jUUID["values"]["id"] = (uint64_t)m_Scene->m_Registry.get<UUIDComponent>(e).Id;
+            jUUID["values"]["name"] = m_Scene->m_Registry.get<UUIDComponent>(e).Name;
+            jScene["objects"][i]["components"][compCount] = jUUID;
+            compCount ++;
+
+            //Transform
+            if(auto *tc = m_Scene->m_Registry.try_get<TransformComponent>(e))
+            {
+                json jTransform;
+                jTransform["id"] = TRANSFORM_CIDX;
+                jTransform["values"][0] = tc->Translation.x;
+                jTransform["values"][1] = tc->Translation.y;
+                jTransform["values"][2] = tc->Translation.z;
+
+                jTransform["values"][3] = tc->Rotation.x;
+                jTransform["values"][4] = tc->Rotation.x;
+                jTransform["values"][5] = tc->Rotation.x;
+
+                jTransform["values"][6] = tc->Scale.x;
+                jTransform["values"][7] = tc->Scale.x;
+                jTransform["values"][8] = tc->Scale.x;
+
+                jScene["objects"][i]["components"][compCount] = jTransform;
+                compCount ++;
+            }
+
+            //Script
+            if(auto *sc = m_Scene->m_Registry.try_get<Script>(e))
+            {
+                json jScript;
+                jScript["id"] = SCRIPT_CIDX;
+                jScript["values"][0] = sc->ScriptName;
+                jScene["objects"][i][compCount] = jScript;
+                compCount ++;
+            }
+
+            //Camera
+            if(auto *cc = m_Scene->m_Registry.try_get<CameraComponent>(e))
+            {
+                json jCamera;
+                jCamera["id"] = CAMERA_CIDX;
+                jCamera["values"][0] = cc->FOV;
+                jCamera["values"][1] = cc->Width;
+                jCamera["values"][2] = cc->Height;
+                jCamera["values"][3] = cc->IsMain;
+                jCamera["values"][4] = cc->IsAdjustable;
+
+                jScene["objects"][i]["component"][compCount] = jCamera;
+                compCount ++;
+            }
+
+            //MeshInstance
+            if(auto *mc = m_Scene->m_Registry.try_get<MeshInstance>(e))
+            {
+                json jMesh;
+                jMesh["id"] = MESH_INSTANCE_CIDX;
+                jMesh["values"][0] = mc->IsVisible;
+                jScene["objects"][i]["components"][compCount];
+                compCount ++;
+            }
+
+            i++;
+        }
     }
 
     void attachComponent(json component, Entity *entity)
@@ -59,6 +138,11 @@ namespace Sauce
                 entity->GetComponent<MeshInstance>().PMesh = CreateCubeMesh();
                 break;
             }
+            case UUID_CIDX:
+            {
+                entity->AddComponent<UUIDComponent>();
+                entity->GetComponent<UUIDComponent>().Id = (UUID)component["values"][0].get<uint64_t>();
+            }
             default:
                 break;
         }
@@ -75,7 +159,7 @@ namespace Sauce
 
         for(auto o : jScene["objects"])
         {
-            Entity e(m_Scene->CreateEntity(o["name"], o["id"].get<uint64_t>()));
+            Entity e(m_Scene->CreateEntity());
             for(auto c : o["components"])
             {
                 attachComponent(c, &e);

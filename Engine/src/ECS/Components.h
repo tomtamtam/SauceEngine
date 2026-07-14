@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/UUID.h"
 #include "Render/Mesh.h"
 #include "ScriptableEntity.h"
 #include <cstdint>
@@ -22,10 +23,10 @@ namespace Sauce
     #define TRANSFORM_CIDX 1
     #define MESH_INSTANCE_CIDX 2
     #define CAMERA_CIDX 3
+    #define UUID_CIDX 4
+
     #define CODE_ID 0
     #define TRANSFORM_ID 1
-
-
 
 
     struct TransformComponent
@@ -77,5 +78,20 @@ namespace Sauce
     {
         Mesh *PMesh = nullptr;
         bool IsVisible;
+    };
+
+    struct UUIDComponent
+    {
+        UUID Id;
+        std::string Name;
+        UUIDComponent()
+            : Id(), Name("New Object")
+        {}
+        UUIDComponent(const std::string &name)
+            : Id(), Name(name)
+        {}
+        ~UUIDComponent() {}
+
+        operator UUID() const {return Id;}
     };
 }

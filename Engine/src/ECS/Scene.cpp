@@ -8,6 +8,7 @@
 #include <iostream>
 #include <memory>
 #include <nlohmann/json.hpp>
+#include <string>
 
 using json = nlohmann::json;
 
@@ -25,17 +26,14 @@ namespace Sauce
 
     Entity Scene::CreateEntity()
     {
-        return { m_Registry.create(), this, UUID(), "NewEntity"};
+        return { m_Registry.create(), this};
     }
 
     Entity Scene::CreateEntity(const std::string &name)
     {
-        return { m_Registry.create(), this, UUID(), name};
-    }
-
-    Entity Scene::CreateEntity(const std::string &name, UUID uuid)
-    {
-        return { m_Registry.create(), this, uuid, name};
+        Entity e = { m_Registry.create(), this};
+        e.AddComponent<UUIDComponent>(name);
+        return e;
     }
 
     void Scene::Init()
@@ -47,7 +45,7 @@ namespace Sauce
 
             if (script.Instance)
             {
-                script.Instance->m_Entity = Entity(entity, this, UUID(), script.ScriptName);
+                script.Instance->m_Entity = Entity(entity, this);
                 script.Instance->OnInit();
             }
         }

@@ -30,12 +30,12 @@ namespace Sauce
 
         //Load projinfo
         std::ifstream info("../.project_info.json");
-        json jinfo;
-        info >> jinfo;
+        json jInfo;
+        info >> jInfo;
 
-        m_Name = jinfo["name"];
-        m_DefaultScene = jinfo["defaultScene"];
-        m_DefaultShader = jinfo["defaultShader"];
+        m_Name = jInfo["name"];
+        m_DefaultScene = jInfo["defaultScene"];
+        m_DefaultShader = jInfo["defaultShader"];
 
         auto self = shared_from_this();
 
@@ -45,7 +45,7 @@ namespace Sauce
 
         m_Renderer->CreateWindow(m_Name, 800, 800, onShouldClose, onKeyCallback);
 
-        m_SceneSerializer.Deserialze(m_DefaultScene);
+        m_SceneSerializer.Deserialze("../" + m_DefaultScene);
 
         m_CurrentScene->Init();
 
