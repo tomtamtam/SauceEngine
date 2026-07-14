@@ -2,8 +2,10 @@
 
 #include "ECS/Scene.h"
 #include <memory>
+
 namespace Sauce
 {
+    class Scene;
     class SceneSerializer
     {
     public:

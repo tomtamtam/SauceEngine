@@ -13,8 +13,8 @@ using json = nlohmann::json;
 
 namespace Sauce
 {
-    Scene::Scene(const UUID &uuid, const std::string &name, std::shared_ptr<Renderer> renderer)
-        : m_Name(name), m_ID(uuid), m_Renderer(renderer)
+    Scene::Scene(std::shared_ptr<Renderer> renderer)
+        : m_Renderer(renderer)
     {
         entt::entity entity = m_Registry.create();
         m_InputSystem = std::make_shared<InputSystem>();

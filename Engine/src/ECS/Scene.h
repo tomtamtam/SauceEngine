@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <memory>
 #include <string>
+#include "Core/SceneSerializer.h"
 
 #define F_NEAR 1.0f
 #define F_FAR 1000.0f
@@ -19,7 +20,7 @@ namespace Sauce
     class Scene
     {
     public:
-        Scene(const UUID &uuid, const std::string &name, std::shared_ptr<Renderer> renderer);
+        Scene(std::shared_ptr<Renderer> renderer);
         ~Scene();
 
         Entity CreateEntity();
@@ -43,5 +44,6 @@ namespace Sauce
         uint32_t m_WindowWidth, m_WindowHeight;
 
         friend class Entity;
+        friend class SceneSerializer;
     };
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/SceneSerializer.h"
 #include "ECS/Scene.h"
 #include "Render/Renderer.h"
 #include <memory>
@@ -25,8 +26,6 @@ namespace Sauce
         const std::string ENTITY_DLL_PATH = "./libGame.so";
         void Setup();
 
-        std::shared_ptr<Scene> LoadScene(const std::string &path);
-
         float m_DT, m_BeginTime, m_EndTime;
 
         bool m_IsRunning;
@@ -39,5 +38,6 @@ namespace Sauce
         std::shared_ptr<Renderer> m_Renderer;
 
         std::shared_ptr<Scene> m_CurrentScene;
+        SceneSerializer m_SceneSerializer;
     };
 }
