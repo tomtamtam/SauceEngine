@@ -28,11 +28,9 @@ Transform-Component Values:
     0: px
     1: py
     2: pz
-
     3: rx
     4: ry
     5: rz
-
     6: sx
     7: sy
     8: sz
