@@ -19,6 +19,7 @@ public:
 
         ImGui_ImplGlfw_InitForOpenGL(window, false);
         ImGui_ImplOpenGL3_Init("#version 330");
+        //glfwSwapInterval(1);
     }
 
     void BeginFrame()
