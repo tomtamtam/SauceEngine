@@ -29,7 +29,7 @@ private:
     {
         MAIN_SCREEN,
         CREATE_SCREEN,
-        OPEN_SCENE
+        OPEN_SCREEN
     };
 public:
     ProjectSelector(std::string *path)
@@ -51,11 +51,11 @@ public:
         ImGui::Begin("Select Projct");
             if(ImGui::Button("Create Project"))
             {
-                m_State = SelectionState::OPEN_SCENE;
+                m_State = SelectionState::CREATE_SCREEN;
             }
             if(ImGui::Button("Open Folder"))
             {
-                m_State = SelectionState::CREATE_SCREEN;
+                m_State = SelectionState::OPEN_SCREEN;
             }
             if(ImGui::Button("Quit"))
             {
@@ -105,6 +105,8 @@ public:
                                 createProject(m_ProjName, m_ProjPath);
                                 *m_Path = finalPath;
                                 shouldReturn = true;
+                                m_InvalidPath = false;
+                                m_AlreadyExsists = false;
                             }
                         }
                         else {
@@ -115,14 +117,52 @@ public:
                     if(ImGui::Button("Cancel"))
                     {
                         m_State = SelectionState::MAIN_SCREEN;
+                        m_InvalidPath = false;
+                        m_AlreadyExsists = false;
                     }
                 ImGui::End();
                 break;
 
-            case SelectionState::OPEN_SCENE:
+            case SelectionState::OPEN_SCREEN:
                 ImGui::SetNextWindowSize(ImVec2(700, 200), ImGuiCond_Always);
                 ImGui::SetNextWindowPos(ImVec2(viewport->WorkSize.x / 2 - 350, viewport->WorkSize.y / 2 - 100));
                 ImGui::Begin("Open Project");
+                    ImGui::InputText("Path", m_ProjPath, 200);
+                    ImGui::SameLine();
+                    if(ImGui::Button("Browse"))
+                    {
+                        nfdresult_t res = NFD_PickFolder("~/", &m_NfdPath);
+                        if(res == NFD_OKAY)
+                        {
+                            snprintf(m_ProjPath, sizeof(m_ProjPath), "%s", m_NfdPath);
+                            free(m_NfdPath);
+                            m_NfdPath = nullptr;
+                        }
+                    }
+                    if(m_InvalidPath)
+                    {
+                        ImGui::TextColored({255, 0, 0, 1}, "Path %s isn't a SauceEngine project", m_ProjPath);
+                    }
+                    if(ImGui::Button("Open"))
+                    {
+                        std::string finalPath = std::format("{}/.project_info.json", m_ProjPath);
+                        if(std::filesystem::exists(finalPath))
+                        {
+                            shouldReturn = true;
+                            *m_Path = m_ProjPath;
+                            m_InvalidPath = false;
+                        }
+                        else
+                        {
+                            m_InvalidPath = true;
+                        }
+                    }
+                    ImGui::SameLine();
+                    if(ImGui::Button("Cancel"))
+                    {
+                        m_State = SelectionState::MAIN_SCREEN;
+                        m_InvalidPath = false;
+                    }
                 ImGui::End();
                 break;
         }
