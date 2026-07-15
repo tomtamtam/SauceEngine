@@ -9,6 +9,8 @@ struct EditorState
     std::shared_ptr<Sauce::Renderer> renderer;
     ImGuiLayer layer;
     bool shouldClose = false;
+    bool inProject;
+    std::string projPath;
 };
 
 

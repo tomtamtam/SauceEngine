@@ -96,6 +96,39 @@ add_library(stb_image STATIC
 target_include_directories(stb_image PUBLIC Engine/vendor/stb_image)
 set_target_properties(stb_image PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
+# nativefiledialog
+set(NATIVEFILEDIALOG_DIR "${CMAKE_SOURCE_DIR}/Engine/vendor/nativefiledialog")
+add_library(nativefiledialog STATIC
+    "${NATIVEFILEDIALOG_DIR}/nfd_common.c"
+)
+target_include_directories(nativefiledialog
+    PUBLIC
+        "${NATIVEFILEDIALOG_DIR}/include"
+        "${NATIVEFILEDIALOG_DIR}"
+)
+if(WIN32)
+    target_sources(nativefiledialog PRIVATE
+        "${NATIVEFILEDIALOG_DIR}/nfd_win.cpp"
+    )
+elseif(APPLE)
+    target_sources(nativefiledialog PRIVATE
+        "${NATIVEFILEDIALOG_DIR}/nfd_cocoa.m"
+    )
+    target_link_libraries(nativefiledialog PRIVATE "-framework Cocoa")
+else() # Linux/Unix - using GTK backend
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+    target_sources(nativefiledialog PRIVATE
+        "${NATIVEFILEDIALOG_DIR}/nfd_gtk.c"
+    )
+    target_include_directories(nativefiledialog PRIVATE ${GTK3_INCLUDE_DIRS})
+    target_link_libraries(nativefiledialog PRIVATE ${GTK3_LIBRARIES})
+    target_compile_options(nativefiledialog PRIVATE ${GTK3_CFLAGS_OTHER})
+endif()
+set_target_properties(nativefiledialog PROPERTIES
+    C_STANDARD 11
+)
+
 #ENGINE (Static Library)
 add_library(SauceEngine SHARED
     Engine/src/Core/UUID.cpp
@@ -160,9 +193,10 @@ target_link_libraries(sauce-engine
 # UI Editor
 add_executable(sauce-editor
     ${CMAKE_SOURCE_DIR}/Editor/UI/SauceEditor.cpp
+    ${CMAKE_SOURCE_DIR}/Editor/Shared/Shared.cpp
 )
 
-target_link_libraries(sauce-editor
+target_link_libraries(sauce-editor PRIVATE
     glad
     glfw
     glm::glm
@@ -171,6 +205,7 @@ target_link_libraries(sauce-editor
     imgui
     sauce_opengl
     SauceEngine
+    nativefiledialog
 )
 
 target_include_directories(sauce-editor PUBLIC

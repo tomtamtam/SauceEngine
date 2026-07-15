@@ -1,3 +1,4 @@
+/*
 #include "../Shared/Shared.h"
 
 #include "nlohmann/json_fwd.hpp"
@@ -182,4 +183,7 @@ void edit(const std::string &path)
         std::getline(std::cin, cmnd);
         processInput(cmnd);
     }
-}
+}*/
+
+int main()
+{}

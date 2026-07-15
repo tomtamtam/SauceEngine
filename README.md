@@ -18,7 +18,7 @@ chmod +x setup.sh
 
 ### Used Libraries
 #### Inside repo (Engine/vendor):
-glad, stb_image, imgui
+glad, stb_image, imgui, nativefiledialog
 
 #### Fetched through CMake:
 glfw, glm, nlohman/json, lua, entt, assimp
