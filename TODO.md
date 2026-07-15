@@ -1,2 +1,1 @@
-- Scene Serializer to extract scene loading
 - Editor Rendering Scene

@@ -39,7 +39,37 @@ namespace Sauce {
         glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mod) {
                 auto *self = static_cast<Window*>(glfwGetWindowUserPointer(window));
                 self->m_OnKeyCallback(window, key, scancode, action, mod);
-                });
+        });
+
+        glfwSetMouseButtonCallback(m_Window, [](GLFWwindow *window, int button, int action, int mods){
+                auto *self = static_cast<Window*>(glfwGetWindowUserPointer(window));
+                self->m_MouseButtonCallback(window, button, action, mods);
+        });
+
+        glfwSetScrollCallback(m_Window, [](GLFWwindow *window, double xoffset, double yoffset){
+                auto *self = static_cast<Window*>(glfwGetWindowUserPointer(window));
+                self->m_ScrollCallback(window, xoffset, yoffset);
+        });
+
+        glfwSetCharCallback(m_Window, [](GLFWwindow *window, unsigned int codepoint){
+                auto *self = static_cast<Window*>(glfwGetWindowUserPointer(window));
+                self->m_CharCallback(window, codepoint);
+        });
+
+        glfwSetCursorEnterCallback(m_Window, [](GLFWwindow *window, int entered){
+                auto *self = static_cast<Window*>(glfwGetWindowUserPointer(window));
+                self->m_EnterCallback(window, entered);
+        });
+
+        glfwSetCursorPosCallback(m_Window, [](GLFWwindow *window, double xpos, double ypos){
+                auto *self = static_cast<Window*>(glfwGetWindowUserPointer(window));
+                self->m_CursorPosCallback(window, xpos, ypos);
+        });
+
+        glfwSetWindowFocusCallback(m_Window, [](GLFWwindow *window, int focused){
+                auto *self = static_cast<Window*>(glfwGetWindowUserPointer(window));
+                self->m_WindowFocusCallback(window, focused);
+        });
 
 
         // Resize Callback
@@ -89,7 +119,7 @@ namespace Sauce {
     }
 
     Window::Window(std::string title, uint32_t width, uint32_t height, std::function<void()> onShouldClose, SauceKeyCallback keyCallback, SauceMouseButtonCallback mouseButtonCallback, SauceScrollCallback scrollCallback, SauceCharCallback charCallback, SauceEnterCallback enterCallback, SauceCurtsorPositionCallback cursorPositionCallback, SauceWindowFocusCallback windowFocusCallback)
-        : m_Title(title), m_Width(width), m_Height(height), m_Window(nullptr), m_OnShouldClose(onShouldClose), m_OnKeyCallback(keyCallback)
+        : m_Title(title), m_Width(width), m_Height(height), m_Window(nullptr), m_OnShouldClose(onShouldClose), m_OnKeyCallback(keyCallback), m_CharCallback(charCallback), m_CursorPosCallback(cursorPositionCallback), m_EnterCallback(enterCallback), m_ScrollCallback(scrollCallback), m_MouseButtonCallback(mouseButtonCallback), m_WindowFocusCallback(windowFocusCallback)
     {
     }
 

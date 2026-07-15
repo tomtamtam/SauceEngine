@@ -1,9 +1,9 @@
-
 #include "Render/Renderer.h"
 #include "GLFW/glfw3.h"
 #include "ImGuiLayer.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
+#include <iostream>
 #include <memory>
 
 auto renderer = std::make_shared<Sauce::Renderer>();
@@ -12,6 +12,7 @@ bool shouldClose = false;
 
 void onClose()
 {
+    std::cout << "close\n";
     shouldClose = true;
 }
 
@@ -69,6 +70,8 @@ int main()
         }
         layer.BeginFrame();
             ImGui::Begin("Test");
+            if(ImGui::Button("Test"))
+                std::cout << "pressed\n";
             ImGui::End();
         layer.EndFrame();
         glfwSwapBuffers(renderer->GetWindow());

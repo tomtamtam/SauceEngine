@@ -32,5 +32,11 @@ namespace Sauce
         GLFWwindow *m_Window;
         std::function<void()> m_OnShouldClose;
         SauceKeyCallback m_OnKeyCallback;
+        SauceMouseButtonCallback m_MouseButtonCallback;
+        SauceScrollCallback m_ScrollCallback;
+        SauceCharCallback m_CharCallback;
+        SauceEnterCallback m_EnterCallback;
+        SauceCurtsorPositionCallback m_CursorPosCallback;
+        SauceWindowFocusCallback m_WindowFocusCallback;
     };
 }
