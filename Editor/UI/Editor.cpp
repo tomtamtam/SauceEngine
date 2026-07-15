@@ -6,11 +6,11 @@ void Editor(EditorState *state)
 {
     if(state->first)
     {
-        std:: cout << "\x1B[32mEditing\033[0m " << state->projectPath << '\n';
+        std:: cout << "\x1B[32mEditing\033[0m " << state->info.projectPath << '\n';
         state->first = false;
     }
 
-    std::string name = "SauceEditor " + state->projectPath;
+    std::string name = "SauceEditor " + state->info.projectPath;
 
     auto *viewport = ImGui::GetMainViewport();
 

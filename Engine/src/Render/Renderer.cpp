@@ -10,11 +10,12 @@
 
 namespace Sauce
 {
-    void Renderer::CreateWindow(const std::string &name, uint32_t width, uint32_t height, std::function<void()> onShouldClose, std::function<void(GLFWwindow *window, int key, int scancode, int action, int mod)> onKeyCallback)
+    void Renderer::CreateWindow(const std::string &name, uint32_t width, uint32_t height, std::function<void()> onShouldClose, SauceKeyCallback keyCallback, SauceMouseButtonCallback mouseButtonCallback, SauceScrollCallback scrollCallback, SauceCharCallback charCallback, SauceEnterCallback onEnterCallback, SauceCurtsorPositionCallback cursorPositionCallback, SauceWindowFocusCallback windowFocusCallback)
     {
-        m_Window = std::make_unique<Window>(name, width, height, onShouldClose, onKeyCallback);
+        m_Window = std::make_unique<Window>(name, width, height, onShouldClose, keyCallback, mouseButtonCallback, scrollCallback, charCallback, onEnterCallback, cursorPositionCallback, windowFocusCallback);
         m_Window->Init();
     }
+
 
     void Renderer::KillWindow()
     {
@@ -64,5 +65,10 @@ namespace Sauce
     uint32_t Renderer::GetWinHeight() const
     {
         return m_Window->GetHeight();
+    }
+
+    GLFWwindow *Renderer::GetWindow() const
+    {
+        return m_Window->GetWindow();
     }
 }

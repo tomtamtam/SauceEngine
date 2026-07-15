@@ -21,4 +21,9 @@ namespace Sauce
     {
         m_KeyboardListener.Callback(window, key, scancode, action, mods);
     }
+
+    void InputSystem::MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+    {
+
+    }
 }

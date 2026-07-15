@@ -163,19 +163,19 @@
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/Engine/vendor/imgui -I/home/tom/dev/SauceEngine/Engine/vendor/imgui/backends -std=gnu++20 -o CMakeFiles/sauce-editor.dir/Editor/UI/SauceEditor.cpp.o -c /home/tom/dev/SauceEngine/Editor/UI/SauceEditor.cpp",
+  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/Engine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/Engine/vendor/imgui -I/home/tom/dev/SauceEngine/Engine/vendor/imgui/backends -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -o CMakeFiles/sauce-editor.dir/Editor/UI/SauceEditor.cpp.o -c /home/tom/dev/SauceEngine/Editor/UI/SauceEditor.cpp",
   "file": "/home/tom/dev/SauceEngine/Editor/UI/SauceEditor.cpp",
   "output": "CMakeFiles/sauce-editor.dir/Editor/UI/SauceEditor.cpp.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/Engine/vendor/imgui -I/home/tom/dev/SauceEngine/Engine/vendor/imgui/backends -std=gnu++20 -o CMakeFiles/sauce-editor.dir/Editor/UI/Editor.cpp.o -c /home/tom/dev/SauceEngine/Editor/UI/Editor.cpp",
+  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/Engine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/Engine/vendor/imgui -I/home/tom/dev/SauceEngine/Engine/vendor/imgui/backends -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -o CMakeFiles/sauce-editor.dir/Editor/UI/Editor.cpp.o -c /home/tom/dev/SauceEngine/Editor/UI/Editor.cpp",
   "file": "/home/tom/dev/SauceEngine/Editor/UI/Editor.cpp",
   "output": "CMakeFiles/sauce-editor.dir/Editor/UI/Editor.cpp.o"
 },
 {
   "directory": "/home/tom/dev/SauceEngine/build",
-  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/Engine/vendor/imgui -I/home/tom/dev/SauceEngine/Engine/vendor/imgui/backends -std=gnu++20 -o CMakeFiles/sauce-editor.dir/Editor/Shared/Shared.cpp.o -c /home/tom/dev/SauceEngine/Editor/Shared/Shared.cpp",
+  "command": "/usr/bin/c++  -I/home/tom/dev/SauceEngine/Engine -I/home/tom/dev/SauceEngine/Engine/vendor/glad/include -I/home/tom/dev/SauceEngine/build/_deps/glfw-src/include -I/home/tom/dev/SauceEngine/build/_deps/glm-src -I/home/tom/dev/SauceEngine/build/_deps/nlohmann_json-src/include -I/home/tom/dev/SauceEngine/Engine/vendor/stb_image -I/home/tom/dev/SauceEngine/Engine/vendor/imgui -I/home/tom/dev/SauceEngine/Engine/vendor/imgui/backends -I/home/tom/dev/SauceEngine/Engine/src -I/home/tom/dev/SauceEngine -I/home/tom/dev/SauceEngine/build/_deps/lua-src/src -I/home/tom/dev/SauceEngine/build/_deps/entt-src/src -std=gnu++20 -o CMakeFiles/sauce-editor.dir/Editor/Shared/Shared.cpp.o -c /home/tom/dev/SauceEngine/Editor/Shared/Shared.cpp",
   "file": "/home/tom/dev/SauceEngine/Editor/Shared/Shared.cpp",
   "output": "CMakeFiles/sauce-editor.dir/Editor/Shared/Shared.cpp.o"
 },

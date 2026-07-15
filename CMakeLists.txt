@@ -172,4 +172,9 @@ target_link_libraries(sauce-editor
     stb_image
     imgui
     sauce_opengl
+    SauceEngine
+)
+
+target_include_directories(sauce-editor PUBLIC
+    ${CMAKE_SOURCE_DIR}/Engine
 )

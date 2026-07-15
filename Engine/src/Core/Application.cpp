@@ -39,11 +39,17 @@ namespace Sauce
 
         auto self = shared_from_this();
 
-        auto onShouldClose = [self](){self->Terminate();};
-        auto onResizeCallback = [self](uint32_t width, uint32_t height) {};
-        auto onKeyCallback = [self](GLFWwindow *window, int key, int scancode, int action, int mods) {self->m_CurrentScene->GetInputSystem()->KeyCallback(window, key, scancode, action, mods);};
+        auto onShouldClose = [&self](){self->Terminate();};
+        auto onResizeCallback = [&self](uint32_t width, uint32_t height) {};
+        auto onKeyCallback = [&self](GLFWwindow *window, int key, int scancode, int action, int mods) {self->m_CurrentScene->GetInputSystem()->KeyCallback(window, key, scancode, action, mods);};
+        auto onMouseButtonCallback = [&self](GLFWwindow *window, int button, int action, int mods) {};
+        auto onScrollCallback = [&self](GLFWwindow *window, double xoffset, double yoffset) {};
+        auto onCharCallback = [&self](GLFWwindow *window, uint32_t codepoint) {};
+        auto onEnterCallback = [&self](GLFWwindow *window, int entered) {};
+        auto onCursorPosCallback = [&self](GLFWwindow* window, double xpos, double ypos){};
+        auto onWindowFocusCallback = [&self](GLFWwindow* window, int focused){};
 
-        m_Renderer->CreateWindow(m_Name, 800, 800, onShouldClose, onKeyCallback);
+        m_Renderer->CreateWindow(m_Name, 800, 800, onShouldClose, onKeyCallback, onMouseButtonCallback, onScrollCallback, onCharCallback, onEnterCallback,onCursorPosCallback, onWindowFocusCallback);
 
         m_SceneSerializer.Deserialze("../" + m_DefaultScene);
 

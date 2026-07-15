@@ -7,7 +7,8 @@
 #include <string>
 
 namespace Sauce {
-    void Window::Init() {
+    void Window::Init() 
+    {
         std::cout << "win init\n";
         glfwSetErrorCallback([](int error, const char *desc) {
             std::cerr << "GLFW Error " << error << ": " << desc << std::endl;
@@ -87,8 +88,8 @@ namespace Sauce {
         m_OnShouldClose = []() {};
     }
 
-    Window::Window(std::string title, uint32_t width, uint32_t height, std::function<void()> onShouldClose, std::function<void(GLFWwindow *window, int key, int scancode, int action, int mod)> onKeyCallback)
-        : m_Title(title), m_Width(width), m_Height(height), m_Window(nullptr), m_OnShouldClose(onShouldClose), m_OnKeyCallback(onKeyCallback)
+    Window::Window(std::string title, uint32_t width, uint32_t height, std::function<void()> onShouldClose, SauceKeyCallback keyCallback, SauceMouseButtonCallback mouseButtonCallback, SauceScrollCallback scrollCallback, SauceCharCallback charCallback, SauceEnterCallback enterCallback, SauceCurtsorPositionCallback cursorPositionCallback, SauceWindowFocusCallback windowFocusCallback)
+        : m_Title(title), m_Width(width), m_Height(height), m_Window(nullptr), m_OnShouldClose(onShouldClose), m_OnKeyCallback(keyCallback)
     {
     }
 
@@ -100,5 +101,10 @@ namespace Sauce {
     uint32_t Window::GetHeight() const 
     {
         return m_Height;
+    }
+
+    GLFWwindow *Window::GetWindow() const
+    {
+        return m_Window;
     }
 }
