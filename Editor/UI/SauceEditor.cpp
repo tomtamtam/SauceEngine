@@ -6,6 +6,7 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include <filesystem>
+#include <iostream>
 #include <memory>
 #include <format>
 #include <nfd.h>
@@ -103,6 +104,7 @@ public:
                             else
                             {
                                 createProject(m_ProjName, m_ProjPath);
+                                m_State = SelectionState::MAIN_SCREEN;
                                 *m_Path = finalPath;
                                 shouldReturn = true;
                                 m_InvalidPath = false;
@@ -151,6 +153,7 @@ public:
                             shouldReturn = true;
                             *m_Path = m_ProjPath;
                             m_InvalidPath = false;
+                            m_State = SelectionState::MAIN_SCREEN;
                         }
                         else
                         {
@@ -178,9 +181,52 @@ private:
     nfdchar_t *m_NfdPath;
 };
 
+class Editor
+{
+public:
+    Editor(std::string *projPath) 
+        : m_ProjPath(*projPath)
+    {
+
+    }
+    ~Editor() {}
+    bool Update()
+    {
+        if(m_FirstTime)
+        {
+            std::cout << "\x1B[32mEditing\033[0m " << m_ProjPath << '\n';
+        }
+        ImGui::Begin("Test");
+            if(ImGui::Button("Quit"))
+                state.shouldClose = true;
+            ImGui::SameLine();
+            if(ImGui::Button("Back to ProjectSelector"))
+                state.inProject = false;
+        ImGui::End();
+        DrawMenuBar();
+        return true;
+    }
+private:
+    std::string m_ProjPath;
+    bool m_FirstTime;
+
+    void DrawSceneHirachy()
+    {
+        ImGui::Begin("Scene Hirachy");
+        ImGui::End();
+    }
+
+    void DrawMenuBar()
+    {
+        if(ImGui::BeginMenuBar())
+        {}
+    }
+};
+
 void Update();
 
 ProjectSelector projectSelector = {&state.projPath};
+Editor editor = {&state.projPath};
 
 int main()
 {
@@ -189,6 +235,7 @@ int main()
 
     while(!state.shouldClose)
     {
+        state.shouldClose = glfwWindowShouldClose(state.renderer->GetWindow());
         state.renderer->Clear();
         glfwPollEvents();
         if (glfwGetWindowAttrib(state.renderer->GetWindow(), GLFW_ICONIFIED) != 0)
@@ -213,5 +260,9 @@ void Update()
             state.inProject = true;
         }
         return;
+    }
+    if(!editor.Update())
+    {
+        state.inProject = false;
     }
 }
