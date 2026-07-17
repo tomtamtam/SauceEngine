@@ -12,6 +12,8 @@
 #define F_NEAR 1.0f
 #define F_FAR 1000.0f
 
+class Editor;
+
 namespace Sauce
 {
     class Entity;
@@ -43,5 +45,6 @@ namespace Sauce
 
         friend class Entity;
         friend class SceneSerializer;
+        friend class ::Editor;
     };
 }

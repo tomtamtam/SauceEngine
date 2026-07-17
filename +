@@ -1,6 +1,4 @@
 #include "../Shared/Shared.h"
-#include "ECS/Entity.h"
-#include "ECS/Components.h"
 #include "defines.h"
 #include "GLFW/glfw3.h"
 #include "ImGuiLayer.h"
@@ -9,12 +7,9 @@
 #include "imgui_internal.h"
 #include <GL/glext.h>
 #include <filesystem>
-#include <fstream>
 #include <iostream>
 #include <format>
 #include <nfd.h>
-#include <string>
-
 
 EditorState state = {};
 
@@ -200,19 +195,15 @@ class Editor
 {
 public:
     Editor(std::string *projPath) 
-        : m_ProjPath(*projPath), viewStates(false, true, true, true, true, true), m_DefaultScene(""), m_FirstTime(true)
+        : m_ProjPath(*projPath), viewStates(false, true, true, true, true, true)
     {
-
     }
     ~Editor() {}
     bool Update()
     {
         if(m_FirstTime)
         {
-            m_ProjPath = state.projPath;
             std::cout << "\x1B[32mEditing\033[0m " << m_ProjPath << '\n';
-            load();
-            m_FirstTime = false;
         }
         DrawMainWindow();
         DrawRunWindow();
@@ -227,20 +218,6 @@ private:
     std::string m_ProjPath;
     bool m_FirstTime;
     ViewStates viewStates;
-    char buffer[100];
-    bool m_ShowPopup;
-    std::string m_DefaultScene;
-
-    void load()
-    {
-        json j;
-        std::ifstream f(validPath(m_ProjPath) + "/.project_info.json");
-        std::cout << "json path: " << validPath(m_ProjPath) + "/.project_info.json" << '\n';
-        f >> j;
-        m_DefaultScene = std::format("{}/{}", validPath(m_ProjPath), j["defaultScene"].get<std::string>());
-        state.sceneSerializer.Deserialze(m_DefaultScene);
-        std::cout << "Desiralized: " << m_DefaultScene << '\n';
-    }
 
     void DrawMenuBar()
     {
@@ -412,42 +389,8 @@ private:
     {
         if(!viewStates.sceneHierarchy)
             return;
-
         ImGui::Begin("Scene Hierarchy");
-            if(ImGui::Button("Add"))
-            {
-                m_ShowPopup = true;
-                ImGui::OpenPopup("Add Entity");
-            }
-            ImGui::Separator();
-            ImGui::BeginChild("ScrollRegion", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
-            ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(4, 1));
-
-            auto view = state.scene->m_Registry.view<Sauce::UUIDComponent>();
-            for(auto e : view)
-            {
-                ImGui::TextUnformatted(state.scene->m_Registry.get<Sauce::UUIDComponent>(e).Name.c_str());
-            }
-            ImGui::PopStyleVar();
-            ImGui::EndChild();
-
-            if(m_ShowPopup)
-            {
-                ImGui::BeginPopup("Add Entity");
-                    ImGui::InputText("Name", buffer, 100);
-                    if(ImGui::Button("Add"))
-                    {
-                        std::string name = std::string(buffer);
-                        Sauce::Entity e = state.scene->CreateEntity(name);
-                        m_ShowPopup = false;
-                    }
-                    ImGui::SameLine();
-                    if(ImGui::Button("Cancel"))
-                    {
-                        m_ShowPopup = false;
-                    }
-                ImGui::EndPopup();
-            }
+        ImGui::Text("test");
         ImGui::End();
     }
 
@@ -456,17 +399,16 @@ private:
         if(!viewStates.inspector)
             return;
         ImGui::Begin("Inspector");
+        if(ImGui::Button("Add"))
+        {
+
+        }
         ImGui::End();
     }
 
     void run()
     {
         state.console.put(MessageType::INFO, "Run Scene: " + state.scene->m_Name);
-    }
-
-    void loadScene(const std::string &scenePath)
-    {
-        state.sceneSerializer.Deserialze(m_ProjPath + scenePath);
     }
 };
 

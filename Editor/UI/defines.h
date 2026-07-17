@@ -8,6 +8,9 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 const ImGuiWindowFlags hostFlags =
      ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse |
@@ -108,6 +111,7 @@ struct EditorState
         initializedDock(false),
         console()
     {
+        std::cout << "state init\n";
     }
 };
 
