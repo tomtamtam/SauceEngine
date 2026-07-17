@@ -4,6 +4,8 @@
 #include "defines.h"
 #include "GLFW/glfw3.h"
 #include "ImGuiLayer.h"
+#include "entt/entity/entity.hpp"
+#include "entt/entity/fwd.hpp"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_internal.h"
@@ -200,9 +202,12 @@ class Editor
 {
 public:
     Editor(std::string *projPath) 
-        : m_ProjPath(*projPath), viewStates(false, true, true, true, true, true), m_DefaultScene(""), m_FirstTime(true)
+        : m_ProjPath(*projPath),
+        viewStates(false, true, true, true, true, true),
+        m_DefaultScene(""),
+        m_FirstTime(true),
+        m_SelectedEntity()
     {
-
     }
     ~Editor() {}
     bool Update()
@@ -230,6 +235,7 @@ private:
     char buffer[100];
     bool m_ShowPopup;
     std::string m_DefaultScene;
+    entt::entity m_SelectedEntity;
 
     void load()
     {
@@ -426,7 +432,16 @@ private:
             auto view = state.scene->m_Registry.view<Sauce::UUIDComponent>();
             for(auto e : view)
             {
-                ImGui::TextUnformatted(state.scene->m_Registry.get<Sauce::UUIDComponent>(e).Name.c_str());
+                ImGui::PushID((int)e);
+                //ImGui::TextUnformatted(state.scene->m_Registry.get<Sauce::UUIDComponent>(e).Name.c_str());
+                auto uuid = state.scene->m_Registry.get<Sauce::UUIDComponent>(e);
+
+                bool isSelected = (m_SelectedEntity == e);
+                if(ImGui::Selectable(uuid.Name.c_str(), isSelected))
+                {
+                    m_SelectedEntity = e;
+                }
+                ImGui::PopID();
             }
             ImGui::PopStyleVar();
             ImGui::EndChild();
@@ -456,6 +471,17 @@ private:
         if(!viewStates.inspector)
             return;
         ImGui::Begin("Inspector");
+            if(state.scene->m_Registry.try_get<Sauce::UUIDComponent>(m_SelectedEntity))
+            {
+                auto uuid = state.scene->m_Registry.get<Sauce::UUIDComponent>(m_SelectedEntity);
+                ImGui::Text("Name: %s", uuid.Name.c_str());
+                ImGui::Text("UUID: %s", std::to_string((uint64_t)uuid.Id).c_str());
+                ImGui::Separator();
+                ImGui::Text("Components:");
+                ImGui::SameLine();
+                if(ImGui::Button("Add"))
+                {}
+            }
         ImGui::End();
     }
 
