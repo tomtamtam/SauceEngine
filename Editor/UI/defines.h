@@ -1,16 +1,114 @@
 #pragma once
 
+#include "Core/SceneSerializer.h"
+#include "ECS/Scene.h"
 #include "Render/Renderer.h"
 #include "Editor/UI/ImGuiLayer.h"
+#include <format>
+#include <iostream>
 #include <memory>
+#include <vector>
+
+const ImGuiWindowFlags hostFlags =
+     ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse |
+     ImGuiWindowFlags_NoResize   | ImGuiWindowFlags_NoMove |
+     ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus |
+     ImGuiWindowFlags_MenuBar;
+
+const ImGuiWindowFlags floatingFlags =
+     ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse |
+     ImGuiWindowFlags_NoResize;
+
+enum class MessageType
+{
+    DEBUG,
+    WARNING,
+    ERROR,
+    INFO
+};
+
+inline std::string colored(const std::string &text, int a, int b)
+{
+    return std::format("\x1B[{}m{}\0{}[0m", a, text, b);
+}
+
+inline std::string coloredMsgEntry(MessageType type)
+{
+
+    switch (type)
+    {
+        case MessageType::ERROR:
+            return colored("[Error]", 31, 41);
+            break;
+        case MessageType::INFO:
+            return colored("[Info]", 36, 46);
+            break;
+        case MessageType::WARNING:
+            return colored("[Warning]", 33, 43);
+            break;
+        default:
+            return colored("[Debug]", 35, 45);
+            break;
+    }
+}
+
+struct Message
+{
+    MessageType type;
+    std::string text;
+};
+
+class Console
+{
+public:
+    bool autoScroll;
+    bool showWarnings;
+    void clear()
+    { messages.clear(); }
+
+    void put(MessageType type, const std::string text)
+    {
+        messages.push_back({type, text});
+        if(type == MessageType::WARNING && !showWarnings)
+            return;
+        std::cout << coloredMsgEntry(type) << '\n' << text << '\n';
+    }
+
+    void copyAll()
+    {}
+    std::vector<Message> messages;
+
+    Console()
+        : autoScroll(true), showWarnings(true)
+    {
+    }
+    ~Console() {}
+};
 
 struct EditorState
 {
     std::shared_ptr<Sauce::Renderer> renderer;
+    std::shared_ptr<Sauce::Scene> scene;
+    Sauce::SceneSerializer sceneSerializer;
     ImGuiLayer layer;
     bool shouldClose = false;
     bool inProject;
     std::string projPath;
+    bool initializedDock;
+    Console console;
+
+    EditorState()
+        : renderer(std::make_shared<Sauce::Renderer>()),
+        scene(std::make_shared<Sauce::Scene>(renderer)),
+        sceneSerializer(scene),
+        layer(),
+        shouldClose(false),
+        inProject(false),
+        projPath(""),
+        initializedDock(false),
+        console()
+    {
+    }
 };
 
 
