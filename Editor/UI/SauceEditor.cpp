@@ -1,21 +1,25 @@
 #include "../Shared/Shared.h"
 #include "ECS/Entity.h"
 #include "ECS/Components.h"
+#include "ECS/Scene.h"
+#include "Render/Buffers/VertexBuffer.h"
 #include "defines.h"
 #include "GLFW/glfw3.h"
 #include "ImGuiLayer.h"
-#include "entt/entity/entity.hpp"
 #include "entt/entity/fwd.hpp"
+#include "glm/gtc/type_ptr.hpp"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_internal.h"
 #include <GL/glext.h>
+#include <cstdio>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <format>
 #include <nfd.h>
 #include <string>
+#include <unordered_map>
 
 
 EditorState state = {};
@@ -87,7 +91,7 @@ public:
             case SelectionState::CREATE_SCREEN:
                 ImGui::SetNextWindowPos(ImVec2(viewport->WorkSize.x / 2 - 350, viewport->WorkSize.y / 2 - 100));
                 ImGui::SetNextWindowSize(ImVec2(700, 200), ImGuiCond_Always);
-                ImGui::Begin("Create Project", nullptr, hostFlags);
+                ImGui::Begin("Create Project", nullptr);
                     ImGui::InputText("Name", m_ProjName, 100);
                     if(!m_InvalidPath && m_AlreadyExsists)
                     {
@@ -225,6 +229,7 @@ public:
         DrawAssetBrowser();
         DrawSceneHierarchy();
         DrawInspector();
+        DrawViewport();
         return true;
     }
 private:
@@ -233,7 +238,6 @@ private:
     bool m_FirstTime;
     ViewStates viewStates;
     char buffer[100];
-    bool m_ShowPopup;
     std::string m_DefaultScene;
     entt::entity m_SelectedEntity;
 
@@ -255,7 +259,10 @@ private:
             if(ImGui::BeginMenu("File"))
             {
                 if(ImGui::MenuItem("Save", "Ctrl+S"))
-                {}
+                {
+                    state.sceneSerializer.Serialze(m_DefaultScene);
+                    std::cout << "Saved Scene: " << m_DefaultScene << '\n';
+                }
                 if(ImGui::MenuItem("Save As", "Ctrl+Shift+S"))
                 {}
                 if(ImGui::MenuItem("Quit", "Ctrl+Q"))
@@ -414,6 +421,42 @@ private:
         ImGui::End();
     }
 
+    std::string dupeVersionName(const std::string &name)
+    {
+        std::string temp = name;
+        char version = temp.at(temp.size() - 2);
+        if (version == '9')
+        {
+            temp.at(temp.size() - 2) = '0';
+        }
+        else
+        {
+            temp.at(temp.size() - 2) = version + 1;
+        }
+        return temp;
+    }
+
+    template<typename T>
+    bool THasComponent(entt::entity e)
+    {
+        return state.scene->m_Registry.try_get<T>(e);
+    }
+
+    template<typename T>
+    void DuplicateComponent(entt::entity e1, entt::entity e2)
+    {
+        if(state.scene->m_Registry.try_get<T>(e1))
+        {
+            T dupe = state.scene->m_Registry.get<T>(e1);
+            state.scene->m_Registry.emplace_or_replace<T>(e2);
+            state.scene->m_Registry.get<T>(e2) = dupe;
+        }
+        else
+        {
+            std::cerr << "component to dupe dous not exist\n";
+        }
+    }
+
     void DrawSceneHierarchy()
     {
         if(!viewStates.sceneHierarchy)
@@ -422,7 +465,6 @@ private:
         ImGui::Begin("Scene Hierarchy");
             if(ImGui::Button("Add"))
             {
-                m_ShowPopup = true;
                 ImGui::OpenPopup("Add Entity");
             }
             ImGui::Separator();
@@ -441,29 +483,176 @@ private:
                 {
                     m_SelectedEntity = e;
                 }
+                if (ImGui::BeginPopupContextItem())
+                {
+                    // Optional: also select the entity on right-click so it's clear what you're acting on
+                    m_SelectedEntity = e;
+                    if (ImGui::MenuItem("Rename"))
+                    {
+                        ImGui::OpenPopup("Rename Object");
+                    }
+                    if (ImGui::MenuItem("Duplicate"))
+                    {
+                        std::string newName = state.scene->m_Registry.get<Sauce::UUIDComponent>(m_SelectedEntity).Name;
+                        if(newName.ends_with(')'))
+                        {
+                            newName = dupeVersionName(newName);
+                        }
+                        else
+                        {
+                            newName.push_back('(');
+                            newName.push_back('1');
+                            newName.push_back(')');
+                        }
+                        auto e = state.scene->m_Registry.create();
+                        state.scene->m_Registry.emplace_or_replace<Sauce::UUIDComponent>(e, newName);
+
+                        if(THasComponent<Sauce::TransformComponent>(m_SelectedEntity))
+                        {
+                            DuplicateComponent<Sauce::TransformComponent>(m_SelectedEntity, e);
+                        }
+
+                        if(THasComponent<Sauce::CameraComponent>(m_SelectedEntity))
+                        {
+                            DuplicateComponent<Sauce::CameraComponent>(m_SelectedEntity, e);
+                        }
+
+                        if(THasComponent<Sauce::Script>(m_SelectedEntity))
+                        {
+                            DuplicateComponent<Sauce::Script>(m_SelectedEntity, e);
+                        }
+
+                        if(THasComponent<Sauce::MeshInstance>(m_SelectedEntity))
+                        {
+                            DuplicateComponent<Sauce::MeshInstance>(m_SelectedEntity, e);
+                        }
+                    }
+                    if (ImGui::MenuItem("Delete"))
+                    {
+                        state.scene->m_Registry.destroy(m_SelectedEntity);
+                    }
+                    ImGui::EndPopup();
+                }
+                if(ImGui::BeginPopup("Rename Object"))
+                {
+                    char nameBuffer[128];
+                    ImGui::InputText("Name", nameBuffer, 128);
+                    if(ImGui::Button("Ok"))
+                    {
+                        std::snprintf(nameBuffer, sizeof(nameBuffer), "%s", state.scene->m_Registry.get<Sauce::UUIDComponent>(m_SelectedEntity).Name.c_str());
+                    }
+                    if(ImGui::Button("Cancel"))
+                    {
+                        ImGui::CloseCurrentPopup();
+                    }
+                    ImGui::EndPopup();
+                }
                 ImGui::PopID();
             }
             ImGui::PopStyleVar();
             ImGui::EndChild();
 
-            if(m_ShowPopup)
+
+            if(ImGui::BeginPopup("Add Entity"))
             {
-                ImGui::BeginPopup("Add Entity");
-                    ImGui::InputText("Name", buffer, 100);
-                    if(ImGui::Button("Add"))
-                    {
-                        std::string name = std::string(buffer);
-                        Sauce::Entity e = state.scene->CreateEntity(name);
-                        m_ShowPopup = false;
-                    }
-                    ImGui::SameLine();
-                    if(ImGui::Button("Cancel"))
-                    {
-                        m_ShowPopup = false;
-                    }
+                ImGui::InputText("Name", buffer, 100);
+                if(ImGui::Button("Add"))
+                {
+                    std::string name = std::string(buffer);
+                    Sauce::Entity e = state.scene->CreateEntity(name);
+                    ImGui::CloseCurrentPopup();
+                }
+                ImGui::SameLine();
+                if(ImGui::Button("Cancel"))
+                {
+                    ImGui::CloseCurrentPopup();
+                }
                 ImGui::EndPopup();
             }
-        ImGui::End();
+            ImGui::End();
+    }
+
+    const std::unordered_map<int, std::string> COMPONENT_MAP = {
+        {TRANSFORM_CIDX, "Transform"},
+        {CAMERA_CIDX, "Camera"},
+        {MESH_INSTANCE_CIDX, "Mesh Instance"},
+        {SCRIPT_CIDX, "Script"}
+    };
+
+    void AddComponent(int idx, entt::entity e)
+    {
+        std::cout << "add idx: " << idx << '\n';
+        switch (idx)
+        {
+        case TRANSFORM_CIDX:
+            state.scene->m_Registry.emplace_or_replace<Sauce::TransformComponent>(e);
+            break;
+        case CAMERA_CIDX:
+            state.scene->m_Registry.emplace_or_replace<Sauce::CameraComponent>(e);
+            break;
+        case MESH_INSTANCE_CIDX:
+            state.scene->m_Registry.emplace_or_replace<Sauce::MeshInstance>(e);
+            break;
+        case SCRIPT_CIDX:
+            state.scene->m_Registry.emplace_or_replace<Sauce::Script>(e);
+            break;
+        default:
+            break;
+        }
+    }
+
+    bool HasCoomponent(int idx, entt::entity e)
+    {
+        switch (idx)
+        {
+        case TRANSFORM_CIDX:
+            return state.scene->m_Registry.try_get<Sauce::TransformComponent>(e);
+        case CAMERA_CIDX:
+            return state.scene->m_Registry.try_get<Sauce::CameraComponent>(e);
+        case MESH_INSTANCE_CIDX:
+            return state.scene->m_Registry.try_get<Sauce::MeshInstance>(e);
+        case SCRIPT_CIDX:
+            return state.scene->m_Registry.try_get<Sauce::Script>(e);
+        default:
+            return false;
+        }
+    }
+
+    void DrawComponent(int idx, entt::entity e)
+    {
+        switch (idx)
+        {
+        case TRANSFORM_CIDX:
+        {
+            auto &t = state.scene->m_Registry.get<Sauce::TransformComponent>(e);
+            ImGui::DragFloat3("Position", glm::value_ptr(t.Translation), 0.05f);
+            ImGui::DragFloat3("Rotation", glm::value_ptr(t.Rotation), 0.5f, -360.0f, 360.0f);
+            ImGui::DragFloat3("Scale", glm::value_ptr(t.Scale), 0.05f, 0.001f, 100.0f);
+            break;
+        }
+        case CAMERA_CIDX:
+        {
+            auto &c = state.scene->m_Registry.get<Sauce::CameraComponent>(e);
+            ImGui::DragFloat("FOV", &c.FOV, 0.05f);
+            ImGui::DragInt("Width", (int*)&c.Width, 1);
+            ImGui::DragInt("Height", (int*)&c.Height, 1);
+            ImGui::Checkbox("Main", &c.IsMain);
+            ImGui::Checkbox("Adjustable", &c.IsAdjustable);
+            break;
+        }
+        case MESH_INSTANCE_CIDX:
+        {
+            ImGui::Text("Mesh:");
+            break;
+        }
+        case SCRIPT_CIDX:
+        {
+            ImGui::Text("Path:");
+            break;
+        }
+        default:
+            break;
+        }
     }
 
     void DrawInspector()
@@ -478,9 +667,34 @@ private:
                 ImGui::Text("UUID: %s", std::to_string((uint64_t)uuid.Id).c_str());
                 ImGui::Separator();
                 ImGui::Text("Components:");
-                ImGui::SameLine();
-                if(ImGui::Button("Add"))
-                {}
+
+                for(int i = 0; i < COMPONENT_MAP.size(); i++)
+                if(HasCoomponent(i, m_SelectedEntity))
+                {
+                    if(ImGui::CollapsingHeader(COMPONENT_MAP.at(i).c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+                    {
+                        DrawComponent(i, m_SelectedEntity);
+                    }
+                }
+
+                ImGui::Separator();
+                if(ImGui::Button("Add Component"))
+                {
+                    ImGui::OpenPopup("Add Component");
+                }
+
+                if(ImGui::BeginPopup("Add Component"))
+                {
+                    for(int i = 0; i < COMPONENT_MAP.size(); i++)
+                    {
+                        if(ImGui::Button(COMPONENT_MAP.at(i).c_str()))
+                        {
+                            AddComponent(i, m_SelectedEntity);
+                            ImGui::CloseCurrentPopup();
+                        }
+                    }
+                    ImGui::EndPopup();
+                }
             }
         ImGui::End();
     }
@@ -493,6 +707,22 @@ private:
     void loadScene(const std::string &scenePath)
     {
         state.sceneSerializer.Deserialze(m_ProjPath + scenePath);
+        //state.scene->Init();
+        //state.scene->Start();
+    }
+
+    void DrawViewport()
+    {
+        if (!viewStates.viewport) return;
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+        ImGui::Begin("Viewport", &viewStates.viewport, ImGuiWindowFlags_NoScrollbar);
+        ImGui::PopStyleVar();
+
+        ImVec2 regionSize = ImGui::GetContentRegionAvail();
+        ImVec2 originScreen = ImGui::GetCursorScreenPos();
+
+        //state.scene->Update(1);
+        ImGui::End();
     }
 };
 

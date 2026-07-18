@@ -5,6 +5,7 @@
 #include "entt/entity/fwd.hpp"
 #include <cstdint>
 #include <fstream>
+#include <iostream>
 #include <nlohmann/json.hpp>
 #include <string>
 
@@ -23,9 +24,6 @@ namespace Sauce
         jScene["name"] = m_Scene->m_Name;
         jScene["id"] = (uint64_t)m_Scene->m_ID;
 
-        if(jScene["objects"].size() == 0)
-            return;
-
         auto view = m_Scene->m_Registry.view<UUIDComponent>();
 
         int i = 0;
@@ -33,12 +31,15 @@ namespace Sauce
         {
         int compCount = 0;
             //UUID
-            json jUUID;
-            jUUID["id"] = UUID_CIDX;
-            jUUID["values"]["id"] = (uint64_t)m_Scene->m_Registry.get<UUIDComponent>(e).Id;
-            jUUID["values"]["name"] = m_Scene->m_Registry.get<UUIDComponent>(e).Name;
-            jScene["objects"][i]["components"][compCount] = jUUID;
-            compCount ++;
+            if(auto *uuid = m_Scene->m_Registry.try_get<UUIDComponent>(e))
+            {
+                json jUUID;
+                jUUID["id"] = UUID_CIDX;
+                jUUID["values"][0] = (uint64_t)uuid->Id;
+                jUUID["values"][1] = uuid->Name;
+                jScene["objects"][i]["components"][compCount] = jUUID;
+                compCount ++;
+            }
 
             //Transform
             if(auto *tc = m_Scene->m_Registry.try_get<TransformComponent>(e))
@@ -50,12 +51,12 @@ namespace Sauce
                 jTransform["values"][2] = tc->Translation.z;
 
                 jTransform["values"][3] = tc->Rotation.x;
-                jTransform["values"][4] = tc->Rotation.x;
-                jTransform["values"][5] = tc->Rotation.x;
+                jTransform["values"][4] = tc->Rotation.y;
+                jTransform["values"][5] = tc->Rotation.z;
 
                 jTransform["values"][6] = tc->Scale.x;
-                jTransform["values"][7] = tc->Scale.x;
-                jTransform["values"][8] = tc->Scale.x;
+                jTransform["values"][7] = tc->Scale.y;
+                jTransform["values"][8] = tc->Scale.z;
 
                 jScene["objects"][i]["components"][compCount] = jTransform;
                 compCount ++;
@@ -67,7 +68,7 @@ namespace Sauce
                 json jScript;
                 jScript["id"] = SCRIPT_CIDX;
                 jScript["values"][0] = sc->ScriptName;
-                jScene["objects"][i][compCount] = jScript;
+                jScene["objects"][i]["components"][compCount] = jScript;
                 compCount ++;
             }
 
@@ -82,7 +83,7 @@ namespace Sauce
                 jCamera["values"][3] = cc->IsMain;
                 jCamera["values"][4] = cc->IsAdjustable;
 
-                jScene["objects"][i]["component"][compCount] = jCamera;
+                jScene["objects"][i]["components"][compCount] = jCamera;
                 compCount ++;
             }
 
@@ -92,12 +93,21 @@ namespace Sauce
                 json jMesh;
                 jMesh["id"] = MESH_INSTANCE_CIDX;
                 jMesh["values"][0] = mc->IsVisible;
-                jScene["objects"][i]["components"][compCount];
+                jScene["objects"][i]["components"][compCount] = jMesh;
                 compCount ++;
             }
 
             i++;
         }
+        std::ofstream f(path);
+        if(!f.is_open())
+        {
+            std::cerr << "failed to open file: " << path << '\n';
+            return;
+        }
+        f << jScene;
+        f.close();
+        std::cout << "wrote to file\n";
     }
 
     void attachComponent(json component, Entity *entity)
@@ -142,6 +152,7 @@ namespace Sauce
             {
                 entity->AddComponent<UUIDComponent>();
                 entity->GetComponent<UUIDComponent>().Id = (UUID)component["values"][0].get<uint64_t>();
+                entity->GetComponent<UUIDComponent>().Name = component["values"][1].get<std::string>();
             }
             default:
                 break;
