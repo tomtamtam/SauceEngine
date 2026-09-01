@@ -9,7 +9,6 @@
 namespace Sauce {
     void Window::Init() 
     {
-        std::cout << "win init\n";
         glfwSetErrorCallback([](int error, const char *desc) {
             std::cerr << "GLFW Error " << error << ": " << desc << std::endl;
         });

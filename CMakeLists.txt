@@ -147,6 +147,7 @@ add_library(SauceEngine SHARED
     Engine/src/Core/SceneSerializer.cpp
     Engine/src/Input/KeyboardListener.cpp
     Engine/src/Input/InputSystem.cpp
+    Engine/src/Render/Framebuffer.cpp
 )
 
 target_include_directories(SauceEngine PUBLIC
@@ -179,17 +180,6 @@ endif()
 
 target_link_libraries(SauceEngine PUBLIC sauce_opengl)
 
-# Terminal App
-
-add_executable(sauce-engine
-    ${CMAKE_SOURCE_DIR}/Editor/Terminal/SauceEngine.cpp
-    ${CMAKE_SOURCE_DIR}/Editor/Shared/Shared.cpp
-)
-
-target_link_libraries(sauce-engine
-    nlohmann_json::nlohmann_json
-)
-
 # UI Editor
 add_executable(sauce-editor
     ${CMAKE_SOURCE_DIR}/Editor/UI/SauceEditor.cpp
@@ -209,5 +199,6 @@ target_link_libraries(sauce-editor PRIVATE
 )
 
 target_include_directories(sauce-editor PUBLIC
-    ${CMAKE_SOURCE_DIR}/Engine
+    ${CMAKE_SOURCE_DIR}/Engine/src
+    ${CMAKE_SOURCE_DIR}/Engine/vendor/utils.hpp
 )

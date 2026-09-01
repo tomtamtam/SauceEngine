@@ -18,7 +18,7 @@ namespace Sauce
 
     SceneSerializer::~SceneSerializer() {}
 
-    void SceneSerializer::Serialze(const std::string &path)
+    void SceneSerializer::Serialze(const std::string &path) // SAVE
     {
         json jScene;
         jScene["name"] = m_Scene->m_Name;
@@ -159,7 +159,7 @@ namespace Sauce
         }
     }
 
-    void SceneSerializer::Deserialze(const std::string &path)
+    void SceneSerializer::Deserialze(const std::string &path) // LOAD
     {
         std::ifstream f(path);
         json jScene;

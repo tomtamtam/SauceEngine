@@ -80,6 +80,7 @@ namespace Sauce
             if(m_DT >= 0.0f)
             {
                 m_CurrentScene->Update(m_DT);
+                m_Renderer->Draw();
             }
 
             m_EndTime = glfwGetTime();

@@ -62,8 +62,6 @@ namespace Sauce
 
     void Scene::Update(float dt)
     {
-        m_Renderer->Clear();
-
         //Script Update
         auto scriptView = m_Registry.view<Script>();
         for(auto entity : scriptView)
@@ -74,7 +72,7 @@ namespace Sauce
         //main cam
         glm::mat4 view = {1.0f};
         glm::mat4 proj = {1.0f};
-        uint32_t width, height = 0;
+        uint32_t width = 0, height = 0;
         auto camView = m_Registry.view<CameraComponent>();
         for(auto entity : camView)
         {
@@ -108,8 +106,6 @@ namespace Sauce
         {
             m_Renderer->Submit(m_Registry.get<TransformComponent>(entity), view, proj, meshView->get(entity).PMesh);
         }
-
-        m_Renderer->Draw();
     }
 
     std::shared_ptr<InputSystem> Scene::GetInputSystem()

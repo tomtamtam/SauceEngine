@@ -3,16 +3,20 @@
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 
-struct VertexArray
+namespace Sauce
 {
-  VertexArray();
-  virtual ~VertexArray();
 
-  void AddBuffer(const VertexBuffer &vb, VertexBufferLayout &layout);
+    struct VertexArray
+    {
+        VertexArray();
+        virtual ~VertexArray();
 
-  void Bind() const;
-  void Unbind() const;
+        void AddBuffer(const VertexBuffer &vb, const VertexBufferLayout &layout);
 
-private:
-  uint32_t m_VAO;
-};
+        void Bind() const;
+        void Unbind() const;
+
+    private:
+        uint32_t m_VAO;
+    };
+}

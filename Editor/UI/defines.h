@@ -1,14 +1,12 @@
 #pragma once
 
-#include "Core/SceneSerializer.h"
-#include "ECS/Scene.h"
-#include "Render/Renderer.h"
 #include "Editor/UI/ImGuiLayer.h"
-#include <format>
-#include <iostream>
-#include <memory>
-#include <vector>
+#include "Engine/vendor/utils_hpp/escapes.hpp"
+#include "Input/InputSystem.h"
+#include <cstdio>
 #include <nlohmann/json.hpp>
+#include <string>
+#include <unordered_map>
 
 using json = nlohmann::json;
 
@@ -30,30 +28,21 @@ enum class MessageType
     INFO
 };
 
-inline std::string colored(const std::string &text, int a, int b)
+const std::unordered_map<MessageType, Escapes::Color> ColorMessageMap
 {
-    return std::format("\x1B[{}m{}\0{}[0m", a, text, b);
-}
+    {MessageType::DEBUG, Escapes::BLUE},
+    {MessageType::WARNING, Escapes::YELLOW},
+    {MessageType::ERROR, Escapes::RED},
+    {MessageType::INFO, Escapes::CYAN}
+};
 
-inline std::string coloredMsgEntry(MessageType type)
+const std::unordered_map<MessageType, std::string> NameMessageMap
 {
-
-    switch (type)
-    {
-        case MessageType::ERROR:
-            return colored("[Error]", 31, 41);
-            break;
-        case MessageType::INFO:
-            return colored("[Info]", 36, 46);
-            break;
-        case MessageType::WARNING:
-            return colored("[Warning]", 33, 43);
-            break;
-        default:
-            return colored("[Debug]", 35, 45);
-            break;
-    }
-}
+    {MessageType::DEBUG, "DEBUG:"},
+    {MessageType::WARNING, "WARNING:"},
+    {MessageType::ERROR, "ERROR:"},
+    {MessageType::INFO, "INFO:"}
+};
 
 struct Message
 {
@@ -74,7 +63,12 @@ public:
         messages.push_back({type, text});
         if(type == MessageType::WARNING && !showWarnings)
             return;
-        std::cout << coloredMsgEntry(type) << '\n' << text << '\n';
+        PrintMsg(type, text);
+    }
+
+    static void PrintMsg(MessageType t, const std::string &s)
+    {
+        std::printf("%s %s\n", Escapes::ColoredText(NameMessageMap.at(t), ColorMessageMap.at(t)).c_str(), s.c_str());
     }
 
     void copyAll()
@@ -88,67 +82,51 @@ public:
     ~Console() {}
 };
 
-struct EditorState
-{
-    std::shared_ptr<Sauce::Renderer> renderer;
-    std::shared_ptr<Sauce::Scene> scene;
-    Sauce::SceneSerializer sceneSerializer;
-    ImGuiLayer layer;
-    bool shouldClose = false;
-    bool inProject;
-    std::string projPath;
-    bool initializedDock;
-    Console console;
+inline static Sauce::InputSystem inputSystem;
 
-    EditorState()
-        : renderer(std::make_shared<Sauce::Renderer>()),
-        scene(std::make_shared<Sauce::Scene>(renderer)),
-        sceneSerializer(scene),
-        layer(),
-        shouldClose(false),
-        inProject(false),
-        projPath(""),
-        initializedDock(false),
-        console()
-    {
-        std::cout << "state init\n";
-    }
-};
-
-
-inline void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+inline static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     ImGui_ImplGlfw_KeyCallback(window, key, scancode, action, mods);
+    inputSystem.KeyCallback(window, key, scancode, action, mods);
     if (ImGui::GetIO().WantCaptureKeyboard)
         return;
 }
 
-inline void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+inline static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
     ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
+    inputSystem.MouseButtonCallback(window, button, action, mods);
 }
 
-inline void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+inline static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
     ImGui_ImplGlfw_ScrollCallback(window, xoffset, yoffset);
+    inputSystem.ScrollCallback(window, xoffset, yoffset);
 }
 
-inline void char_callback(GLFWwindow* window, unsigned int codepoint)
+inline static void char_callback(GLFWwindow* window, unsigned int codepoint)
 {
     ImGui_ImplGlfw_CharCallback(window, codepoint);
+    inputSystem.CharCallback(window, codepoint);
 }
 
-inline void enter_callback(GLFWwindow* window, int entered)
+inline static void enter_callback(GLFWwindow* window, int entered)
 {
     ImGui_ImplGlfw_CursorEnterCallback(window, entered);
+    inputSystem.EnterCallback(window, entered);
 }
 
-inline void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
+inline static void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
 {
     ImGui_ImplGlfw_CursorPosCallback(window, xpos, ypos);
+    inputSystem.CursorPosCallback(window, xpos, ypos);
 }
 
-inline void window_focus_callback(GLFWwindow* window, int focused)
+inline static void window_focus_callback(GLFWwindow* window, int focused)
 {
     ImGui_ImplGlfw_WindowFocusCallback(window, focused);
+    inputSystem.WindowFocusCallback(window, focused);
 }
+
+inline void on_close()
+{}

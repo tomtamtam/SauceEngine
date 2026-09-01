@@ -7,6 +7,8 @@ namespace Sauce
     class InputSystem
     {
     public:
+        InputSystem();
+        ~InputSystem();
         bool GetKeyDown(int key);
         bool GetKeyReleased(int key);
         bool GetKeyJustPressed(int key);

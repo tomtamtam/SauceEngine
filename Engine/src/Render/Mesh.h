@@ -5,6 +5,7 @@
 #include "Render/Buffers/VertexBuffer.h"
 #include "Render/Buffers/VertexBufferLayout.h"
 #include "Render/Vertex.h"
+#include <cstdio>
 #include <span>
 #include <vector>
 

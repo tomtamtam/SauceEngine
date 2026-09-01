@@ -22,14 +22,15 @@ namespace Sauce
         m_Window->Destroy();
     }
  
-    void Renderer::Clear()
+    void Renderer::Clear(glm::vec4 col)
     {
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClearColor(col.r, col.g, col.b, col.a);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
  
     void Renderer::Draw()
     {
+        Clear({1.0f, 0.0f, 0.2f, 1.0f});
         m_Window->Update();
     }
 
