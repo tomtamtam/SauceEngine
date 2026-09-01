@@ -79,8 +79,10 @@ namespace Sauce
         {
             if(m_DT >= 0.0f)
             {
+                m_CurrentScene->GetInputSystem()->BeginFrame();
                 m_CurrentScene->Update(m_DT);
                 m_Renderer->Draw();
+                m_CurrentScene->GetInputSystem()->Endframe();
             }
 
             m_EndTime = glfwGetTime();

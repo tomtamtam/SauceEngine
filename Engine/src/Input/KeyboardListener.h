@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GLFW/glfw3.h"
+
 namespace Sauce
 {
     class KeyboardListener
@@ -11,9 +12,11 @@ namespace Sauce
 
         void Callback(GLFWwindow *window, int key, int scancode, int action, int mods);
 
-        bool GetKeyDown(int key);
-        bool GetKeyReleased(int key);
-        bool GetKeyJustPressed(int key);
+        void EndFrame();
+
+        bool GetKeyDown(int key) const;
+        bool GetKeyReleased(int key) const;
+        bool GetKeyJustPressed(int key) const;
 
     private:
         bool m_Keys[GLFW_KEY_LAST + 1];

@@ -1,4 +1,5 @@
 #include "KeyboardListener.h"
+#include "GLFW/glfw3.h"
 #include <cstring>
 
 namespace Sauce
@@ -18,6 +19,7 @@ namespace Sauce
         if (key < 0 || key > GLFW_KEY_LAST)
             return;
 
+
         if (action == GLFW_PRESS)
         {
             m_Keys[key] = true;
@@ -28,7 +30,15 @@ namespace Sauce
         }
     }
 
-    bool KeyboardListener::GetKeyDown(int key)
+    void KeyboardListener::EndFrame()
+    {
+        for(int i = 0; i < GLFW_KEY_LAST; i++)
+        {
+            m_LastKeys[i] = m_Keys[i];
+        }
+    }
+
+    bool KeyboardListener::GetKeyDown(int key) const
     {
         if (key < 0 || key > GLFW_KEY_LAST)
             return false;
@@ -36,7 +46,7 @@ namespace Sauce
         return m_Keys[key];
     }
 
-    bool KeyboardListener::GetKeyReleased(int key)
+    bool KeyboardListener::GetKeyReleased(int key) const
     {
         if (key < 0 || key > GLFW_KEY_LAST)
             return false;
@@ -44,13 +54,12 @@ namespace Sauce
         return !m_Keys[key];
     }
 
-    bool KeyboardListener::GetKeyJustPressed(int key)
+    bool KeyboardListener::GetKeyJustPressed(int key) const
     {
         if (key < 0 || key > GLFW_KEY_LAST)
             return false;
 
         bool justPressed = m_Keys[key] && !m_LastKeys[key];
-        m_LastKeys[key] = m_Keys[key];
 
         return justPressed;
     }

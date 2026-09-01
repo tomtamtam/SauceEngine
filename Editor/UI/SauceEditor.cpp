@@ -21,6 +21,8 @@
 #include "Render/Shader.h"
 #include "defines.h"
 #include "entt/entity/fwd.hpp"
+#include "glm/ext/vector_float2.hpp"
+#include "glm/fwd.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "imgui.h"
 #include "imgui_internal.h"
@@ -154,6 +156,8 @@ private:
 
     void Update()
     {
+        inputSystem.BeginFrame();
+
         DrawMainWindow();
         DrawRunWindow();
         DrawConsole();
@@ -161,6 +165,8 @@ private:
         DrawSceneHierarchy();
         DrawInspector();
         DrawViewport();
+
+        inputSystem.Endframe();
     }
 
     void RunScene()
@@ -665,16 +671,28 @@ private:
         }
     }
 
+    glm::vec2 m_PrevMousePos, m_MousePos;
+
     void UpdateInput()
     {
-        float x = 0, z = 0;
-        if(inputSystem.GetKeyDown(GLFW_KEY_S))
-        {
-            z += 2 * m_DT;
-        }
+        float x = 0, y = 0, z = 0;
+
+        m_EditorCam.FOV -= 2000 * m_DT * inputSystem.GetMouseScrollY();
         if(inputSystem.GetKeyDown(GLFW_KEY_W))
         {
             z -= 2 * m_DT;
+        }
+        if(inputSystem.GetKeyDown(GLFW_KEY_S))
+        {
+           z += 2 * m_DT;
+        }
+        if(inputSystem.GetKeyDown(GLFW_KEY_DOWN))
+        {
+            y -= 2 * m_DT;
+        }
+        if(inputSystem.GetKeyDown(GLFW_KEY_UP))
+        {
+           y += 2 * m_DT;
         }
         if(inputSystem.GetKeyDown(GLFW_KEY_D))
         {
@@ -684,7 +702,20 @@ private:
         {
             x -= 2 * m_DT;
         }
-        m_EditorTransform.Translate({x, 0.0f, z});
+        m_EditorTransform.Translate({x, y, z});
+
+        if(inputSystem.GetMouseButtonJustPressed(GLFW_MOUSE_BUTTON_RIGHT))
+        {
+            m_MousePos = inputSystem.GetMousePos();
+            m_PrevMousePos = inputSystem.GetMousePos();
+        }
+        if(inputSystem.GetMouseButtonDown(GLFW_MOUSE_BUTTON_RIGHT))
+        {
+            m_MousePos = inputSystem.GetMousePos();
+            m_EditorTransform.Rotation.x += (m_MousePos.x - m_PrevMousePos.x) * m_DT * 10;
+            m_EditorTransform.Rotation.y -= (m_MousePos.y - m_PrevMousePos.y) * m_DT * 10;
+            m_PrevMousePos = m_MousePos;
+        }
     }
 
     void DrawViewport()

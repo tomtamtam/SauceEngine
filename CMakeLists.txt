@@ -146,6 +146,9 @@ add_library(SauceEngine SHARED
     Engine/src/Core/ScriptEngine.cpp
     Engine/src/Core/SceneSerializer.cpp
     Engine/src/Input/KeyboardListener.cpp
+    Engine/src/Input/MouseListener.cpp
+    Engine/src/Input/Gamepad.cpp
+    Engine/src/Input/GamepadListener.cpp
     Engine/src/Input/InputSystem.cpp
     Engine/src/Render/Framebuffer.cpp
 )

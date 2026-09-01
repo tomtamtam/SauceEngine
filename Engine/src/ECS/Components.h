@@ -12,6 +12,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "glm/ext/vector_float3.hpp"
+#include "glm/fwd.hpp"
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/euler_angles.hpp>
@@ -40,16 +41,18 @@ namespace Sauce
 
         operator glm::mat4 ()
         {
-            glm::mat4 rotation = glm::toMat4(glm::quat(Rotation));
+            glm::quat q = glm::quat(glm::radians(Rotation));
+            glm::mat4 rotation = glm::toMat4(q);
 
-			return glm::translate(glm::mat4(1.0f), Translation)
-				* rotation
-				* glm::scale(glm::mat4(1.0f), Scale);
+            return glm::translate(glm::mat4(1.0f), Translation)
+                * rotation
+                * glm::scale(glm::mat4(1.0f), Scale);
         }
 
         void Translate(glm::vec3 translation)
         {
-            Translation += translation;
+            glm::quat q = glm::quat(glm::radians(Rotation));
+            Translation += q * translation;
         }
     };
 
