@@ -1,11 +1,16 @@
 #pragma once
 
-#include "Core/SceneSerializer.h"
-#include "ECS/Scene.h"
-#include "Render/Renderer.h"
-#include <memory>
 #include <nlohmann/json.hpp>
+
+#include <memory>
 #include <string>
+
+#include "Core/AssetSystem.h"
+#include "Core/SceneSerializer.h"
+
+#include "ECS/Scene.h"
+
+#include "Render/Renderer.h"
 
 using json = nlohmann::json;
 
@@ -39,5 +44,7 @@ namespace Sauce
 
         std::shared_ptr<Scene> m_CurrentScene;
         SceneSerializer m_SceneSerializer;
+
+        AssetSystem m_AssetSystem;
     };
 }

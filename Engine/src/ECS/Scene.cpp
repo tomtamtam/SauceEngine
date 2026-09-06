@@ -1,14 +1,21 @@
-#include "Scene.h"
-#include "ECS/Components.h"
-#include "Entity.h"
-#include "Render/Renderer.h"
-#include "glm/ext/matrix_clip_space.hpp"
-#include "glm/ext/matrix_float4x4.hpp"
-#include "glm/trigonometric.hpp"
+#include <nlohmann/json.hpp>
+
 #include <iostream>
 #include <memory>
-#include <nlohmann/json.hpp>
 #include <string>
+
+#include "Scene.h"
+
+#include "Entity.h"
+
+#include "ECS/Components.h"
+
+#include "Render/Renderer.h"
+
+#include "glm/trigonometric.hpp"
+
+#include "glm/ext/matrix_clip_space.hpp"
+#include "glm/ext/matrix_float4x4.hpp"
 
 using json = nlohmann::json;
 
@@ -104,7 +111,8 @@ namespace Sauce
         auto meshView = m_Registry.view<MeshInstance>();
         for(auto entity : meshView)
         {
-            m_Renderer->Submit(m_Registry.get<TransformComponent>(entity), view, proj, meshView->get(entity).PMesh);
+            if(!p_AssetSystem->p_Meshes.at(meshView->get(entity).meshId).mesh) continue;
+            m_Renderer->Submit(m_Registry.get<TransformComponent>(entity), view, proj, *p_AssetSystem->p_Meshes[meshView->get(entity).meshId].mesh);
         }
     }
 

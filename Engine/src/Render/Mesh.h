@@ -1,13 +1,17 @@
 #pragma once
 
+#include <cstdint>
+
+#include <memory>
+#include <span>
+#include <vector>
+
+#include "Render/Vertex.h"
+
 #include "Render/Buffers/IndexBuffer.h"
 #include "Render/Buffers/VertexArray.h"
 #include "Render/Buffers/VertexBuffer.h"
 #include "Render/Buffers/VertexBufferLayout.h"
-#include "Render/Vertex.h"
-#include <cstdio>
-#include <span>
-#include <vector>
 
 namespace Sauce
 {
@@ -38,59 +42,20 @@ namespace Sauce
         }
     };
 
-    inline static Mesh *CreateCubeMesh()
+    namespace Shapes
     {
-        static const Vertex vertices[] =
-        {
-            // Front (+Z)
-            { -0.5f, -0.5f,  0.5f,   1,0,1,1,   0,0 },
-            {  0.5f, -0.5f,  0.5f,   1,0,1,1,   1,0 },  
-            {  0.5f,  0.5f,  0.5f,   1,0,1,1,   1,1 },  
-            { -0.5f,  0.5f,  0.5f,   1,0,1,1,   0,1 },  
+    	constexpr float CYLINDER_RADIUS {0.5f};
+    	constexpr float CYLINDER_HEIGHT {2.0f};
+    	constexpr uint32_t CYLINDER_CUTS {18};
+    	constexpr float PI {3.1415};
+    	
+    	constexpr int BOTTOM_RIGHT_OFFSET {2};
+    	constexpr int TOP_RIGHT_OFFSET {3};
+		constexpr int BOTTOM_LEFT_OFFSET {0};
+		constexpr int TOP_LEFT_OFFSET {1};
 
-            // Back (-Z)
-            {  0.5f, -0.5f, -0.5f,   0,1,1,1,   0,0 },
-            { -0.5f, -0.5f, -0.5f,   0,1,1,1,   1,0 },
-            { -0.5f,  0.5f, -0.5f,   0,1,1,1,   1,1 },
-            {  0.5f,  0.5f, -0.5f,   0,1,1,1,   0,1 },
-
-            // Left (-X)
-            { -0.5f, -0.5f, -0.5f,   1,1,0,1,   0,0 },
-            { -0.5f, -0.5f,  0.5f,   1,1,0,1,   1,0 },
-            { -0.5f,  0.5f,  0.5f,   1,1,0,1,   1,1 },
-            { -0.5f,  0.5f, -0.5f,   1,1,0,1,   0,1 },
-
-            // Right (+X)
-            {  0.5f, -0.5f,  0.5f,   1,0,0,1,   0,0 },
-            {  0.5f, -0.5f, -0.5f,   1,0,0,1,   1,0 },
-            {  0.5f,  0.5f, -0.5f,   1,0,0,1,   1,1 },
-            {  0.5f,  0.5f,  0.5f,   1,0,0,1,   0,1 },
-
-            // Top (+Y)
-            { -0.5f,  0.5f,  0.5f,   0,0,1,1,   0,0 },
-            {  0.5f,  0.5f,  0.5f,   0,0,1,1,   1,0 },
-            {  0.5f,  0.5f, -0.5f,   0,0,1,1,   1,1 },
-            { -0.5f,  0.5f, -0.5f,   0,0,1,1,   0,1 },
-
-            // Bottom (-Y)
-            { -0.5f, -0.5f, -0.5f,   0.5,1,1,1,   0,0 },
-            {  0.5f, -0.5f, -0.5f,   0.5,1,1,1,   1,0 },
-            {  0.5f, -0.5f,  0.5f,   0.5,1,1,1,   1,1 },
-            { -0.5f, -0.5f,  0.5f,   0.5,1,1,1,   0,1 },
-        };
-
-        // 6 Seiten × 2 Dreiecke × 3 Indices = 36
-        // Jede Seite: 0,1,2, 2,3,0  (CCW)
-        static const int indices[] =
-        {
-             0,  1,  2,   2,  3,  0,   // Front
-             4,  5,  6,   6,  7,  4,   // Back
-             8,  9, 10,  10, 11,  8,   // Left
-            12, 13, 14,  14, 15, 12,   // Right
-            16, 17, 18,  18, 19, 16,   // Top
-            20, 21, 22,  22, 23, 20,   // Bottom
-        };
-
-        return new Mesh(indices, vertices);
+		std::unique_ptr<Mesh> CreateCubeMesh();
+    	std::unique_ptr<Mesh> CreatePlaneMesh();
+    	std::unique_ptr<Mesh> CreateCylinderMesh(float radius = CYLINDER_RADIUS, float height = CYLINDER_HEIGHT, uint32_t cuts = CYLINDER_CUTS);
     }
 };

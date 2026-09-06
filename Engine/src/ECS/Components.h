@@ -1,18 +1,26 @@
 #pragma once
 
-#include "Core/UUID.h"
-#include "Render/Mesh.h"
-#include "ScriptableEntity.h"
 #include <cstdint>
-#include <memory>
-#include <functional>
-#include <string>
 #include <dlfcn.h>
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "glm/ext/vector_float3.hpp"
+
+#include <functional>
+#include <memory>
+#include <string>
+
+#include "ScriptableEntity.h"
+
+#include "Core/AssetSystem.h"
+#include "Core/UUID.h"
+
+#include "Render/Mesh.h"
+#include "Render/Texture.h"
+
 #include "glm/fwd.hpp"
+
+#include "glm/ext/vector_float3.hpp"
+
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/euler_angles.hpp>
@@ -20,15 +28,64 @@
 
 namespace Sauce
 {
-    #define SCRIPT_CIDX 0
-    #define TRANSFORM_CIDX 1
-    #define MESH_INSTANCE_CIDX 2
-    #define CAMERA_CIDX 3
-    #define UUID_CIDX 4
+    constexpr uint32_t SCRIPT_CIDX {0};
+    constexpr uint32_t TRANSFORM_CIDX {1};
+    constexpr uint32_t MESH_INSTANCE_CIDX {2};
+    constexpr uint32_t CAMERA_CIDX {3};
+    constexpr uint32_t UUID_CIDX {4};
+    constexpr uint32_t TEXTURE_CIDX {5};
 
-    #define CODE_ID 0
-    #define TRANSFORM_ID 1
+    constexpr uint32_t CODE_ID {0};
+    constexpr uint32_t TRANSFORM_ID {1};
 
+    namespace VIDX
+    {
+    	namespace CTexture
+    	{
+    		constexpr uint32_t ID { 0 };
+    	}
+
+    	namespace CUUID
+    	{
+    		constexpr uint32_t ID { 0 };
+    		constexpr uint32_t NAME { 1 };
+    	}
+
+    	namespace CScript
+    	{
+    		constexpr uint32_t NAME { 0 };
+    	}
+
+    	namespace CMesh
+    	{
+    		constexpr uint32_t IS_VISIBLE { 0 };
+    		constexpr uint32_t ID { 1 };
+    	}
+    	
+    	namespace CCamera
+    	{
+    		constexpr uint32_t FOV { 0 };
+    		constexpr uint32_t WIDHT { 1 };
+    		constexpr uint32_t HEIGHT { 2 };
+    		constexpr uint32_t IS_MAIN { 3 };
+    		constexpr uint32_t IS_ADJUSTABLE { 4 };
+    	}
+
+    	namespace CTransform
+    	{
+    		constexpr uint32_t TRANSFORM_X { 0 };
+    		constexpr uint32_t TRANSFORM_Y { 1 };
+    		constexpr uint32_t TRANSFORM_Z { 2 };
+
+    		constexpr uint32_t ROTATION_X {	3 };
+    		constexpr uint32_t ROTATION_Y {	4 };
+    		constexpr uint32_t ROTATION_Z {	5 };
+
+    		constexpr uint32_t SCALE_X { 6 };
+    		constexpr uint32_t SCALE_Y { 7 };
+    		constexpr uint32_t SCALE_Z { 8 };
+    	}
+    }
 
     struct TransformComponent
     {
@@ -79,8 +136,8 @@ namespace Sauce
 
     struct MeshInstance
     {
-        Mesh *PMesh = nullptr;
-        bool IsVisible;
+		uint32_t meshId {};
+        bool IsVisible {};
     };
 
     struct UUIDComponent
@@ -96,5 +153,10 @@ namespace Sauce
         ~UUIDComponent() {}
 
         operator UUID() const {return Id;}
+    };
+
+    struct TextureComponent
+    {
+    	uint32_t textureId {};
     };
 }

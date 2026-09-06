@@ -1,7 +1,18 @@
+// noincludeformat
+
 #pragma once
 
-#include "ECS/Scene.h"
+#include <nlohmann/json.hpp>
+
 #include <memory>
+
+#include "ECS/Scene.h"
+
+#include "ECS/Entity.h"
+
+#include "nlohmann/json.hpp"
+
+using json = nlohmann::json;
 
 namespace Sauce
 {
@@ -12,6 +23,7 @@ namespace Sauce
         SceneSerializer(std::shared_ptr<Scene> scene);
         ~SceneSerializer();
 
+		void AttachComponent(json component, Entity *entity);
         void Serialze(const std::string &filepath);
         void Deserialze(const std::string &filepath);
     private:

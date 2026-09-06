@@ -1,12 +1,17 @@
+//noincludeformat
 #pragma once
 
-#include "Render/Mesh.h"
-#include "Render/Shader.h"
-#include "Window.h"
-#include "glm/ext/matrix_float4x4.hpp"
 #include <cstdint>
+
 #include <functional>
 #include <memory>
+
+#include "Render/Mesh.h"
+#include "Window.h"
+
+#include "Render/Shader.h"
+
+#include "glm/ext/matrix_float4x4.hpp"
 
 namespace Sauce
 {
@@ -31,7 +36,7 @@ namespace Sauce
 
         void SetMainShader(std::shared_ptr<Shader>);
 
-        void Submit(const glm::mat4 &transform, const glm::mat4 &view, const glm::mat4 &proj, Mesh *mesh);
+        void Submit(const glm::mat4 &transform, const glm::mat4 &view, const glm::mat4 &proj, const Mesh &mesh);
 
         uint32_t GetWinWidth() const;
         uint32_t GetWinHeight() const;

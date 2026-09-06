@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(SauceEngine)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 26)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -75,23 +75,24 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(entt)
 
 # ASSIMP
-# FetchContent_Declare(
-#     assimp
-#     GIT_REPOSITORY https://github.com/assimp/assimp.git
-#     GIT_TAG        v5.4.3        # oder eine andere Version/Branch
-# )
-# 
-# set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-# set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "" FORCE)
-# set(ASSIMP_INSTALL OFF CACHE BOOL "" FORCE)
-# set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
-# set(ASSIMP_WARNINGS_AS_ERRORS OFF CACHE BOOL "" FORCE)
-# 
-# FetchContent_MakeAvailable(assimp)
-# 
+FetchContent_Declare(
+    assimp
+    GIT_REPOSITORY https://github.com/assimp/assimp.git
+    GIT_TAG        v6.0.5
+)
+
+set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "" FORCE)
+set(ASSIMP_INSTALL OFF CACHE BOOL "" FORCE)
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+set(ASSIMP_WARNINGS_AS_ERRORS OFF CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_ZLIB ON CACHE BOOL "" FORCE)
+
+FetchContent_MakeAvailable(assimp)
+
 # STB IMAGE
 add_library(stb_image STATIC
-  Engine/vendor/stb_image/stb_image.cpp
+  	${CMAKE_SOURCE_DIR}/Engine/vendor/stb_image/stb_image.cpp
 )
 target_include_directories(stb_image PUBLIC Engine/vendor/stb_image)
 set_target_properties(stb_image PROPERTIES POSITION_INDEPENDENT_CODE ON)
@@ -129,28 +130,32 @@ set_target_properties(nativefiledialog PROPERTIES
     C_STANDARD 11
 )
 
-#ENGINE (Static Library)
+#ENGINE (Shared Library)
 add_library(SauceEngine SHARED
-    Engine/src/Core/UUID.cpp
-    Engine/src/Core/Application.cpp
-    Engine/src/Render/Window.cpp
-    Engine/src/Render/Renderer.cpp
-    Engine/src/Render/Viewport.cpp
-    Engine/src/Render/Buffers/IndexBuffer.cpp
-    Engine/src/Render/Buffers/VertexArray.cpp
-    Engine/src/Render/Buffers/VertexBuffer.cpp
-    Engine/src/Render/Texture.cpp
-    Engine/src/Render/Shader.cpp
-    Engine/src/ECS/Scene.cpp
-    Engine/src/ECS/Entity.cpp
-    Engine/src/Core/ScriptEngine.cpp
-    Engine/src/Core/SceneSerializer.cpp
-    Engine/src/Input/KeyboardListener.cpp
-    Engine/src/Input/MouseListener.cpp
-    Engine/src/Input/Gamepad.cpp
-    Engine/src/Input/GamepadListener.cpp
-    Engine/src/Input/InputSystem.cpp
-    Engine/src/Render/Framebuffer.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Core/UUID.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Core/Application.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Core/AssetSystem.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Render/Window.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Render/Renderer.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Render/Viewport.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Render/Buffers/IndexBuffer.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Render/Buffers/VertexArray.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Render/Buffers/VertexBuffer.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Render/Texture.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Render/Shader.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/ECS/Scene.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/ECS/Entity.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Core/ScriptEngine.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Core/SceneSerializer.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Input/KeyboardListener.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Input/MouseListener.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Input/Gamepad.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Input/GamepadListener.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Input/InputSystem.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Render/Framebuffer.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Render/Mesh.cpp
+
+    ${CMAKE_SOURCE_DIR}/Engine/vendor/json/json.cpp
 )
 
 target_include_directories(SauceEngine PUBLIC
@@ -166,7 +171,7 @@ target_link_libraries(SauceEngine PUBLIC
     stb_image
     lua::lua
     EnTT::EnTT
-    # assimp
+    assimp
 )
 
 #OpenGL
@@ -187,6 +192,8 @@ target_link_libraries(SauceEngine PUBLIC sauce_opengl)
 add_executable(sauce-editor
     ${CMAKE_SOURCE_DIR}/Editor/UI/SauceEditor.cpp
     ${CMAKE_SOURCE_DIR}/Editor/Shared/Shared.cpp
+
+    ${CMAKE_SOURCE_DIR}/Engine/vendor/json/json.cpp
 )
 
 target_link_libraries(sauce-editor PRIVATE

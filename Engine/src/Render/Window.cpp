@@ -1,10 +1,13 @@
-#include <glad/glad.h>
-#include "Window.h"
-#include "GLFW/glfw3.h"
 #include <cassert>
+#include <glad/glad.h>
+
 #include <functional>
 #include <iostream>
 #include <string>
+
+#include "Window.h"
+
+#include "GLFW/glfw3.h"
 
 namespace Sauce {
     void Window::Init() 

@@ -1,16 +1,17 @@
-#include <cstddef>
 #include <cstdint>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <sys/types.h>
 #include <glad/glad.h>
-
-#include "Shader.h"
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <sys/types.h>
+
+#include <cstddef>
+#include <iostream>
+#include <sstream>
+#include <string>
+
+#include "Shader.h"
+
 
 namespace Sauce
 {
@@ -101,7 +102,7 @@ namespace Sauce
         if(file == nullptr)
         {
             std::cout << "file " << fileName << " not found\n";
-            return 0;
+            return "";
         }
 
         std::string contents;

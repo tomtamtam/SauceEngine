@@ -1,13 +1,20 @@
-#include "SceneSerializer.h"
-#include "ECS/Components.h"
-#include "ECS/Entity.h"
-#include "Render/Mesh.h"
-#include "entt/entity/fwd.hpp"
+// noincludeformat
+
 #include <cstdint>
+#include <nlohmann/json.hpp>
+
 #include <fstream>
 #include <iostream>
-#include <nlohmann/json.hpp>
 #include <string>
+
+#include "SceneSerializer.h"
+
+#include "Core/AssetSystem.h"
+
+#include "ECS/Components.h"
+#include "ECS/Entity.h"
+
+#include "entt/entity/fwd.hpp"
 
 using json = nlohmann::json;
 namespace Sauce
@@ -35,8 +42,8 @@ namespace Sauce
             {
                 json jUUID;
                 jUUID["id"] = UUID_CIDX;
-                jUUID["values"][0] = (uint64_t)uuid->Id;
-                jUUID["values"][1] = uuid->Name;
+                jUUID["values"][VIDX::CUUID::ID] = (uint64_t)uuid->Id;
+                jUUID["values"][VIDX::CUUID::NAME] = uuid->Name;
                 jScene["objects"][i]["components"][compCount] = jUUID;
                 compCount ++;
             }
@@ -46,17 +53,17 @@ namespace Sauce
             {
                 json jTransform;
                 jTransform["id"] = TRANSFORM_CIDX;
-                jTransform["values"][0] = tc->Translation.x;
-                jTransform["values"][1] = tc->Translation.y;
-                jTransform["values"][2] = tc->Translation.z;
+                jTransform["values"][VIDX::CTransform::TRANSFORM_X] = tc->Translation.x;
+                jTransform["values"][VIDX::CTransform::TRANSFORM_Y] = tc->Translation.y;
+                jTransform["values"][VIDX::CTransform::TRANSFORM_Z] = tc->Translation.z;
 
-                jTransform["values"][3] = tc->Rotation.x;
-                jTransform["values"][4] = tc->Rotation.y;
-                jTransform["values"][5] = tc->Rotation.z;
+                jTransform["values"][VIDX::CTransform::ROTATION_X] = tc->Rotation.x;
+                jTransform["values"][VIDX::CTransform::ROTATION_Y] = tc->Rotation.y;
+                jTransform["values"][VIDX::CTransform::ROTATION_Z] = tc->Rotation.z;
 
-                jTransform["values"][6] = tc->Scale.x;
-                jTransform["values"][7] = tc->Scale.y;
-                jTransform["values"][8] = tc->Scale.z;
+                jTransform["values"][VIDX::CTransform::SCALE_X] = tc->Scale.x;
+                jTransform["values"][VIDX::CTransform::SCALE_Y] = tc->Scale.y;
+                jTransform["values"][VIDX::CTransform::SCALE_Z] = tc->Scale.z;
 
                 jScene["objects"][i]["components"][compCount] = jTransform;
                 compCount ++;
@@ -67,7 +74,7 @@ namespace Sauce
             {
                 json jScript;
                 jScript["id"] = SCRIPT_CIDX;
-                jScript["values"][0] = sc->ScriptName;
+                jScript["values"][VIDX::CScript::NAME] = sc->ScriptName;
                 jScene["objects"][i]["components"][compCount] = jScript;
                 compCount ++;
             }
@@ -77,11 +84,11 @@ namespace Sauce
             {
                 json jCamera;
                 jCamera["id"] = CAMERA_CIDX;
-                jCamera["values"][0] = cc->FOV;
-                jCamera["values"][1] = cc->Width;
-                jCamera["values"][2] = cc->Height;
-                jCamera["values"][3] = cc->IsMain;
-                jCamera["values"][4] = cc->IsAdjustable;
+                jCamera["values"][VIDX::CCamera::FOV] = cc->FOV;
+                jCamera["values"][VIDX::CCamera::WIDHT] = cc->Width;
+                jCamera["values"][VIDX::CCamera::HEIGHT] = cc->Height;
+                jCamera["values"][VIDX::CCamera::IS_MAIN] = cc->IsMain;
+                jCamera["values"][VIDX::CCamera::IS_ADJUSTABLE] = cc->IsAdjustable;
 
                 jScene["objects"][i]["components"][compCount] = jCamera;
                 compCount ++;
@@ -92,9 +99,19 @@ namespace Sauce
             {
                 json jMesh;
                 jMesh["id"] = MESH_INSTANCE_CIDX;
-                jMesh["values"][0] = mc->IsVisible;
+                jMesh["values"][VIDX::CMesh::ID] = mc->IsVisible;
                 jScene["objects"][i]["components"][compCount] = jMesh;
                 compCount ++;
+            }
+            
+            //Texture
+            if(auto *tc = m_Scene->m_Registry.try_get<TextureComponent>(e))
+            {
+            	json jTexture;
+            	jTexture["id"] = TEXTURE_CIDX;
+            	jTexture["values"][VIDX::CTexture::ID] = tc->textureId;
+            	jScene["objects"][i]["components"][compCount] = jTexture;
+            	compCount ++;
             }
 
             i++;
@@ -110,25 +127,25 @@ namespace Sauce
         std::cout << "wrote to file\n";
     }
 
-    void attachComponent(json component, Entity *entity)
+    void SceneSerializer::AttachComponent(json component, Entity *entity)
     {
         switch(component["id"].get<int>())
         {
             case SCRIPT_CIDX:
             {
                 entity->AddComponent<Script>();
-                entity->GetComponent<Script>().ScriptName = component["values"][0];
+                entity->GetComponent<Script>().ScriptName = component["values"][VIDX::CScript::NAME];
                 break;
             }
             case CAMERA_CIDX:
             {
                 entity->AddComponent<CameraComponent>();
                 CameraComponent c;
-                c.FOV = component["values"][0];
-                c.Width = component["values"][1];
-                c.Height = component["values"][2];
-                c.IsMain = component["values"][3];
-                c.IsAdjustable = component["values"][4];
+                c.FOV = component["values"][VIDX::CCamera::FOV];
+                c.Width = component["values"][VIDX::CCamera::WIDHT];
+                c.Height = component["values"][VIDX::CCamera::HEIGHT];
+                c.IsMain = component["values"][VIDX::CCamera::IS_MAIN];
+                c.IsAdjustable = component["values"][VIDX::CCamera::IS_ADJUSTABLE];
                 entity->GetComponent<CameraComponent>() = c;
                 break;
             }
@@ -144,15 +161,21 @@ namespace Sauce
             case MESH_INSTANCE_CIDX:
             {
                 entity->AddComponent<MeshInstance>();
-                entity->GetComponent<MeshInstance>().IsVisible = true;
-                entity->GetComponent<MeshInstance>().PMesh = CreateCubeMesh();
+                entity->GetComponent<MeshInstance>().IsVisible = component["values"][VIDX::CMesh::IS_VISIBLE];
+                UUID meshId {component["values"][VIDX::CMesh::ID]};
+                entity->GetComponent<MeshInstance>().meshId = meshId;
                 break;
             }
             case UUID_CIDX:
             {
                 entity->AddComponent<UUIDComponent>();
-                entity->GetComponent<UUIDComponent>().Id = (UUID)component["values"][0].get<uint64_t>();
-                entity->GetComponent<UUIDComponent>().Name = component["values"][1].get<std::string>();
+                entity->GetComponent<UUIDComponent>().Id = (UUID)component["values"][VIDX::CUUID::ID].get<uint64_t>();
+                entity->GetComponent<UUIDComponent>().Name = component["values"][VIDX::CUUID::NAME].get<std::string>();
+            }
+            case TEXTURE_CIDX:
+            {
+            	entity->AddComponent<TextureComponent>();
+            	entity->GetComponent<TextureComponent>().textureId = component["values"][VIDX::CTexture::ID].get<uint32_t>();
             }
             default:
                 break;
@@ -173,7 +196,7 @@ namespace Sauce
             Entity e(m_Scene->CreateEntity());
             for(auto c : o["components"])
             {
-                attachComponent(c, &e);
+                AttachComponent(c, &e);
             }
         }
     }

@@ -1,32 +1,46 @@
-#include "Core/SceneSerializer.h"
-#include "ECS/Components.h"
-#include "ECS/Scene.h"
-#include "Editor/Shared/Shared.h"
-#include "Editor/UI/ImGuiLayer.h"
-#include "GLFW/glfw3.h"
-#include "Render/Buffers/VertexBuffer.h"
-#include "Render/Framebuffer.h"
-#include "Render/Mesh.h"
-#include "Render/Renderer.h"
 #include <cstdint>
 #include <cstdio>
+#include <glad/glad.h>
+#include <immintrin.h>
+
+#include <cstddef>
 #include <filesystem>
 #include <format>
 #include <fstream>
 #include <functional>
-#include <immintrin.h>
 #include <memory>
+#include <optional>
 #include <stdexcept>
 #include <string>
-#include "Render/Shader.h"
+
 #include "defines.h"
-#include "entt/entity/fwd.hpp"
-#include "glm/ext/vector_float2.hpp"
-#include "glm/fwd.hpp"
-#include "glm/gtc/type_ptr.hpp"
 #include "imgui.h"
 #include "imgui_internal.h"
 #include "nfd.h"
+
+#include "Core/AssetSystem.h"
+#include "Core/SceneSerializer.h"
+
+#include "ECS/Components.h"
+#include "ECS/Scene.h"
+
+#include "Editor/Shared/Shared.h"
+
+#include "Editor/UI/ImGuiLayer.h"
+
+#include "GLFW/glfw3.h"
+
+#include "Render/Framebuffer.h"
+#include "Render/Renderer.h"
+#include "Render/Shader.h"
+
+#include "entt/entity/fwd.hpp"
+
+#include "glm/fwd.hpp"
+
+#include "glm/ext/vector_float2.hpp"
+
+#include "glm/gtc/type_ptr.hpp"
 
 class Editor
 {
@@ -37,7 +51,8 @@ public:
         m_SceneSerializer(m_Scene),
         m_ProjectPath(projPath),
         m_FrameBuffer()
-    {}
+    {
+    }
     ~Editor()
     {}
 
@@ -56,6 +71,7 @@ public:
             std::runtime_error(std::format("path to shader: {}/{} is no valid path\n", m_ProjectPath, m_CurrentScenePath).c_str());
         std::string shaderPath = j["defaultShader"];
         m_Renderer->CreateWindow(m_ProjectName, 800, 800, on_close,key_callback, mouse_button_callback, scroll_callback, char_callback, enter_callback, cursor_pos_callback, window_focus_callback);
+        m_Scene->p_AssetSystem.emplace();
         m_Layer.Init(m_Renderer->GetWindow());
 
         m_CurrentShader = std::make_shared<Sauce::Shader>(m_ProjectPath + '/' + shaderPath);
@@ -68,7 +84,7 @@ public:
             .runState = RunState::STOPPED
         };
 
-        m_ViewStates = {.runWindow = true, .viewport = true, .sceneHierarchy = true, .inspector = true, .console = true, .assetBrowser = true};
+        m_ViewStates = {.runWindow = true, .viewport = true, .sceneHierarchy = true, .inspector = true, .console = true, .assetBrowser = true, .fpsView = true};
         m_EditorCam = {{0.0f, 1.0f, 0.0f}, 60.0f, 200, 200, true, false};
         m_EditorTransform.Translation = {0.0f, 0.0f, 3.0f};
         m_EditorTransform.Rotation = {0.0f, 0.0f, -1.0f};
@@ -123,7 +139,7 @@ private:
 
     struct ViewStates
     {
-        bool runWindow, viewport, sceneHierarchy, inspector, console, assetBrowser;
+        bool runWindow, viewport, sceneHierarchy, inspector, console, assetBrowser, fpsView;
     };
 
     std::shared_ptr<Sauce::Renderer> m_Renderer;
@@ -136,7 +152,7 @@ private:
     std::string m_ProjectPath;
 
     std::string m_CurrentScenePath;
-    std::shared_ptr<Sauce::Shader>  m_CurrentShader;
+    std::shared_ptr<Sauce::Shader> m_CurrentShader;
 
     float m_BeginTime;
     float m_EndTime;
@@ -160,6 +176,7 @@ private:
 
         DrawMainWindow();
         DrawRunWindow();
+        DrawFPSWindow();
         DrawConsole();
         DrawAssetBrowser();
         DrawSceneHierarchy();
@@ -249,6 +266,7 @@ private:
                     ImGui::MenuItem("Inspector", nullptr, &m_ViewStates.inspector);
                     ImGui::MenuItem("Console", nullptr, &m_ViewStates.console);
                     ImGui::MenuItem("Asset-Browser", nullptr, &m_ViewStates.assetBrowser);
+					ImGui::MenuItem("FPS-View", nullptr, &m_ViewStates.fpsView);
                 ImGui::EndMenu();
             }
             ImGui::EndMenuBar();
@@ -318,6 +336,22 @@ private:
                 StopScene();
             }
         ImGui::End();
+    }
+
+    void DrawFPSWindow()
+    {
+    	if(!m_ViewStates.fpsView)
+    		return;
+		ImGui::Begin("FPS");
+			ImGui::Text("Editor: %f FPS", 1 / m_DT);
+			if(m_State.runState == RunState::RUNNING)
+			{
+				ImGui::SameLine();
+				ImGui::Separator();
+				ImGui::SameLine();
+				ImGui::Text("Game: FPS");
+			}
+		ImGui::End();
     }
 
     void DrawConsole()
@@ -437,7 +471,6 @@ private:
                 }
                 if (ImGui::BeginPopupContextItem())
                 {
-                    // Optional: also select the entity on right-click so it's clear what you're acting on
                     m_SelectedEntity = e;
                     if (ImGui::MenuItem("Rename"))
                     {
@@ -546,7 +579,7 @@ private:
             break;
         case MESH_INSTANCE_CIDX:
             m_Scene->m_Registry.emplace_or_replace<Sauce::MeshInstance>(e);
-            m_Scene->m_Registry.get<Sauce::MeshInstance>(e).PMesh = Sauce::CreateCubeMesh();
+            m_Scene->m_Registry.get<Sauce::MeshInstance>(e).meshId = Sauce::CUBE_UUID;
             m_Scene->m_Registry.get<Sauce::MeshInstance>(e).IsVisible = true;
             break;
         case SCRIPT_CIDX:
@@ -598,8 +631,19 @@ private:
         }
         case MESH_INSTANCE_CIDX:
         {
-            ImGui::Text("Mesh:");
-            break;
+			std::vector<const char*> meshNames(m_Scene->p_AssetSystem->p_MeshCount);
+			for (size_t i = 0; i < m_Scene->p_AssetSystem->p_MeshCount; i++)
+			    meshNames[i] = m_Scene->p_AssetSystem->p_Meshes[i].name.c_str();
+			
+			auto& meshInstance {m_Scene->m_Registry.get<Sauce::MeshInstance>(e)};
+			int meshIdx {static_cast<int>(meshInstance.meshId)};
+			
+			ImGui::Text("Mesh Instance");
+			if (ImGui::Combo("Mesh", &meshIdx, meshNames.data(), static_cast<int>(meshNames.size()), 20))
+			{
+			    meshInstance.meshId = static_cast<uint32_t>(meshIdx);
+			}
+			ImGui::Checkbox("Visible", &meshInstance.IsVisible);
         }
         case SCRIPT_CIDX:
         {
@@ -666,8 +710,9 @@ private:
         auto meshView = m_Scene->m_Registry.view<Sauce::MeshInstance>();
         for(auto entity : meshView)
         {
-            if(!m_Scene->m_Registry.try_get<Sauce::TransformComponent>(entity) || m_Scene->m_Registry.get<Sauce::MeshInstance>(entity).PMesh == nullptr || !m_Scene->m_Registry.get<Sauce::MeshInstance>(entity).IsVisible) continue;
-            m_Renderer->Submit(m_Scene->m_Registry.get<Sauce::TransformComponent>(entity), view, proj, meshView->get(entity).PMesh);
+            if(!m_Scene->m_Registry.get<Sauce::MeshInstance>(entity).IsVisible) continue;
+            auto meshId = m_Scene->m_Registry.get<Sauce::MeshInstance>(entity).meshId;
+            m_Renderer->Submit(m_Scene->m_Registry.get<Sauce::TransformComponent>(entity), view, proj, *m_Scene->p_AssetSystem->p_Meshes.at(meshId).mesh);
         }
     }
 
@@ -750,7 +795,7 @@ private:
 
 void Edit(const std::string &path)
 {
-    Editor e = {path};
+    Editor e {path};
     e.Run();
 }
 

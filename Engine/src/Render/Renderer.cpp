@@ -1,12 +1,18 @@
+#include <cstdint>
+
+#include <memory>
+#include <optional>
+
 #include "Renderer.h"
+
+#include "Render/Shader.h"
+#include "Render/Window.h"
+
 #include "Render/Buffers/IndexBuffer.h"
 #include "Render/Buffers/VertexArray.h"
 #include "Render/Buffers/VertexBuffer.h"
-#include "Render/Shader.h"
-#include "Render/Window.h"
+
 #include "glm/ext/matrix_float4x4.hpp"
-#include <cstdint>
-#include <memory>
 
 namespace Sauce
 {
@@ -47,16 +53,16 @@ namespace Sauce
     {
     }
 
-    void Renderer::Submit(const glm::mat4 &transform, const glm::mat4 &view, const glm::mat4 &proj, Mesh *mesh)
+    void Renderer::Submit(const glm::mat4 &transform, const glm::mat4 &view, const glm::mat4 &proj, const Mesh &mesh)
     {
-        mesh->Vao.Bind();
-        mesh->Ibo.Bind();
+        mesh.Vao.Bind();
+        mesh.Ibo.Bind();
         m_MainShader->Bind();
         m_MainShader->SetMatrix4("u_Transform", transform);
         m_MainShader->SetMatrix4("u_View", view);
         m_MainShader->SetMatrix4("u_Proj", proj);
 
-        glDrawElements(GL_TRIANGLES, mesh->Ibo.getCount(), GL_UNSIGNED_INT, nullptr);
+        glDrawElements(GL_TRIANGLES, mesh.Ibo.getCount(), GL_UNSIGNED_INT, nullptr);
     }
 
     uint32_t Renderer::GetWinWidth() const

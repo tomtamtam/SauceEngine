@@ -1,21 +1,28 @@
 #pragma once
 
-#include "Core/UUID.h"
-#include "Render/Renderer.h"
-#include "Input/InputSystem.h"
-#include "entt/entity/fwd.hpp"
-#include "entt/entt.hpp"
 #include <cstdint>
-#include <memory>
-#include "Core/SceneSerializer.h"
 
-#define F_NEAR 1.0f
-#define F_FAR 1000.0f
+#include <memory>
+
+#include "Core/AssetSystem.h"
+#include "Core/UUID.h"
+
+#include "Input/InputSystem.h"
+
+#include "Render/Renderer.h"
+
+#include "entt/entt.hpp"
+
+#include "entt/entity/fwd.hpp"
+
+constexpr float F_NEAR {1.0f};
+constexpr float F_FAR {1000.0f};
 
 class Editor;
 
 namespace Sauce
 {
+    class Application;
     class Entity;
 
     class Scene
@@ -35,6 +42,7 @@ namespace Sauce
 
         void OnResize(uint32_t width, uint32_t height);
 
+		std::optional<AssetSystem> p_AssetSystem;
     private:
         entt::registry m_Registry;
         UUID m_ID;

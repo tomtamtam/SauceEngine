@@ -1,22 +1,28 @@
-#include "Application.h"
 #include <cassert>
 #include <cstdint>
 #include <dlfcn.h>
+
 #include <fstream>
 #include <memory>
 #include <string>
+
+#include "Application.h"
+
 #include "Core/SceneSerializer.h"
+
 #include "GLFW/glfw3.h"
+
 #include "Render/Renderer.h"
 #include "Render/Shader.h"
-#include "Util/Json.h"
-#include "nlohmann/json.hpp"
 
+#include "Util/Json.h"
+
+#include "nlohmann/json.hpp"
 
 namespace Sauce
 {
     Application::Application()
-        : m_IsRunning(true), m_Renderer(std::make_unique<Renderer>()), m_CurrentScene(std::make_shared<Scene>(m_Renderer)), m_SceneSerializer(m_CurrentScene)
+        : m_IsRunning(true), m_Renderer(std::make_unique<Renderer>()), m_AssetSystem(), m_CurrentScene(std::make_shared<Scene>(m_Renderer)), m_SceneSerializer(m_CurrentScene)
     {
     }
 
@@ -51,12 +57,16 @@ namespace Sauce
 
         m_Renderer->CreateWindow(m_Name, 800, 800, onShouldClose, onKeyCallback, onMouseButtonCallback, onScrollCallback, onCharCallback, onEnterCallback,onCursorPosCallback, onWindowFocusCallback);
 
+        m_CurrentScene->p_AssetSystem.emplace();
+
         m_SceneSerializer.Deserialze("../" + m_DefaultScene);
 
         m_CurrentScene->Init();
 
         auto shader = std::make_shared<Shader>("../"+m_DefaultShader);
         m_Renderer->SetMainShader(shader);
+        
+        //m_AssetSystem = {};
     }
 
     void Application::Terminate()

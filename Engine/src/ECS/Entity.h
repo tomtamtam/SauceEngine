@@ -1,8 +1,10 @@
 #pragma once
 
-#include "ECS/Scene.h"
-#include "entt/entity/fwd.hpp"
 #include <utility>
+
+#include "ECS/Scene.h"
+
+#include "entt/entity/fwd.hpp"
 
 namespace Sauce
 {
