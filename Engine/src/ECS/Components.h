@@ -49,6 +49,8 @@ namespace Sauce
     	{
     		constexpr uint32_t ID { 0 };
     		constexpr uint32_t NAME { 1 };
+    		constexpr uint32_t PARENT { 2 };
+    		constexpr uint32_t CHILDEREN { 3 };
     	}
 
     	namespace CScript
@@ -137,13 +139,16 @@ namespace Sauce
     struct MeshInstance
     {
 		uint32_t meshId {};
-        bool IsVisible {};
+        bool IsVisible { true };
     };
 
     struct UUIDComponent
     {
         UUID Id;
         std::string Name;
+		std::optional<UUID> parent {};
+		std::vector<UUID> childeren;
+
         UUIDComponent()
             : Id(), Name("New Object")
         {}

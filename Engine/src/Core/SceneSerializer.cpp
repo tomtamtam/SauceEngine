@@ -11,6 +11,7 @@
 
 #include "Core/AssetSystem.h"
 
+#include "Core/UUID.h"
 #include "ECS/Components.h"
 #include "ECS/Entity.h"
 
@@ -44,6 +45,19 @@ namespace Sauce
                 jUUID["id"] = UUID_CIDX;
                 jUUID["values"][VIDX::CUUID::ID] = (uint64_t)uuid->Id;
                 jUUID["values"][VIDX::CUUID::NAME] = uuid->Name;
+				if(uuid->parent)
+                	jUUID["values"][VIDX::CUUID::PARENT] = (uint64_t)uuid->parent.value();
+				else
+                	jUUID["values"][VIDX::CUUID::PARENT] = UUID_NULL;
+				if(uuid->childeren.size() > 0)
+				{
+					for(size_t i{}; i < uuid->childeren.size(); i++)
+					{
+						jUUID["values"][VIDX::CUUID::CHILDEREN][i] = (uint64_t)uuid->childeren[i];
+					}	
+				}
+				else
+					jUUID["values"][VIDX::CUUID::CHILDEREN] = json::array();
                 jScene["objects"][i]["components"][compCount] = jUUID;
                 compCount ++;
             }
@@ -99,7 +113,8 @@ namespace Sauce
             {
                 json jMesh;
                 jMesh["id"] = MESH_INSTANCE_CIDX;
-                jMesh["values"][VIDX::CMesh::ID] = mc->IsVisible;
+                jMesh["values"][VIDX::CMesh::IS_VISIBLE] = mc->IsVisible;
+                jMesh["values"][VIDX::CMesh::ID] = mc->meshId;
                 jScene["objects"][i]["components"][compCount] = jMesh;
                 compCount ++;
             }
@@ -171,6 +186,17 @@ namespace Sauce
                 entity->AddComponent<UUIDComponent>();
                 entity->GetComponent<UUIDComponent>().Id = (UUID)component["values"][VIDX::CUUID::ID].get<uint64_t>();
                 entity->GetComponent<UUIDComponent>().Name = component["values"][VIDX::CUUID::NAME].get<std::string>();
+				if(component["values"][VIDX::CUUID::PARENT] != UUID_NULL)
+				{
+					entity->GetComponent<UUIDComponent>().parent = component["values"][VIDX::CUUID::PARENT].get<uint64_t>();
+				}
+				if(component["values"][VIDX::CUUID::CHILDEREN].size() > 0)
+				{
+					for(size_t i {}; i < component["values"][VIDX::CUUID::CHILDEREN].size(); i++)
+					{
+						entity->GetComponent<UUIDComponent>().childeren.push_back(component["values"][VIDX::CUUID::CHILDEREN][i].get<uint64_t>());
+					}
+				}
             }
             case TEXTURE_CIDX:
             {

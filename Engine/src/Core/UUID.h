@@ -4,32 +4,33 @@
 
 namespace Sauce
 {
-  class UUID
-  {
+	constexpr uint64_t UUID_NULL { 0 };
+  	class UUID
+  	{
 
-  public:
-    UUID();
-    UUID(uint64_t uuid);
+  	public:
+  	  	UUID();
+  	  	UUID(uint64_t uuid);
 
-    operator uint64_t() const {return m_UUID;}
+  	  	operator uint64_t() const {return m_UUID;}
 
-  private:
-    uint64_t m_UUID;
+  	private:
+  	  	uint64_t m_UUID;
 
-  };
+  	};
 
 }
 
 namespace std {
   
-  template<typename T> struct hash;
+  	template<typename T> struct hash;
 
-  template<>
+  	template<>
     struct hash<Sauce::UUID>
     {
-      std::size_t operator()(const Sauce::UUID &uuid) const
-      {
-        return (uint64_t) uuid;
-      }
+      	std::size_t operator()(const Sauce::UUID &uuid) const
+      	{
+      	  	return (uint64_t) uuid;
+      	}
     };
 }

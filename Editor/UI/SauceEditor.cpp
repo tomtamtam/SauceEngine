@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <glad/glad.h>
 #include <immintrin.h>
+#include <print>
 
 #include <cstddef>
 #include <filesystem>
@@ -20,6 +21,7 @@
 
 #include "Core/AssetSystem.h"
 #include "Core/SceneSerializer.h"
+#include "Core/UUID.h"
 
 #include "ECS/Components.h"
 #include "ECS/Scene.h"
@@ -80,7 +82,7 @@ public:
 
         m_State =
         {
-            .initializedDock = false, .shouldClose = false,
+            .initializedDock = false, .shouldClose = false, .requestAddChild = false,
             .runState = RunState::STOPPED
         };
 
@@ -133,7 +135,7 @@ private:
 
     struct EditorState
     {
-        bool initializedDock, shouldClose;
+        bool initializedDock, shouldClose, requestAddChild;
         RunState runState;
     };
 
@@ -516,8 +518,17 @@ private:
                     {
                         m_Scene->m_Registry.destroy(m_SelectedEntity);
                     }
+					if(ImGui::MenuItem("Add Child"))
+					{
+						m_State.requestAddChild = true;
+					}
                     ImGui::EndPopup();
                 }
+				if(m_State.requestAddChild)
+				{
+						ImGui::OpenPopup("Create Child");
+						m_State.requestAddChild = false;
+				}
                 if(ImGui::BeginPopup("Rename Object"))
                 {
                     char nameBuffer[128];
@@ -532,6 +543,25 @@ private:
                     }
                     ImGui::EndPopup();
                 }
+            	if(ImGui::BeginPopup("Create Child"))
+            	{
+            	    ImGui::InputText("Name", m_TextBuffer, 100);
+            	    if(ImGui::Button("Add"))
+            	    {
+            	        std::string name = { m_TextBuffer };
+            	        Sauce::Entity e = m_Scene->CreateEntity(name);
+						e.GetComponent<Sauce::UUIDComponent>().parent = m_Scene->m_Registry.get<Sauce::UUIDComponent>(m_SelectedEntity).Id;
+						m_Scene->m_Registry.get<Sauce::UUIDComponent>(m_SelectedEntity).childeren.push_back(e.GetComponent<Sauce::UUIDComponent>().Id);
+            	        m_Console.put(MessageType::INFO, std::format("Added Child Object '{}' to '{}'", name, m_Scene->m_Registry.get<Sauce::UUIDComponent>(m_SelectedEntity).Name));
+            	        ImGui::CloseCurrentPopup();
+            	    }
+            	    ImGui::SameLine();
+            	    if(ImGui::Button("Cancel"))
+            	    {
+            	        ImGui::CloseCurrentPopup();
+            	    }
+            	    ImGui::EndPopup();
+            	}
                 ImGui::PopID();
             }
             ImGui::PopStyleVar();
@@ -655,6 +685,20 @@ private:
         }
     }
 
+	template<typename T>
+	std::optional<T> GetComponentByUUID(Sauce::UUID uuid)
+	{
+		auto view = m_Scene->m_Registry.view<Sauce::UUIDComponent, T>();
+		for(auto e : view)
+		{
+			if(m_Scene->m_Registry.get<Sauce::UUIDComponent>(e).Id == uuid)
+			{
+				return m_Scene->m_Registry.get<T>(e);
+			}
+		}
+		return {};
+	}
+
     void DrawInspector()
     {
         if(!m_ViewStates.inspector)
@@ -665,6 +709,8 @@ private:
                 auto uuid = m_Scene->m_Registry.get<Sauce::UUIDComponent>(m_SelectedEntity);
                 ImGui::Text("Name: %s", uuid.Name.c_str());
                 ImGui::Text("UUID: %s", std::to_string((uint64_t)uuid.Id).c_str());
+				if(uuid.parent)
+					ImGui::Text("Parent: [name] %s [uuid] %s", GetComponentByUUID<Sauce::UUIDComponent>(uuid.parent.value()).value_or(std::string({})).Name.c_str(), std::to_string((uint64_t)uuid.parent.value()).c_str());
                 ImGui::Separator();
                 ImGui::Text("Components:");
 
