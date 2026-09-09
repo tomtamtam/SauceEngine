@@ -11,11 +11,7 @@
 
 #include "ScriptableEntity.h"
 
-#include "Core/AssetSystem.h"
 #include "Core/UUID.h"
-
-#include "Render/Mesh.h"
-#include "Render/Texture.h"
 
 #include "glm/fwd.hpp"
 

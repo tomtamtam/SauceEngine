@@ -33,10 +33,10 @@ namespace Sauce
             layout.Push<float>(3);
 
             //Color
-            layout.Push<float>(4);
+            layout.Push<float>(3);
 
             //UV
-            layout.Push<float>(2);
+            layout.Push<float>(3);
 
             Vao.AddBuffer(Vbo, layout);
         }

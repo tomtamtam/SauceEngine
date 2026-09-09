@@ -154,6 +154,7 @@ add_library(SauceEngine SHARED
     ${CMAKE_SOURCE_DIR}/Engine/src/Input/InputSystem.cpp
     ${CMAKE_SOURCE_DIR}/Engine/src/Render/Framebuffer.cpp
     ${CMAKE_SOURCE_DIR}/Engine/src/Render/Mesh.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/src/Platform/Linux/OpenGL/Renderer.cpp
 
     ${CMAKE_SOURCE_DIR}/Engine/vendor/json/json.cpp
 )
@@ -192,6 +193,8 @@ target_link_libraries(SauceEngine PUBLIC sauce_opengl)
 add_executable(sauce-editor
     ${CMAKE_SOURCE_DIR}/Editor/UI/SauceEditor.cpp
     ${CMAKE_SOURCE_DIR}/Editor/Shared/Shared.cpp
+
+    ${CMAKE_SOURCE_DIR}/Engine/src/Platform/Linux/ImGui/Renderer.cpp
 
     ${CMAKE_SOURCE_DIR}/Engine/vendor/json/json.cpp
 )

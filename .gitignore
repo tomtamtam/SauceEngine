@@ -2,7 +2,7 @@ build/*
 compile_commands.json
 
 .idea
-cmake-build-debub
+cmake-build-debug
 .cache
 .vscode
 imgui.ini

@@ -5,7 +5,7 @@ namespace Sauce
     struct Vertex
     {
         float x, y, z;
-        float r, g, b, a;
-        float u, v;
+		float nX, nY, nZ;
+        float u, v, w;
     };
 }

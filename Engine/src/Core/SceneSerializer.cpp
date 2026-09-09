@@ -161,6 +161,7 @@ namespace Sauce
                 c.Height = component["values"][VIDX::CCamera::HEIGHT];
                 c.IsMain = component["values"][VIDX::CCamera::IS_MAIN];
                 c.IsAdjustable = component["values"][VIDX::CCamera::IS_ADJUSTABLE];
+                c.Up = {0, 1, 0};
                 entity->GetComponent<CameraComponent>() = c;
                 break;
             }
@@ -225,5 +226,6 @@ namespace Sauce
                 AttachComponent(c, &e);
             }
         }
+		//m_Scene->p_AssetSystem->PushAssets(jScene["assets"]);
     }
 }

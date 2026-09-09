@@ -3,9 +3,9 @@
 #include <assimp/scene.h>
 #include <print>
 
-#include <algorithm>
 #include <filesystem>
 #include <memory>
+#include <string>
 
 #include "AssetSystem.h"
 
@@ -68,7 +68,7 @@ namespace Sauce
 		}
 	}
 
-	std::optional<std::unique_ptr<Mesh>> AssetSystem::CreateMeshFile(const std::string &path)
+	std::optional<std::unique_ptr<Import>> AssetSystem::CreateImportFile(const std::string &path)
 	{
 //in progress
 		if(!std::filesystem::exists(path))
@@ -81,11 +81,46 @@ namespace Sauce
 
 		const aiScene * scene { importer.ReadFile(path, aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace | aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_SortByPType) };
 
-		std::unique_ptr<Mesh> mesh;
+		auto import = std::make_unique<Import>();
 
-		std::vector<int> indices;
-		std::vector<Vertex> vertices;
-		
-		return mesh;
+		if(scene->HasMeshes())
+		{
+			for(size_t i {}; i < scene->mNumMeshes; i++)
+			{
+				aiMesh *iMesh = scene->mMeshes[i];
+
+				std::vector<int> indices;
+				std::vector<Vertex> vertices;
+
+				for(size_t i {}; i < iMesh->mNumFaces; i++)
+				{
+					for(size_t j {}; j < iMesh->mFaces[i].mNumIndices; j++)
+						indices.push_back(iMesh->mFaces[i].mIndices[j]);
+				}
+
+				for(size_t i {}; i < iMesh->mNumVertices; i++)
+				{
+					Vertex v;
+					v.x = iMesh->mVertices[i].x;
+					v.y = iMesh->mVertices[i].y;
+					v.z = iMesh->mVertices[i].z;
+
+					v.nX = iMesh->mNormals[i].x;
+					v.nY = iMesh->mNormals[i].y;
+					v.nZ = iMesh->mNormals[i].z;
+
+					v.u = iMesh->mTextureCoords[i]->x;
+					v.v = iMesh->mTextureCoords[i]->y;
+					v.w = iMesh->mTextureCoords[i]->z;
+
+					vertices.push_back(v);
+				}
+
+				p_Meshes.insert({p_MeshCount, {std::make_unique<Mesh>(indices, vertices), iMesh->mName.C_Str()}});
+				p_MeshCount ++;
+			}
+		}
+
+		return import;
 	}
 }

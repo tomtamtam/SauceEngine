@@ -1,12 +1,14 @@
 #pragma once
 
-#include "Editor/UI/ImGuiLayer.h"
-#include "Engine/vendor/utils_hpp/escapes.hpp"
-#include "Input/InputSystem.h"
 #include <cstdio>
 #include <nlohmann/json.hpp>
+
 #include <string>
 #include <unordered_map>
+
+#include "Editor/UI/ImGuiLayer.h"
+
+#include "Engine/vendor/utils_hpp/escapes.hpp"
 
 using json = nlohmann::json;
 
@@ -81,52 +83,3 @@ public:
     }
     ~Console() {}
 };
-
-inline static Sauce::InputSystem inputSystem;
-
-inline static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    ImGui_ImplGlfw_KeyCallback(window, key, scancode, action, mods);
-    inputSystem.KeyCallback(window, key, scancode, action, mods);
-    if (ImGui::GetIO().WantCaptureKeyboard)
-        return;
-}
-
-inline static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
-{
-    ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
-    inputSystem.MouseButtonCallback(window, button, action, mods);
-}
-
-inline static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
-{
-    ImGui_ImplGlfw_ScrollCallback(window, xoffset, yoffset);
-    inputSystem.ScrollCallback(window, xoffset, yoffset);
-}
-
-inline static void char_callback(GLFWwindow* window, unsigned int codepoint)
-{
-    ImGui_ImplGlfw_CharCallback(window, codepoint);
-    inputSystem.CharCallback(window, codepoint);
-}
-
-inline static void enter_callback(GLFWwindow* window, int entered)
-{
-    ImGui_ImplGlfw_CursorEnterCallback(window, entered);
-    inputSystem.EnterCallback(window, entered);
-}
-
-inline static void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
-{
-    ImGui_ImplGlfw_CursorPosCallback(window, xpos, ypos);
-    inputSystem.CursorPosCallback(window, xpos, ypos);
-}
-
-inline static void window_focus_callback(GLFWwindow* window, int focused)
-{
-    ImGui_ImplGlfw_WindowFocusCallback(window, focused);
-    inputSystem.WindowFocusCallback(window, focused);
-}
-
-inline void on_close()
-{}

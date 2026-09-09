@@ -36,7 +36,6 @@ namespace Sauce
  
     void Renderer::Draw()
     {
-        Clear({1.0f, 0.0f, 0.2f, 1.0f});
         m_Window->Update();
     }
 

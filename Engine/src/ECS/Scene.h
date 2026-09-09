@@ -9,7 +9,7 @@
 
 #include "Input/InputSystem.h"
 
-#include "Render/Renderer.h"
+#include "Render/IRenderer.h"
 
 #include "entt/entt.hpp"
 
@@ -28,7 +28,7 @@ namespace Sauce
     class Scene
     {
     public:
-        Scene(std::shared_ptr<Renderer> renderer);
+        Scene(std::shared_ptr<IRenderer> renderer, std::shared_ptr<InputSystem> inputSystem);
         ~Scene();
 
         Entity CreateEntity();
@@ -47,7 +47,7 @@ namespace Sauce
         entt::registry m_Registry;
         UUID m_ID;
         std::string m_Name;
-        std::shared_ptr<Renderer> m_Renderer;
+        std::shared_ptr<IRenderer> m_Renderer;
         std::shared_ptr<InputSystem> m_InputSystem;
         uint32_t m_WindowWidth, m_WindowHeight;
 

@@ -1,5 +1,7 @@
+//noincludeformat
 #pragma once
 
+#include <glad/glad.h>
 #include <cstdint>
 #include <nlohmann/json.hpp>
 
@@ -7,6 +9,8 @@
 #include <memory>
 #include <string>
 #include <unordered_map>
+
+#include "Core/UUID.h"
 
 #include "Render/Mesh.h"
 #include "Render/Texture.h"
@@ -51,6 +55,13 @@ namespace Sauce
 		std::string name {};
 	};
 
+	struct Import
+	{
+		UUID uuid {};
+		std::string name {};
+		std::vector<std::string> childeren {};
+	};
+
 	class AssetSystem
 	{
 	public:
@@ -65,8 +76,9 @@ namespace Sauce
 		void LoadAssets();
 	private:
 		std::vector<Asset> m_AssetsToLoad;
+		std::vector<Import> m_Imports;
 
 		AssetType GetTypeByPath(const std::string &path);
-		std::optional<std::unique_ptr<Mesh>> CreateMeshFile(const std::string &path);
+		std::optional<std::unique_ptr<Import>> CreateImportFile(const std::string &path);
 	};
 }

@@ -2,7 +2,6 @@
 #include <cstdio>
 #include <glad/glad.h>
 #include <immintrin.h>
-#include <print>
 
 #include <cstddef>
 #include <filesystem>
@@ -32,8 +31,9 @@
 
 #include "GLFW/glfw3.h"
 
+#include "Platform/Linux/ImGui/Renderer.h"
+
 #include "Render/Framebuffer.h"
-#include "Render/Renderer.h"
 #include "Render/Shader.h"
 
 #include "entt/entity/fwd.hpp"
@@ -48,8 +48,9 @@ class Editor
 {
 public:
     Editor(const std::string &projPath)
-        : m_Renderer(std::make_shared<Sauce::Renderer>()),
-        m_Scene(std::make_shared<Sauce::Scene>(m_Renderer)),
+        : m_Renderer(std::make_shared<Sauce::Linux::ImRenderer>()),
+        m_InputSystem(std::make_shared<Sauce::InputSystem>()),
+        m_Scene(std::make_shared<Sauce::Scene>(m_Renderer, m_InputSystem)),
         m_SceneSerializer(m_Scene),
         m_ProjectPath(projPath),
         m_FrameBuffer()
@@ -72,12 +73,12 @@ public:
         if(!std::filesystem::exists(m_ProjectPath + m_CurrentScenePath))
             std::runtime_error(std::format("path to shader: {}/{} is no valid path\n", m_ProjectPath, m_CurrentScenePath).c_str());
         std::string shaderPath = j["defaultShader"];
-        m_Renderer->CreateWindow(m_ProjectName, 800, 800, on_close,key_callback, mouse_button_callback, scroll_callback, char_callback, enter_callback, cursor_pos_callback, window_focus_callback);
+        m_Renderer->InitWindow(m_ProjectName, 800, 800, m_InputSystem);
         m_Scene->p_AssetSystem.emplace();
         m_Layer.Init(m_Renderer->GetWindow());
 
-        m_CurrentShader = std::make_shared<Sauce::Shader>(m_ProjectPath + '/' + shaderPath);
-        m_Renderer->SetMainShader(m_CurrentShader);
+        m_CurrentShader = std::make_unique<Sauce::Shader>(m_ProjectPath + '/' + shaderPath);
+        m_Renderer->SetShader(*m_CurrentShader);
         m_FrameBuffer = std::make_shared<Sauce::FrameBuffer>(200, 200);
 
         m_State =
@@ -103,7 +104,7 @@ public:
         {
             if(m_DT >= 0.0f)
             {
-                m_State.shouldClose = glfwWindowShouldClose(m_Renderer->GetWindow());
+                m_State.shouldClose = m_Renderer->WindowShouldClose();
                 m_Renderer->Clear();
 
                 glfwPollEvents();
@@ -144,17 +145,18 @@ private:
         bool runWindow, viewport, sceneHierarchy, inspector, console, assetBrowser, fpsView;
     };
 
-    std::shared_ptr<Sauce::Renderer> m_Renderer;
+    std::shared_ptr<Sauce::Linux::ImRenderer> m_Renderer;
     std::shared_ptr<Sauce::Scene> m_Scene;
     Sauce::SceneSerializer m_SceneSerializer;
     std::shared_ptr<Sauce::FrameBuffer> m_FrameBuffer;
     entt::entity m_SelectedEntity;
+	std::shared_ptr<Sauce::InputSystem> m_InputSystem;
 
     std::string m_ProjectName;
     std::string m_ProjectPath;
 
     std::string m_CurrentScenePath;
-    std::shared_ptr<Sauce::Shader> m_CurrentShader;
+    std::unique_ptr<Sauce::Shader> m_CurrentShader;
 
     float m_BeginTime;
     float m_EndTime;
@@ -174,7 +176,7 @@ private:
 
     void Update()
     {
-        inputSystem.BeginFrame();
+        m_InputSystem->BeginFrame();
 
         DrawMainWindow();
         DrawRunWindow();
@@ -185,7 +187,7 @@ private:
         DrawInspector();
         DrawViewport();
 
-        inputSystem.Endframe();
+        m_InputSystem->Endframe();
     }
 
     void RunScene()
@@ -768,41 +770,41 @@ private:
     {
         float x = 0, y = 0, z = 0;
 
-        m_EditorCam.FOV -= 2000 * m_DT * inputSystem.GetMouseScrollY();
-        if(inputSystem.GetKeyDown(GLFW_KEY_W))
+        m_EditorCam.FOV -= 2000 * m_DT * m_InputSystem->GetMouseScrollY();
+        if(m_InputSystem->GetKeyDown(GLFW_KEY_W))
         {
             z -= 2 * m_DT;
         }
-        if(inputSystem.GetKeyDown(GLFW_KEY_S))
+        if(m_InputSystem->GetKeyDown(GLFW_KEY_S))
         {
            z += 2 * m_DT;
         }
-        if(inputSystem.GetKeyDown(GLFW_KEY_DOWN))
+        if(m_InputSystem->GetKeyDown(GLFW_KEY_DOWN))
         {
             y -= 2 * m_DT;
         }
-        if(inputSystem.GetKeyDown(GLFW_KEY_UP))
+        if(m_InputSystem->GetKeyDown(GLFW_KEY_UP))
         {
            y += 2 * m_DT;
         }
-        if(inputSystem.GetKeyDown(GLFW_KEY_D))
+        if(m_InputSystem->GetKeyDown(GLFW_KEY_D))
         {
             x += 2 * m_DT;
         }
-        if(inputSystem.GetKeyDown(GLFW_KEY_A))
+        if(m_InputSystem->GetKeyDown(GLFW_KEY_A))
         {
             x -= 2 * m_DT;
         }
         m_EditorTransform.Translate({x, y, z});
 
-        if(inputSystem.GetMouseButtonJustPressed(GLFW_MOUSE_BUTTON_RIGHT))
+        if(m_InputSystem->GetMouseButtonJustPressed(GLFW_MOUSE_BUTTON_RIGHT))
         {
-            m_MousePos = inputSystem.GetMousePos();
-            m_PrevMousePos = inputSystem.GetMousePos();
+            m_MousePos = m_InputSystem->GetMousePos();
+            m_PrevMousePos = m_InputSystem->GetMousePos();
         }
-        if(inputSystem.GetMouseButtonDown(GLFW_MOUSE_BUTTON_RIGHT))
+        if(m_InputSystem->GetMouseButtonDown(GLFW_MOUSE_BUTTON_RIGHT))
         {
-            m_MousePos = inputSystem.GetMousePos();
+            m_MousePos = m_InputSystem->GetMousePos();
             m_EditorTransform.Rotation.x += (m_MousePos.x - m_PrevMousePos.x) * m_DT * 10;
             m_EditorTransform.Rotation.y -= (m_MousePos.y - m_PrevMousePos.y) * m_DT * 10;
             m_PrevMousePos = m_MousePos;
@@ -848,13 +850,15 @@ void Edit(const std::string &path)
 class ProjectSelector
 {
 public:
-    ProjectSelector() {}
+    ProjectSelector()
+    	: m_Renderer(std::make_shared<Sauce::Linux::ImRenderer>()), m_InputSystem(std::make_shared<Sauce::InputSystem>())
+    {}
     ~ProjectSelector() {}
 
     std::string Run()
     {
-        m_Renderer.CreateWindow("Sauce Editor", 800, 800, on_close,key_callback, mouse_button_callback, scroll_callback, char_callback, enter_callback, cursor_pos_callback, window_focus_callback);
-        m_Layer.Init(m_Renderer.GetWindow());
+        m_Renderer->InitWindow("Sauce Editor", 800, 800, m_InputSystem);
+        m_Layer.Init(m_Renderer->GetWindow());
 
         bool shouldClose = false;
         bool open = false, create = false;
@@ -866,11 +870,11 @@ public:
 
         while(!shouldClose)
         {
-            shouldClose = glfwWindowShouldClose(m_Renderer.GetWindow());
-            m_Renderer.Clear();
+            shouldClose = glfwWindowShouldClose(m_Renderer->GetWindow());
+            m_Renderer->Clear();
             glfwPollEvents();
 
-            if (glfwGetWindowAttrib(m_Renderer.GetWindow(), GLFW_ICONIFIED) != 0)
+            if (glfwGetWindowAttrib(m_Renderer->GetWindow(), GLFW_ICONIFIED) != 0)
             {
                 ImGui_ImplGlfw_Sleep(10);
                 continue;
@@ -908,7 +912,7 @@ public:
                             {
                                 ImGui::CloseCurrentPopup();
                                 m_Layer.Shutdown();
-                                m_Renderer.KillWindow();
+                                m_Renderer->KillWindow();
                                 return {textBuffer};
                             }
                             errorText = std::format("invalid path '{}'", std::string(textBuffer));
@@ -959,7 +963,7 @@ public:
                                 createProject({nameBuffer}, {textBuffer});
                                 ImGui::CloseCurrentPopup();
                                 m_Layer.Shutdown();
-                                m_Renderer.KillWindow();
+                                m_Renderer->KillWindow();
                                 return std::format("{}/{}", std::string(textBuffer), std::string(nameBuffer));
                             }
                         }
@@ -984,14 +988,15 @@ public:
             m_Layer.EndFrame();
 #pragma endregion
 
-        glfwSwapBuffers(m_Renderer.GetWindow());
+        glfwSwapBuffers(m_Renderer->GetWindow());
         }
         m_Layer.Shutdown();
-        m_Renderer.KillWindow();
+        m_Renderer->KillWindow();
         return "exit";
     }
 private:
-    Sauce::Renderer m_Renderer;
+	std::shared_ptr<Sauce::Linux::ImRenderer> m_Renderer;
+	std::shared_ptr<Sauce::InputSystem> m_InputSystem;
     ImGuiLayer m_Layer;
 };
 

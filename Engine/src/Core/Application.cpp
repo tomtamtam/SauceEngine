@@ -1,6 +1,6 @@
 #include <cassert>
-#include <cstdint>
 #include <dlfcn.h>
+#include <print>
 
 #include <fstream>
 #include <memory>
@@ -10,9 +10,12 @@
 
 #include "Core/SceneSerializer.h"
 
+#include "Engine/vendor/utils_hpp/escapes.hpp"
+
 #include "GLFW/glfw3.h"
 
-#include "Render/Renderer.h"
+#include "Platform/Linux/OpenGL/Renderer.h"
+
 #include "Render/Shader.h"
 
 #include "Util/Json.h"
@@ -22,7 +25,7 @@
 namespace Sauce
 {
     Application::Application()
-        : m_IsRunning(true), m_Renderer(std::make_unique<Renderer>()), m_AssetSystem(), m_CurrentScene(std::make_shared<Scene>(m_Renderer)), m_SceneSerializer(m_CurrentScene)
+        : m_IsRunning(true), m_Renderer(std::make_shared<Linux::GLRenderer>()), m_InputSystem(std::make_shared<InputSystem>()), m_CurrentScene(std::make_shared<Scene>(m_Renderer, m_InputSystem)), m_SceneSerializer(m_CurrentScene)
     {
     }
 
@@ -33,7 +36,6 @@ namespace Sauce
 
     void Application::Setup()
     {
-
         //Load projinfo
         std::ifstream info("../.project_info.json");
         json jInfo;
@@ -43,19 +45,7 @@ namespace Sauce
         m_DefaultScene = jInfo["defaultScene"];
         m_DefaultShader = jInfo["defaultShader"];
 
-        auto self = shared_from_this();
-
-        auto onShouldClose = [&self](){self->Terminate();};
-        auto onResizeCallback = [&self](uint32_t width, uint32_t height) {};
-        auto onKeyCallback = [&self](GLFWwindow *window, int key, int scancode, int action, int mods) {self->m_CurrentScene->GetInputSystem()->KeyCallback(window, key, scancode, action, mods);};
-        auto onMouseButtonCallback = [&self](GLFWwindow *window, int button, int action, int mods) {};
-        auto onScrollCallback = [&self](GLFWwindow *window, double xoffset, double yoffset) {};
-        auto onCharCallback = [&self](GLFWwindow *window, uint32_t codepoint) {};
-        auto onEnterCallback = [&self](GLFWwindow *window, int entered) {};
-        auto onCursorPosCallback = [&self](GLFWwindow* window, double xpos, double ypos){};
-        auto onWindowFocusCallback = [&self](GLFWwindow* window, int focused){};
-
-        m_Renderer->CreateWindow(m_Name, 800, 800, onShouldClose, onKeyCallback, onMouseButtonCallback, onScrollCallback, onCharCallback, onEnterCallback,onCursorPosCallback, onWindowFocusCallback);
+        m_Renderer->InitWindow(m_Name, 800, 800, m_InputSystem);
 
         m_CurrentScene->p_AssetSystem.emplace();
 
@@ -63,10 +53,9 @@ namespace Sauce
 
         m_CurrentScene->Init();
 
-        auto shader = std::make_shared<Shader>("../"+m_DefaultShader);
-        m_Renderer->SetMainShader(shader);
+		m_Shader = std::make_unique<Shader>("../"+m_DefaultShader);
+        m_Renderer->SetShader(*m_Shader);
         
-        //m_AssetSystem = {};
     }
 
     void Application::Terminate()
@@ -77,6 +66,7 @@ namespace Sauce
 
     void Application::Run()
     {
+		std::println("{} starting Application class", Escapes::ColoredText("[INFO]", Escapes::YELLOW));
         Setup();
 
         m_BeginTime = glfwGetTime();
@@ -85,11 +75,16 @@ namespace Sauce
 
         m_CurrentScene->Start();
 
+		std::println("{} starting Application loop", Escapes::ColoredText("[INFO]", Escapes::YELLOW));
         while (m_IsRunning)
         {
             if(m_DT >= 0.0f)
             {
+                glfwPollEvents();
+                if(m_Renderer->WindowShouldClose())
+                	Terminate();
                 m_CurrentScene->GetInputSystem()->BeginFrame();
+                m_Renderer->Clear();
                 m_CurrentScene->Update(m_DT);
                 m_Renderer->Draw();
                 m_CurrentScene->GetInputSystem()->Endframe();

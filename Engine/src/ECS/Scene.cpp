@@ -1,4 +1,5 @@
 #include <nlohmann/json.hpp>
+#include <print>
 
 #include <iostream>
 #include <memory>
@@ -10,8 +11,6 @@
 
 #include "ECS/Components.h"
 
-#include "Render/Renderer.h"
-
 #include "glm/trigonometric.hpp"
 
 #include "glm/ext/matrix_clip_space.hpp"
@@ -21,8 +20,8 @@ using json = nlohmann::json;
 
 namespace Sauce
 {
-    Scene::Scene(std::shared_ptr<Renderer> renderer)
-        : m_Renderer(renderer)
+    Scene::Scene(std::shared_ptr<IRenderer> renderer, std::shared_ptr<InputSystem> inputSystem)
+        : m_Renderer(std::move(renderer)), m_InputSystem(std::move(inputSystem))
     {
         entt::entity entity = m_Registry.create();
         m_InputSystem = std::make_shared<InputSystem>();
@@ -84,15 +83,22 @@ namespace Sauce
         for(auto entity : camView)
         {
             auto &cam = camView->get(entity);
+            width = cam.Width;
+			height = cam.Height;
+
             if(cam.IsAdjustable)
             {
                 if(cam.Width != m_Renderer->GetWinWidth())
                 {
                     width = m_Renderer->GetWinWidth();
+                    cam.Width = m_Renderer->GetWinWidth();
                 }
 
                 if(cam.Height != m_Renderer->GetWinHeight())
+                {
                     height = m_Renderer->GetWinHeight();
+                    cam.Height = m_Renderer->GetWinHeight();
+                }
             }
 
             if(cam.IsMain)
@@ -100,8 +106,11 @@ namespace Sauce
                 if(!m_Registry.all_of<TransformComponent>(entity))
                 {
                     std::cerr << "Object with component <CameraComponent> has NO component of type <TransformComponent>.\n";
+                    continue;
                 }
                 auto &transform = m_Registry.get<TransformComponent>(entity);
+
+				std::println("main cam [transfom] ({}, {}, {}) ({}, {}, {} [dimensions] ({}, {}))", transform.Translation.x, transform.Translation.y, transform.Translation.z, transform.Rotation.x, transform.Rotation.y, transform.Rotation.z, width, height);
                 view = glm::lookAt(transform.Translation, transform.Translation + transform.Rotation, cam.Up);
                 proj = glm::perspective(glm::radians(cam.FOV), (float)width / (float)height, F_NEAR, F_FAR);
             }

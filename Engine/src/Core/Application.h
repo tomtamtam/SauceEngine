@@ -5,12 +5,9 @@
 #include <memory>
 #include <string>
 
-#include "Core/AssetSystem.h"
 #include "Core/SceneSerializer.h"
 
 #include "ECS/Scene.h"
-
-#include "Render/Renderer.h"
 
 using json = nlohmann::json;
 
@@ -40,11 +37,11 @@ namespace Sauce
 
         void *m_HandleGameDll;
 
-        std::shared_ptr<Renderer> m_Renderer;
+        std::shared_ptr<IRenderer> m_Renderer;
 
         std::shared_ptr<Scene> m_CurrentScene;
+		std::shared_ptr<InputSystem> m_InputSystem;
+		std::unique_ptr<Shader> m_Shader;
         SceneSerializer m_SceneSerializer;
-
-        AssetSystem m_AssetSystem;
     };
 }
