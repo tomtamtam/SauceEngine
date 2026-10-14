@@ -8,7 +8,7 @@
 
 #include "Editor/UI/ImGuiLayer.h"
 
-#include "Engine/vendor/utils_hpp/escapes.hpp"
+#include "utils_hpp/escapes.hpp"
 
 using json = nlohmann::json;
 

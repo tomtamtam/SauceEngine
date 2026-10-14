@@ -50,6 +50,7 @@ namespace Sauce
         m_CurrentScene->p_AssetSystem.emplace();
 
         m_SceneSerializer.Deserialze("../" + m_DefaultScene);
+        m_CurrentScene->p_AssetSystem->LoadAssets();
 
         m_CurrentScene->Init();
 

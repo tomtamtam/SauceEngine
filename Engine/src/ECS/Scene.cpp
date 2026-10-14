@@ -9,6 +9,8 @@
 
 #include "Entity.h"
 
+#include "Core/ScriptEngine.h"
+
 #include "ECS/Components.h"
 
 #include "glm/trigonometric.hpp"
@@ -20,6 +22,7 @@ using json = nlohmann::json;
 
 namespace Sauce
 {
+
     Scene::Scene(std::shared_ptr<IRenderer> renderer, std::shared_ptr<InputSystem> inputSystem)
         : m_Renderer(std::move(renderer)), m_InputSystem(std::move(inputSystem))
     {
@@ -44,16 +47,21 @@ namespace Sauce
 
     void Scene::Init()
     {
+		std::println("Scene Init");
         auto scriptView = m_Registry.view<Script>();
         for (auto entity : scriptView)
         {
             auto& script = scriptView.get<Script>(entity);
 
-            if (script.Instance)
+            if (script.ScriptName.empty() || script.ScriptPath.empty())
             {
-                script.Instance->m_Entity = Entity(entity, this);
-                script.Instance->OnInit();
+				std::println("invalid script");
+            	continue;
             }
+
+			auto handle = ScriptEngine::LoadScript(script.ScriptName, script.ScriptPath);
+			script = ScriptEngine::AttachScript(handle, script.ScriptName, script.ScriptPath);
+			script.Instance->m_Entity = Entity{entity, this};
         }
     }
 
@@ -75,6 +83,7 @@ namespace Sauce
             scriptView->get(entity).Instance->OnUpdate(dt);
         }
 
+        bool foundMainCam {false};
         //main cam
         glm::mat4 view = {1.0f};
         glm::mat4 proj = {1.0f};
@@ -110,11 +119,13 @@ namespace Sauce
                 }
                 auto &transform = m_Registry.get<TransformComponent>(entity);
 
-				std::println("main cam [transfom] ({}, {}, {}) ({}, {}, {} [dimensions] ({}, {}))", transform.Translation.x, transform.Translation.y, transform.Translation.z, transform.Rotation.x, transform.Rotation.y, transform.Rotation.z, width, height);
                 view = glm::lookAt(transform.Translation, transform.Translation + transform.Rotation, cam.Up);
                 proj = glm::perspective(glm::radians(cam.FOV), (float)width / (float)height, F_NEAR, F_FAR);
+                foundMainCam = true;
             }
         }
+		if(!foundMainCam)
+			return;
 
         //meshes
         auto meshView = m_Registry.view<MeshInstance>();

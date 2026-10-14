@@ -56,7 +56,10 @@ namespace Sauce
 				case AssetType::MESH_JSON:
 					break;
 				case AssetType::MESH_GLB:
+				{
+					auto import = CreateImportFile(a.path);
 					break;
+				}
 				case AssetType::IMAGE:
 					p_Textures[p_TextureCount].texture = std::make_unique<Texture>(a.path, true, p_TextureCount + 1);
 					p_Textures[p_TextureCount].name = a.path.substr(0, a.path.size() - EXTENSION_LENGTH);
@@ -81,6 +84,11 @@ namespace Sauce
 
 		const aiScene * scene { importer.ReadFile(path, aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace | aiProcess_Triangulate | aiProcess_ImproveCacheLocality | aiProcess_SortByPType) };
 
+		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
+		{
+		    std::println("{} Assimp import failed: {}", Escapes::ColoredText("ERROR: ", Escapes::RED), importer.GetErrorString());
+		    return {};
+		}
 		auto import = std::make_unique<Import>();
 
 		if(scene->HasMeshes())
@@ -109,9 +117,17 @@ namespace Sauce
 					v.nY = iMesh->mNormals[i].y;
 					v.nZ = iMesh->mNormals[i].z;
 
-					v.u = iMesh->mTextureCoords[i]->x;
-					v.v = iMesh->mTextureCoords[i]->y;
-					v.w = iMesh->mTextureCoords[i]->z;
+					if (iMesh->HasTextureCoords(0))
+					{
+					    v.u = iMesh->mTextureCoords[0][i].x;
+					    v.v = iMesh->mTextureCoords[0][i].y;
+					    v.w = iMesh->mTextureCoords[0][i].z;
+					}
+					else
+					{
+					    v.u = v.v = v.w = 0.0f;
+					}
+
 
 					vertices.push_back(v);
 				}
@@ -120,7 +136,6 @@ namespace Sauce
 				p_MeshCount ++;
 			}
 		}
-
 		return import;
 	}
 }

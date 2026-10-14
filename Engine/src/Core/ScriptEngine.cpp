@@ -1,11 +1,16 @@
-#include "Core/ScriptEngine.h"
 #include <dlfcn.h>
+#include <print>
+
 #include <iostream>
+
+#include "Core/ScriptEngine.h"
+
 
 namespace Sauce
 {
     ScriptHandle ScriptEngine::LoadScript(const std::string &name, const std::string &dllPath)
     {
+		std::println("LoadScript name: {} path: {}", name, dllPath);
         ScriptHandle dll;
         #ifdef _WIN32
             dll.Handle = LoadLibraryA(dllPath.c_str());
@@ -38,12 +43,15 @@ namespace Sauce
         return dll;
     }
 
-    Script ScriptEngine::AttachScript(const ScriptHandle &h, const std::string &name)
+    Script ScriptEngine::AttachScript(const ScriptHandle &h, const std::string &name, const std::string &path)
     {
+		std::println("AttachScript name: {} path: {}", name, path);
         Script comp;
         comp.ScriptName = name;
+        comp.ScriptPath = path;
         comp.InitializeScript = h.CreateScript;
         comp.DestroyScript = h.DeleteScript;
+        comp.Instance = comp.InitializeScript();
         return comp;
     }
 }

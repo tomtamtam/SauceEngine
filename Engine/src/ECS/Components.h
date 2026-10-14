@@ -52,6 +52,7 @@ namespace Sauce
     	namespace CScript
     	{
     		constexpr uint32_t NAME { 0 };
+    		constexpr uint32_t PATH { 1 };
     	}
 
     	namespace CMesh
@@ -113,10 +114,11 @@ namespace Sauce
 
     struct Script
     {
-        std::shared_ptr<ScriptableEntity> Instance = nullptr;
+        ScriptableEntity *Instance = nullptr;
         std::string ScriptName;
+        std::string ScriptPath;
 
-        std::function<std::shared_ptr<ScriptableEntity>()> InitializeScript;
+        std::function<ScriptableEntity *()> InitializeScript;
         std::function<void(ScriptableEntity*)> DestroyScript;
     };
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ECS/Components.h"
-#include <memory>
+
 #ifdef _WIN32
   #include <windows.h>
   using DLLHandle = HMODULE;
@@ -12,7 +12,7 @@
 
 namespace Sauce
 {
-    using CreateScriptFn = std::shared_ptr<ScriptableEntity>(*)();
+	using CreateScriptFn = Sauce::ScriptableEntity*(*)();
     using DeleteScriptFn = void(*)(ScriptableEntity*);
 
     struct ScriptHandle
@@ -26,6 +26,6 @@ namespace Sauce
     {
     public:
         static ScriptHandle LoadScript(const std::string &name, const std::string &dllPath);
-        static Script AttachScript(const ScriptHandle &h, const std::string &name);
+        static Script AttachScript(const ScriptHandle &h, const std::string &name, const std::string &path);
     };
 }

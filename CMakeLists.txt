@@ -53,7 +53,7 @@ target_link_libraries(imgui PUBLIC glfw glad)
 FetchContent_Declare(
     nlohmann_json
     GIT_REPOSITORY https://github.com/nlohmann/json.git
-    GIT_TAG        v3.11.3
+    GIT_TAG        v3.12.0
 )
 FetchContent_MakeAvailable(nlohmann_json)
 
@@ -157,6 +157,7 @@ add_library(SauceEngine SHARED
     ${CMAKE_SOURCE_DIR}/Engine/src/Platform/Linux/OpenGL/Renderer.cpp
 
     ${CMAKE_SOURCE_DIR}/Engine/vendor/json/json.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/vendor/utils_hpp/escapes.cpp
 )
 
 target_include_directories(SauceEngine PUBLIC
@@ -197,6 +198,7 @@ add_executable(sauce-editor
     ${CMAKE_SOURCE_DIR}/Engine/src/Platform/Linux/ImGui/Renderer.cpp
 
     ${CMAKE_SOURCE_DIR}/Engine/vendor/json/json.cpp
+    ${CMAKE_SOURCE_DIR}/Engine/vendor/utils_hpp/escapes.cpp
 )
 
 target_link_libraries(sauce-editor PRIVATE
@@ -213,5 +215,5 @@ target_link_libraries(sauce-editor PRIVATE
 
 target_include_directories(sauce-editor PUBLIC
     ${CMAKE_SOURCE_DIR}/Engine/src
-    ${CMAKE_SOURCE_DIR}/Engine/vendor/utils.hpp
+    ${CMAKE_SOURCE_DIR}/Engine/vendor
 )

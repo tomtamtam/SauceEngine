@@ -15,8 +15,12 @@
 
 #include "entt/entity/fwd.hpp"
 
+#include "nlohmann/json_fwd.hpp"
+
 constexpr float F_NEAR {1.0f};
 constexpr float F_FAR {1000.0f};
+
+using json = nlohmann::json;
 
 class Editor;
 
@@ -50,6 +54,7 @@ namespace Sauce
         std::shared_ptr<IRenderer> m_Renderer;
         std::shared_ptr<InputSystem> m_InputSystem;
         uint32_t m_WindowWidth, m_WindowHeight;
+        json m_Assets;
 
         friend class Entity;
         friend class SceneSerializer;

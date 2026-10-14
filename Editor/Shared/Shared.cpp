@@ -1,13 +1,15 @@
-#include "Shared.h"
-
-#include "nlohmann/json_fwd.hpp"
 #include <cstdint>
+#include <nlohmann/json.hpp>
+
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <random>
 #include <string>
-#include <nlohmann/json.hpp>
+
+#include "Shared.h"
+
+#include "nlohmann/json_fwd.hpp"
 
 using json = nlohmann::json;
 
@@ -33,6 +35,7 @@ int createProject(const std::string &name, const std::string &path)
     std::filesystem::create_directory(fp + "/Code");
     std::filesystem::create_directory(fp + "/Scenes");
     std::filesystem::create_directory(fp + "/Shaders");
+    std::filesystem::create_directory(fp + "/Assets");
 
     std::filesystem::copy_file("/usr/share/sauce-engine/presets/Main.cpp", fp + "/Code/Main.cpp");
     std::filesystem::copy_file("/usr/share/sauce-engine/presets/Default.glsl", fp + "/Shaders/Default.glsl");
@@ -44,6 +47,7 @@ int createProject(const std::string &name, const std::string &path)
     sj["name"] = "TestScene";
     sj["id"] = randUUID();
     sj["objects"] = json::array();
+    sj["assets"] = json::array();
 
     defaultScene << sj;
     defaultScene.close();

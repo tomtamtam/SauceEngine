@@ -31,6 +31,7 @@ namespace Sauce
         json jScene;
         jScene["name"] = m_Scene->m_Name;
         jScene["id"] = (uint64_t)m_Scene->m_ID;
+        jScene["assets"] = m_Scene->m_Assets;
 
         auto view = m_Scene->m_Registry.view<UUIDComponent>();
 
@@ -89,6 +90,7 @@ namespace Sauce
                 json jScript;
                 jScript["id"] = SCRIPT_CIDX;
                 jScript["values"][VIDX::CScript::NAME] = sc->ScriptName;
+                jScript["values"][VIDX::CScript::PATH] = sc->ScriptPath;
                 jScene["objects"][i]["components"][compCount] = jScript;
                 compCount ++;
             }
@@ -150,6 +152,7 @@ namespace Sauce
             {
                 entity->AddComponent<Script>();
                 entity->GetComponent<Script>().ScriptName = component["values"][VIDX::CScript::NAME];
+                entity->GetComponent<Script>().ScriptPath = component["values"][VIDX::CScript::PATH];
                 break;
             }
             case CAMERA_CIDX:
@@ -226,6 +229,7 @@ namespace Sauce
                 AttachComponent(c, &e);
             }
         }
-		//m_Scene->p_AssetSystem->PushAssets(jScene["assets"]);
+		m_Scene->m_Assets = jScene["assets"];
+		m_Scene->p_AssetSystem->PushAssets(jScene["assets"]);
     }
 }

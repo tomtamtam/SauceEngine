@@ -96,6 +96,7 @@ public:
 
         m_SceneSerializer.Deserialze(m_ProjectPath + '/' + m_CurrentScenePath);
         m_Console.put(MessageType::INFO, std::format("Loaded Scene '{}'", m_CurrentScenePath));
+        m_Scene->p_AssetSystem->LoadAssets();
 
         m_BeginTime = glfwGetTime();
         m_EndTime = glfwGetTime();
@@ -616,6 +617,9 @@ private:
             break;
         case SCRIPT_CIDX:
             m_Scene->m_Registry.emplace_or_replace<Sauce::Script>(e);
+			//temp values
+			m_Scene->m_Registry.get<Sauce::Script>(e).ScriptName = "Player";
+			m_Scene->m_Registry.get<Sauce::Script>(e).ScriptPath = "../Code/Player.cpp";
             break;
         default:
             break;
@@ -679,7 +683,8 @@ private:
         }
         case SCRIPT_CIDX:
         {
-            ImGui::Text("Path:");
+			ImGui::Text("Name:");
+			ImGui::Text("%s", m_Scene->m_Registry.get<Sauce::Script>(e).ScriptName.c_str());
             break;
         }
         default:

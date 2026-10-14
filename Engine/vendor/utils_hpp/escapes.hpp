@@ -6,8 +6,9 @@
 
 #include <cstdint>
 #include <cstdio>
-#include <string>
+
 #include <format>
+#include <string>
 #include <unordered_map>
 
 namespace Escapes
@@ -24,7 +25,7 @@ namespace Escapes
 		WHITE
 	};
 
-	const std::unordered_map<Color, int> COLOR_MAP = {
+	inline const std::unordered_map<Color, int> COLOR_MAP = {
 		{BLACK,   0},
 		{RED,     1},
 		{GREEN,   2},
@@ -45,76 +46,6 @@ namespace Escapes
         uint8_t r, g, b;
     };
 
-    inline ColorRGB RGB(uint8_t r, uint8_t g, uint8_t b) //there because f not in namespace, no brace initialization
-    {
-        return {r, g, b};
-    }
-
-	inline std::string ColoredText(const std::string &s, Color c)
-	{
-		return std::format("\x1B[{}m{}\033[0m", COLOR_OFFSET + COLOR_MAP.at(c), s);
-	}
-
-	inline std::string ColoredTextLight(const std::string &s, Color c)
-	{
-		return std::format("\x1B[{}m{}\033[0m", COLOR_OFFSET + UNSATTURATED_OFFSET + COLOR_MAP.at(c), s);
-	}
-
-    inline std::string ColoredTextRGB(const std::string &s, ColorRGB c)
-    {
-        return std::format("\x1B[38;2;{};{};{}m{}\x1B[0m", c.r, c.g, c.b, s);
-    }
-
-    inline std::string ColoredBase(const std::string &s, Color c)
-    {
-        return std::format("\x1B[{}m{}\033[0m", COLOR_OFFSET_BASE + COLOR_MAP.at(c), s);
-    }
-
-    inline std::string ColoredBaseLight(const std::string &s, Color c)
-    {
-		return std::format("\033[3;{};30m{}\033[0m", COLOR_OFFSET_BASE + UNSATTURATED_OFFSET+ COLOR_MAP.at(c), s);
-    }
-
-    inline std::string ColoredBaseRGB(const std::string &s, ColorRGB c)
-    {
-        return std::format("\x1B[48;2;{};{};{}m{}\x1B[0m", c.r, c.g, c.b, s);
-    }
-
-    inline void BeginColor(Color c)
-    {
-        std::printf("\x1b[%um", COLOR_OFFSET + COLOR_MAP.at(c));
-    }
-
-    inline void EndColor()
-    {
-        std::printf("\033[0m");
-    }
-
-    inline void BeginColorLight(Color c)
-    {
-        std::printf("\x1b[%um", UNSATTURATED_OFFSET + COLOR_MAP.at(c));
-    }
-
-    inline void BeginColorBase(Color c)
-    {
-        std::printf("\x1b[%um", COLOR_OFFSET_BASE + COLOR_MAP.at(c));
-    }
-
-    inline void BeginColorLightBase(Color c)
-    {
-        std::printf("\x1b[%um", COLOR_OFFSET + UNSATTURATED_OFFSET + COLOR_MAP.at(c));
-    }
-
-    inline void BeginColorRGB(ColorRGB c)
-    {
-        std::printf("\x1B[38;2;%u;%u;%um", c.r, c.g, c.b);
-    }
-
-    inline void BeginColorBaseRGB(ColorRGB c)
-    {
-        std::printf("\x1B[48;2;%u;%u;%um", c.r, c.g, c.b);
-    }
-
     //styles
     enum Style
     {
@@ -128,58 +59,16 @@ namespace Escapes
         STRIKETHROUGH
     };
 
-    inline void ResetStyles()
-    {
-        std::printf("\x1b[0m");
-    }
-
-    const std::unordered_map<Style, int> STYLE_MAP = {
+    inline const std::unordered_map<Style, int> STYLE_MAP = {
         {BOLD, 1},
         {DIM, 2},
         {ITALIC, 3},
         {UNDERLINE, 4},
         {BLINKING, 5},
         {INVERSE, 7},
-        {HIDDEN, 8},\
+        {HIDDEN, 8},
         {STRIKETHROUGH, 9}
     };
-
-    inline void SetStyle(Style s)
-    {
-        std::printf("\x1b[%um", STYLE_MAP.at(s));
-    }
-
-    //erase
-    inline void ClearLine()
-    {
-        std::printf("\x1b[2K");
-    }
-
-    inline void ClearDisplay()
-    {
-        std::printf("\x1b[3J");
-    }
-
-    inline void ClearDisplayCursorToEnd()
-    {
-        std::printf("\x1b[0J");
-    }
-
-    inline void ClearDisplayCursorToBegin()
-    {
-        std::printf("\x1b[1J");
-    }
-
-    //Cursor
-    inline void BeginPrevLine()
-    {
-        std::printf("\x1b[1F");
-    }
-
-    inline void CursorPos(uint32_t line, uint32_t column)
-    {
-        std::printf("\x1b[%u;%uH", line, column);
-    }
 
     enum Direction
     {
@@ -196,9 +85,153 @@ namespace Escapes
         {LEFT, 'D'},
         {RIGHT, 'C'}
     };
+    
+    //defs
+	ColorRGB RGB(uint8_t r, uint8_t g, uint8_t b); //there because if not in namespace, no brace initialization
+	std::string ColoredText(const std::string &s, Color c);
+	std::string ColoredTextLight(const std::string &s, Color c);
+    std::string ColoredTextRGB(const std::string &s, ColorRGB c);
+    std::string ColoredBase(const std::string &s, Color c);
+    std::string ColoredBaseLight(const std::string &s, Color c);
+    std::string ColoredBaseRGB(const std::string &s, ColorRGB c);
+    void BeginColor(Color c);
+    void EndColor();
+    void BeginColorLight(Color c);
+    void BeginColorBase(Color c);
+    void BeginColorLightBase(Color c);
+    void BeginColorRGB(ColorRGB c);
+    void BeginColorBaseRGB(ColorRGB c);
 
-    inline void MoveCursorDir(Direction dir, uint32_t n = 1)
+    void ResetStyles();
+    void SetStyle(Style s);
+
+    void ClearLine();
+    void ClearDisplay();
+    void ClearDisplayCursorToEnd();
+    void ClearDisplayCursorToBegin();
+
+    void BeginPrevLine();
+    void CursorPos(uint32_t line, uint32_t column);
+    void MoveCursorDir(Direction dir, uint32_t n = 1);
+
+	#ifdef ESCAPES_HPP_IMPLIMENTATION
+    ColorRGB RGB(uint8_t r, uint8_t g, uint8_t b)
+    {
+        return {r, g, b};
+    }
+
+	std::string ColoredText(const std::string &s, Color c)
+	{
+		return std::format("\x1B[{}m{}\033[0m", COLOR_OFFSET + COLOR_MAP.at(c), s);
+	}
+
+	std::string ColoredTextLight(const std::string &s, Color c)
+	{
+		return std::format("\x1B[{}m{}\033[0m", COLOR_OFFSET + UNSATTURATED_OFFSET + COLOR_MAP.at(c), s);
+	}
+
+    std::string ColoredTextRGB(const std::string &s, ColorRGB c)
+    {
+        return std::format("\x1B[38;2;{};{};{}m{}\x1B[0m", c.r, c.g, c.b, s);
+    }
+
+    std::string ColoredBase(const std::string &s, Color c)
+    {
+        return std::format("\x1B[{}m{}\033[0m", COLOR_OFFSET_BASE + COLOR_MAP.at(c), s);
+    }
+
+    std::string ColoredBaseLight(const std::string &s, Color c)
+    {
+		return std::format("\033[3;{};30m{}\033[0m", COLOR_OFFSET_BASE + UNSATTURATED_OFFSET+ COLOR_MAP.at(c), s);
+    }
+
+    std::string ColoredBaseRGB(const std::string &s, ColorRGB c)
+    {
+        return std::format("\x1B[48;2;{};{};{}m{}\x1B[0m", c.r, c.g, c.b, s);
+    }
+
+    void BeginColor(Color c)
+    {
+        std::printf("\x1b[%um", COLOR_OFFSET + COLOR_MAP.at(c));
+    }
+
+    void EndColor()
+    {
+        std::printf("\033[0m");
+    }
+
+    void BeginColorLight(Color c)
+    {
+        std::printf("\x1b[%um", UNSATTURATED_OFFSET + COLOR_MAP.at(c));
+    }
+
+    void BeginColorBase(Color c)
+    {
+        std::printf("\x1b[%um", COLOR_OFFSET_BASE + COLOR_MAP.at(c));
+    }
+
+    void BeginColorLightBase(Color c)
+    {
+        std::printf("\x1b[%um", COLOR_OFFSET + UNSATTURATED_OFFSET + COLOR_MAP.at(c));
+    }
+
+    void BeginColorRGB(ColorRGB c)
+    {
+        std::printf("\x1B[38;2;%u;%u;%um", c.r, c.g, c.b);
+    }
+
+    void BeginColorBaseRGB(ColorRGB c)
+    {
+        std::printf("\x1B[48;2;%u;%u;%um", c.r, c.g, c.b);
+    }
+
+	//style
+    void ResetStyles()
+    {
+        std::printf("\x1b[0m");
+    }
+
+    void SetStyle(Style s)
+    {
+        std::printf("\x1b[%um", STYLE_MAP.at(s));
+    }
+
+    //erase
+    void ClearLine()
+    {
+        std::printf("\x1b[2K");
+    }
+
+    void ClearDisplay()
+    {
+        std::printf("\x1b[3J");
+    }
+
+    void ClearDisplayCursorToEnd()
+    {
+        std::printf("\x1b[0J");
+    }
+
+    void ClearDisplayCursorToBegin()
+    {
+        std::printf("\x1b[1J");
+    }
+
+    //Cursor
+    void BeginPrevLine()
+    {
+        std::printf("\x1b[1F");
+    }
+
+    void CursorPos(uint32_t line, uint32_t column)
+    {
+        std::printf("\x1b[%u;%uH", line, column);
+    }
+
+    void MoveCursorDir(Direction dir, uint32_t n)
     {
         std::printf("\x1b[%u%c", n, DIRECTION_MAP.at(dir));
     }
+
+	#endif
 }
