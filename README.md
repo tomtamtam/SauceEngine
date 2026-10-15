@@ -7,12 +7,13 @@ Releases will be pushed to the "main" branch, the current development is inside 
 ### Dependencies
 git, cmake, make, opengl, X11 / wayland
 
-### How to build
+### How to build & install
 ```bash
 git clone https://github.com/tomtamtam/SauceEngine.git
 cd SauceEngine
-chmod +x setup.sh
-./setup.sh
+mkdir build
+cmake --build build
+sudo cmake --install build --prefix /usr
 ```
 **NOTE: Right now compiling is only possible on Linux devices**
 
@@ -26,9 +27,10 @@ glfw, glm, nlohman/json, lua, entt, assimp
 ## Use the Engine
 Run
 ```bash
-sauce-engine create projname
-cd projname
-sauce-engine edit .
+# open the ui-editor to create / open a project
+sauce-editor
+# to directly open a existing project
+sauce-editor <path-to-project-folder>
 ```
 
 
