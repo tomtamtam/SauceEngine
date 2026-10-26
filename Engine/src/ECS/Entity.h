@@ -1,13 +1,16 @@
+//noincludeformat
 #pragma once
-
-#include <utility>
+#include <entt/entity/fwd.hpp>
 
 #include "ECS/Scene.h"
+#include "ECS/Components.h"
+
 
 #include "entt/entity/fwd.hpp"
 
 namespace Sauce
 {
+	class ScriptableEntity;
     class Entity
     {
     public:
@@ -25,7 +28,7 @@ namespace Sauce
         template<typename T, typename... Args>
         void AddComponent(Args&&... args)
         {
-            m_Scene->m_Registry.emplace_or_replace<T>(m_EntityHandle, std::forward<Args>(args)...);
+            m_Scene->m_Registry.emplace_or_replace<T>(m_EntityHandle, args...);
         }
 
         template<typename T>
@@ -34,8 +37,18 @@ namespace Sauce
             return m_Scene->m_Registry.get<T>(m_EntityHandle);
         }
 
+        template<typename T>
+        void RemoveComponent()
+        {
+            return m_Scene->m_Registry.remove<T>(m_EntityHandle);
+        }
+
+        inline TransformComponent &Transform() { return GetComponent<TransformComponent>(); }
+
     private:
         entt::entity m_EntityHandle;
         Scene* m_Scene;
+
+        friend class ScriptableEntity;
     };
 }

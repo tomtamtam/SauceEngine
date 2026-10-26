@@ -12,6 +12,7 @@
 #include "Core/AssetSystem.h"
 
 #include "Core/UUID.h"
+#include "Core/Log.h"
 #include "ECS/Components.h"
 #include "ECS/Entity.h"
 
@@ -28,6 +29,7 @@ namespace Sauce
 
     void SceneSerializer::Serialze(const std::string &path) // SAVE
     {
+    	LOG_INFO("Serializing Scene");
         json jScene;
         jScene["name"] = m_Scene->m_Name;
         jScene["id"] = (uint64_t)m_Scene->m_ID;
@@ -214,6 +216,7 @@ namespace Sauce
 
     void SceneSerializer::Deserialze(const std::string &path) // LOAD
     {
+    	LOG_INFO("Deserializing Scene");
         std::ifstream f(path);
         json jScene;
         f >> jScene;
@@ -223,10 +226,10 @@ namespace Sauce
 
         for(auto o : jScene["objects"])
         {
-            Entity e(m_Scene->CreateEntity());
+            auto e{m_Scene->CreateEntity()};
             for(auto c : o["components"])
             {
-                AttachComponent(c, &e);
+                AttachComponent(c, e.get());
             }
         }
 		m_Scene->m_Assets = jScene["assets"];

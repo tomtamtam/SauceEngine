@@ -8,6 +8,7 @@
 
 #include "Application.h"
 
+#include "Core/Log.h"
 #include "Core/SceneSerializer.h"
 
 #include "Engine/vendor/utils_hpp/escapes.hpp"
@@ -67,7 +68,7 @@ namespace Sauce
 
     void Application::Run()
     {
-		std::println("{} starting Application class", Escapes::ColoredText("[INFO]", Escapes::YELLOW));
+		LOG_INFO("starting Application class");
         Setup();
 
         m_BeginTime = glfwGetTime();
@@ -76,7 +77,7 @@ namespace Sauce
 
         m_CurrentScene->Start();
 
-		std::println("{} starting Application loop", Escapes::ColoredText("[INFO]", Escapes::YELLOW));
+		LOG_INFO("starting Application loop");
         while (m_IsRunning)
         {
             if(m_DT >= 0.0f)

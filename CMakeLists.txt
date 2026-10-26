@@ -13,8 +13,9 @@ add_library(glad STATIC
 target_include_directories(glad PUBLIC Engine/vendor/glad/include)
 set_target_properties(glad PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-#GLFW
 include(FetchContent)
+
+#GLFW
 FetchContent_Declare(
     glfw
     GIT_REPOSITORY https://github.com/glfw/glfw.git
@@ -217,3 +218,48 @@ target_include_directories(sauce-editor PUBLIC
     ${CMAKE_SOURCE_DIR}/Engine/src
     ${CMAKE_SOURCE_DIR}/Engine/vendor
 )
+
+include(GNUInstallDirs)
+
+set(VENDOR_DEST "${CMAKE_INSTALL_INCLUDEDIR}/SauceEngine/vendor")
+
+# Editor finds libSauceEngine.so relative to itself
+set_target_properties(sauce-editor PROPERTIES
+    INSTALL_RPATH "$ORIGIN/../${CMAKE_INSTALL_LIBDIR}"
+)
+
+install(TARGETS SauceEngine sauce-editor
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+
+# Engine headers
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/Engine/src/"
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/SauceEngine"
+    FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
+)
+
+# Vendored headers: each include root merged into .../SauceEngine/vendor
+set(VENDOR_INCLUDE_ROOTS
+    "${glfw_SOURCE_DIR}/include"                 # GLFW/
+    "${glm_SOURCE_DIR}"                          # glm/
+    "${nlohmann_json_SOURCE_DIR}/include"        # nlohmann/
+    "${entt_SOURCE_DIR}/src"                     # entt/
+    "${assimp_SOURCE_DIR}/include"               # assimp/
+    "${assimp_BINARY_DIR}/include"               # assimp/config.h (generated)
+    "${lua_SOURCE_DIR}"                          # check: see note below
+    "${CMAKE_SOURCE_DIR}/Engine/vendor/glad/include"   # glad/, KHR/
+    "${CMAKE_SOURCE_DIR}/Engine/vendor/stb_image"
+    "${CMAKE_SOURCE_DIR}/Engine/vendor/imgui"
+    "${CMAKE_SOURCE_DIR}/Engine/vendor/json"
+    "${CMAKE_SOURCE_DIR}/Engine/vendor/utils_hpp"
+)
+
+foreach(root IN LISTS VENDOR_INCLUDE_ROOTS)
+    if(EXISTS "${root}")
+        install(DIRECTORY "${root}/"
+            DESTINATION "${VENDOR_DEST}"
+            FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp" PATTERN "*.inl"
+        )
+    endif()
+endforeach()

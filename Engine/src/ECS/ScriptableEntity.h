@@ -1,11 +1,25 @@
 #pragma once
 
-#include "ECS/Entity.h"
-#include "Input/InputSystem.h"
 #include <memory>
+#include <string>
+
+#include "ECS/Entity.h"
+
+#include "Input/InputSystem.h"
 
 namespace Sauce
 {
+	enum class Component
+	{
+		TRANSFORM,
+		SCRIPT,
+		CAM,
+		MESH,
+		TEXTURE
+	};
+
+	struct TransformComponent;
+	class Scene;
     class ScriptableEntity
     {
     public:
@@ -28,9 +42,27 @@ namespace Sauce
             return m_Entity.HasComponent<T>();
         }
 
-        std::shared_ptr<InputSystem> Input;
+        template<typename T, typename... Args>
+        void AddComponent(Args&&... args)
+        {
+            m_Entity.AddComponent<T>(args...);
+        }
+
+        template<typename T>
+        void RemoveComponent()
+        {
+        	m_Entity.RemoveComponent<T>();
+        }
+
+        std::shared_ptr<Entity> CreateEntity();
+        std::shared_ptr<Entity> CreateEntity(const std::string &name);
+
+        inline TransformComponent &Transform() { return m_Entity.Transform(); }
+        inline std::shared_ptr<InputSystem> Input() { return m_InputSystem; }
     private:
         Entity m_Entity;
+        std::shared_ptr<InputSystem> m_InputSystem;
+
         friend class Scene;
     };
 }

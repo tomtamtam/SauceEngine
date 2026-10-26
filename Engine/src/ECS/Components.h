@@ -1,29 +1,23 @@
 #pragma once
 
 #include <cstdint>
-#include <dlfcn.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <functional>
-#include <memory>
+#include <optional>
 #include <string>
-
-#include "ScriptableEntity.h"
-
-#include "Core/UUID.h"
-
-#include "glm/fwd.hpp"
-
-#include "glm/ext/vector_float3.hpp"
+#include <vector>
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/euler_angles.hpp>
-#include <glm/gtx/quaternion.hpp>
+
+#include "Core/UUID.h"
 
 namespace Sauce
 {
+	class ScriptableEntity;
     constexpr uint32_t SCRIPT_CIDX {0};
     constexpr uint32_t TRANSFORM_CIDX {1};
     constexpr uint32_t MESH_INSTANCE_CIDX {2};

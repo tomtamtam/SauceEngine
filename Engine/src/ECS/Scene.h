@@ -28,6 +28,7 @@ namespace Sauce
 {
     class Application;
     class Entity;
+    class ScriptableEntity;
 
     class Scene
     {
@@ -35,8 +36,8 @@ namespace Sauce
         Scene(std::shared_ptr<IRenderer> renderer, std::shared_ptr<InputSystem> inputSystem);
         ~Scene();
 
-        Entity CreateEntity();
-        Entity CreateEntity(const std::string &name);
+		std::shared_ptr<Entity> CreateEntity();
+		std::shared_ptr<Entity> CreateEntity(const std::string &name);
 
         void Init();
         void Start();
@@ -57,6 +58,7 @@ namespace Sauce
         json m_Assets;
 
         friend class Entity;
+        friend class ScriptableEntity;
         friend class SceneSerializer;
         friend class ::Editor;
     };

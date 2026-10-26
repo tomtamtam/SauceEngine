@@ -7,7 +7,6 @@
 #include <filesystem>
 #include <format>
 #include <fstream>
-#include <functional>
 #include <memory>
 #include <optional>
 #include <stdexcept>
@@ -23,6 +22,7 @@
 #include "Core/UUID.h"
 
 #include "ECS/Components.h"
+#include "ECS/Entity.h"
 #include "ECS/Scene.h"
 
 #include "Editor/Shared/Shared.h"
@@ -552,9 +552,9 @@ private:
             	    if(ImGui::Button("Add"))
             	    {
             	        std::string name = { m_TextBuffer };
-            	        Sauce::Entity e = m_Scene->CreateEntity(name);
-						e.GetComponent<Sauce::UUIDComponent>().parent = m_Scene->m_Registry.get<Sauce::UUIDComponent>(m_SelectedEntity).Id;
-						m_Scene->m_Registry.get<Sauce::UUIDComponent>(m_SelectedEntity).childeren.push_back(e.GetComponent<Sauce::UUIDComponent>().Id);
+            	        std::shared_ptr<Sauce::Entity> e = m_Scene->CreateEntity(name);
+						e->GetComponent<Sauce::UUIDComponent>().parent = m_Scene->m_Registry.get<Sauce::UUIDComponent>(m_SelectedEntity).Id;
+						m_Scene->m_Registry.get<Sauce::UUIDComponent>(m_SelectedEntity).childeren.push_back(e->GetComponent<Sauce::UUIDComponent>().Id);
             	        m_Console.put(MessageType::INFO, std::format("Added Child Object '{}' to '{}'", name, m_Scene->m_Registry.get<Sauce::UUIDComponent>(m_SelectedEntity).Name));
             	        ImGui::CloseCurrentPopup();
             	    }
@@ -577,7 +577,7 @@ private:
                 if(ImGui::Button("Add"))
                 {
                     std::string name = { m_TextBuffer };
-                    Sauce::Entity e = m_Scene->CreateEntity(name);
+                    auto e = m_Scene->CreateEntity(name);
                     m_Console.put(MessageType::INFO, std::format("Added Object '{}'", name));
                     ImGui::CloseCurrentPopup();
                 }
@@ -619,7 +619,7 @@ private:
             m_Scene->m_Registry.emplace_or_replace<Sauce::Script>(e);
 			//temp values
 			m_Scene->m_Registry.get<Sauce::Script>(e).ScriptName = "Player";
-			m_Scene->m_Registry.get<Sauce::Script>(e).ScriptPath = "../Code/Player.cpp";
+			m_Scene->m_Registry.get<Sauce::Script>(e).ScriptPath = "./libGame.so";
             break;
         default:
             break;
@@ -667,10 +667,13 @@ private:
         }
         case MESH_INSTANCE_CIDX:
         {
+			if(!m_Scene->m_Registry.try_get<Sauce::MeshInstance>(e))
+				break;
+
 			std::vector<const char*> meshNames(m_Scene->p_AssetSystem->p_MeshCount);
 			for (size_t i = 0; i < m_Scene->p_AssetSystem->p_MeshCount; i++)
 			    meshNames[i] = m_Scene->p_AssetSystem->p_Meshes[i].name.c_str();
-			
+
 			auto& meshInstance {m_Scene->m_Registry.get<Sauce::MeshInstance>(e)};
 			int meshIdx {static_cast<int>(meshInstance.meshId)};
 			
@@ -680,6 +683,7 @@ private:
 			    meshInstance.meshId = static_cast<uint32_t>(meshIdx);
 			}
 			ImGui::Checkbox("Visible", &meshInstance.IsVisible);
+			break;
         }
         case SCRIPT_CIDX:
         {

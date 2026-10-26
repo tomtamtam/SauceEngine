@@ -8,10 +8,6 @@
 
 #include "ECS/Scene.h"
 
-#include "ECS/Entity.h"
-
-#include "nlohmann/json.hpp"
-
 using json = nlohmann::json;
 
 namespace Sauce

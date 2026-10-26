@@ -7,11 +7,11 @@
 
 #include "Scene.h"
 
-#include "Entity.h"
-
 #include "Core/ScriptEngine.h"
 
 #include "ECS/Components.h"
+#include "ECS/Entity.h"
+#include "ECS/ScriptableEntity.h"
 
 #include "glm/trigonometric.hpp"
 
@@ -33,15 +33,19 @@ namespace Sauce
     Scene::~Scene()
     {}
 
-    Entity Scene::CreateEntity()
+    std::shared_ptr<Entity> Scene::CreateEntity()
     {
-        return { m_Registry.create(), this};
+    	auto e { std::make_shared<Entity>(m_Registry.create(), this)};
+    	e->AddComponent<UUIDComponent>();
+    	e->AddComponent<TransformComponent>();
+        return e;
     }
 
-    Entity Scene::CreateEntity(const std::string &name)
+	std::shared_ptr<Entity> Scene::CreateEntity(const std::string &name)
     {
-        Entity e = { m_Registry.create(), this};
-        e.AddComponent<UUIDComponent>(name);
+        auto e { std::make_shared<Entity>(m_Registry.create(), this)};
+        e->AddComponent<UUIDComponent>(name);
+    	e->AddComponent<TransformComponent>();
         return e;
     }
 
@@ -62,6 +66,7 @@ namespace Sauce
 			auto handle = ScriptEngine::LoadScript(script.ScriptName, script.ScriptPath);
 			script = ScriptEngine::AttachScript(handle, script.ScriptName, script.ScriptPath);
 			script.Instance->m_Entity = Entity{entity, this};
+			script.Instance->m_InputSystem = m_InputSystem;
         }
     }
 

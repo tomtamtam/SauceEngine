@@ -16,7 +16,7 @@ out vec3 v_UV;
 void main()
 {
     v_UV = a_UV;
-    v_Color = vec4(a_Normals, 1.0f);
+    v_Color = vec4(0.5f + a_Normals.x / 2, 0.5f + a_Normals.y / 2, 0.5f + a_Normals.z / 2, 1.0f);
     gl_Position = u_Proj * u_View * u_Transform * vec4(a_Position, 1.0f);
 }
 
