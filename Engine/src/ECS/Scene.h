@@ -44,6 +44,7 @@ namespace Sauce
         void Update(float dt);
 
         std::shared_ptr<InputSystem> GetInputSystem();
+        void SetInputSystem(std::shared_ptr<InputSystem> inputSystem);
 
         void OnResize(uint32_t width, uint32_t height);
 

@@ -25,10 +25,9 @@ namespace Sauce
 {
 
     Scene::Scene(std::shared_ptr<IRenderer> renderer, std::shared_ptr<InputSystem> inputSystem)
-        : m_Renderer(std::move(renderer)), m_InputSystem(std::move(inputSystem))
+        : m_Renderer(std::move(renderer)), m_InputSystem(inputSystem)
     {
         entt::entity entity = m_Registry.create();
-        m_InputSystem = std::make_shared<InputSystem>();
     }
 
     Scene::~Scene()
@@ -67,7 +66,9 @@ namespace Sauce
 			auto handle = ScriptEngine::LoadScript(script.ScriptName, script.ScriptPath);
 			script = ScriptEngine::AttachScript(handle, script.ScriptName, script.ScriptPath);
 			script.Instance->m_Entity = Entity{entity, this};
-			script.Instance->m_InputSystem = m_InputSystem;
+			script.Instance->Input = m_InputSystem;
+			LOG_INFO(script.Instance->Input? "Instance.Input" : "Instance.Input = NULL");
+			LOG_INFO(m_InputSystem? "Scene.Input" : "Scene.Input = NULL");
 
 			scriptView->get(entity).Instance->OnInit();
         }
@@ -147,5 +148,10 @@ namespace Sauce
     std::shared_ptr<InputSystem> Scene::GetInputSystem()
     {
         return m_InputSystem;
+    }
+
+    void Scene::SetInputSystem(std::shared_ptr<InputSystem> inputSystem)
+    {
+    	m_InputSystem = inputSystem;
     }
 }

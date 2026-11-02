@@ -1,6 +1,5 @@
 #include <cassert>
 #include <dlfcn.h>
-#include <print>
 
 #include <fstream>
 #include <memory>
@@ -10,8 +9,6 @@
 
 #include "Core/Log.h"
 #include "Core/SceneSerializer.h"
-
-#include "Engine/vendor/utils_hpp/escapes.hpp"
 
 #include "GLFW/glfw3.h"
 
@@ -28,6 +25,7 @@ namespace Sauce
     Application::Application()
         : m_IsRunning(true), m_Renderer(std::make_shared<Linux::GLRenderer>()), m_InputSystem(std::make_shared<InputSystem>()), m_CurrentScene(std::make_shared<Scene>(m_Renderer, m_InputSystem)), m_SceneSerializer(m_CurrentScene)
     {
+    	m_CurrentScene->SetInputSystem(m_InputSystem);
     }
 
     Application::~Application()
@@ -85,14 +83,10 @@ namespace Sauce
                 glfwPollEvents();
                 if(m_Renderer->WindowShouldClose())
                 	Terminate();
-                //m_CurrentScene->GetInputSystem()->BeginFrame();
                 m_InputSystem->BeginFrame();
-                if(m_InputSystem->GetKeyDown(GLFW_KEY_A))
-                	LOG_DEBUG("A Pressed");
                 m_Renderer->Clear();
                 m_CurrentScene->Update(m_DT);
                 m_Renderer->Draw();
-                //m_CurrentScene->GetInputSystem()->Endframe();
                 m_InputSystem->Endframe();
             }
 

@@ -51,11 +51,11 @@ namespace Sauce
         std::shared_ptr<Entity> CreateEntity(const std::string &name);
 
         inline TransformComponent &Transform() { return m_Entity.Transform(); }
-        inline std::shared_ptr<InputSystem> Input() { return m_InputSystem; }
         inline void DebugLog(const std::string &msg) { LOG_DEBUG(msg); }
+
+        std::shared_ptr<InputSystem> Input;
     private:
         Entity m_Entity;
-        std::shared_ptr<InputSystem> m_InputSystem;
 
         friend class Scene;
     };
