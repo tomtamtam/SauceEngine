@@ -37,9 +37,9 @@ int createProject(const std::string &name, const std::string &path)
     std::filesystem::create_directory(fp + "/Shaders");
     std::filesystem::create_directory(fp + "/Assets");
 
-    std::filesystem::copy_file("/usr/share/sauce-engine/presets/Main.cpp", fp + "/Code/Main.cpp");
-    std::filesystem::copy_file("/usr/share/sauce-engine/presets/Default.glsl", fp + "/Shaders/Default.glsl");
-    std::filesystem::copy_file("/usr/share/sauce-engine/presets/CMakeLists.txt", fp + "/CMakeLists.txt");
+    std::filesystem::copy_file("/usr/share/SauceEngine/Presets/Main.cpp", fp + "/Code/Main.cpp");
+    std::filesystem::copy_file("/usr/share/SauceEngine/Presets/Default.glsl", fp + "/Shaders/Default.glsl");
+    std::filesystem::copy_file("/usr/share/SauceEngine/Presets/CMakeLists.txt", fp + "/CMakeLists.txt");
 
     std::ofstream defaultScene(fp + "/Scenes/DefaultScene.json");
 

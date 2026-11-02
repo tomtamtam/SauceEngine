@@ -3,21 +3,14 @@
 #include <memory>
 #include <string>
 
+#include "Core/Log.h"
+
 #include "ECS/Entity.h"
 
 #include "Input/InputSystem.h"
 
 namespace Sauce
 {
-	enum class Component
-	{
-		TRANSFORM,
-		SCRIPT,
-		CAM,
-		MESH,
-		TEXTURE
-	};
-
 	struct TransformComponent;
 	class Scene;
     class ScriptableEntity
@@ -59,6 +52,7 @@ namespace Sauce
 
         inline TransformComponent &Transform() { return m_Entity.Transform(); }
         inline std::shared_ptr<InputSystem> Input() { return m_InputSystem; }
+        inline void DebugLog(const std::string &msg) { LOG_DEBUG(msg); }
     private:
         Entity m_Entity;
         std::shared_ptr<InputSystem> m_InputSystem;

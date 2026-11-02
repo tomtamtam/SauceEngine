@@ -85,11 +85,15 @@ namespace Sauce
                 glfwPollEvents();
                 if(m_Renderer->WindowShouldClose())
                 	Terminate();
-                m_CurrentScene->GetInputSystem()->BeginFrame();
+                //m_CurrentScene->GetInputSystem()->BeginFrame();
+                m_InputSystem->BeginFrame();
+                if(m_InputSystem->GetKeyDown(GLFW_KEY_A))
+                	LOG_DEBUG("A Pressed");
                 m_Renderer->Clear();
                 m_CurrentScene->Update(m_DT);
                 m_Renderer->Draw();
-                m_CurrentScene->GetInputSystem()->Endframe();
+                //m_CurrentScene->GetInputSystem()->Endframe();
+                m_InputSystem->Endframe();
             }
 
             m_EndTime = glfwGetTime();

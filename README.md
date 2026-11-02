@@ -5,15 +5,16 @@ Releases will be pushed to the "main" branch, the current development is inside 
 
 ## Build
 ### Dependencies
-git, cmake, make, opengl, X11 / wayland
+git, cmake, make, ninja, opengl, X11 / wayland
 
 ### How to build & install
 ```bash
 git clone https://github.com/tomtamtam/SauceEngine.git
 cd SauceEngine
 mkdir build
+cmake -B -G Ninja build
 cmake --build build
-sudo cmake --install build --prefix /usr
+sudo cmake --install build
 ```
 **NOTE: Right now compiling is only possible on Linux devices**
 

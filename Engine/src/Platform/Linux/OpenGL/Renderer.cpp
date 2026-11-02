@@ -7,6 +7,8 @@
 
 #include "Renderer.h"
 
+#include "Core/Log.h"
+
 #include "Engine/src/Input/InputSystem.h"
 
 #include "Engine/vendor/utils_hpp/escapes.hpp"
@@ -156,7 +158,10 @@ namespace Sauce::Linux
     }
 
 	GLRenderer::GLRenderer()
-	{}
+	{
+        LOG_INFO("Initializing GLFW");
+		glfwInit();
+	}
 
 	GLRenderer::~GLRenderer()
 	{}

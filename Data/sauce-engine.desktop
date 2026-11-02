@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=SauceEditor
+GenericName=Game Engine
+Icon=/usr/share/SauceEngine/icon.svg
+Comment=3D game engine scriptable with C++
+Exec=/usr/bin/sauce-editor
+TryExec=/usr/bin/sauce-editor
+Icon=/usr/share/SauceEngine/icon.svg
+Terminal=false
+Categories=Development;IDE;Game;
+Keywords=C++;Game;GameEngine;Editor;
+StartupNotify=true

@@ -7,6 +7,7 @@
 
 #include "Scene.h"
 
+#include "Core/Log.h"
 #include "Core/ScriptEngine.h"
 
 #include "ECS/Components.h"
@@ -51,7 +52,7 @@ namespace Sauce
 
     void Scene::Init()
     {
-		std::println("Scene Init");
+		LOG_INFO("Scene Init");
         auto scriptView = m_Registry.view<Script>();
         for (auto entity : scriptView)
         {
@@ -67,6 +68,8 @@ namespace Sauce
 			script = ScriptEngine::AttachScript(handle, script.ScriptName, script.ScriptPath);
 			script.Instance->m_Entity = Entity{entity, this};
 			script.Instance->m_InputSystem = m_InputSystem;
+
+			scriptView->get(entity).Instance->OnInit();
         }
     }
 

@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.20)
 project(SauceEngine)
 
+# Install everything under /usr instead of /usr/local (unless the user overrides it)
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    set(CMAKE_INSTALL_PREFIX "/usr" CACHE PATH "Install path prefix" FORCE)
+endif()
+
 set(CMAKE_CXX_STANDARD 26)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
@@ -164,6 +169,7 @@ add_library(SauceEngine SHARED
 target_include_directories(SauceEngine PUBLIC
     ${CMAKE_SOURCE_DIR}/Engine/src
     ${CMAKE_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/Engine/vendor
 )
 
 target_link_libraries(SauceEngine PUBLIC
@@ -263,3 +269,13 @@ foreach(root IN LISTS VENDOR_INCLUDE_ROOTS)
         )
     endif()
 endforeach()
+
+# Data directory -> <prefix>/share/SauceEngine
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/Data/"
+    DESTINATION "${CMAKE_INSTALL_DATADIR}/SauceEngine"
+)
+
+# .desktop File
+install(FILES "${CMAKE_SOURCE_DIR}/Data/sauce-engine.desktop"
+	DESTINATION "${CMAKE_INSTALL_DATADIR}/applications"
+)

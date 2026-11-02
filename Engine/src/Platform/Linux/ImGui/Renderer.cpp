@@ -10,6 +10,8 @@
 
 #include "imgui_impl_glfw.h"
 
+#include "Core/Log.h"
+
 #include "Engine/src/Input/InputSystem.h"
 
 #include "Engine/vendor/utils_hpp/escapes.hpp"
@@ -20,6 +22,8 @@ namespace Sauce::Linux
 {
 	void ImRenderer::InitWindow(const std::string &title, uint32_t width, uint32_t height, std::shared_ptr<InputSystem> inputSystem)
 	{
+		std::println("{} Init GLFW window", Escapes::ColoredText("[INFO]", Escapes::YELLOW));
+
         m_Title = title;
         m_Width = width;
         m_Height = height;
@@ -168,7 +172,10 @@ namespace Sauce::Linux
     }
 
 	ImRenderer::ImRenderer()
-	{}
+	{
+        LOG_INFO("Initializing GLFW");
+        glfwInit();
+	}
 
 	ImRenderer::~ImRenderer()
 	{}
