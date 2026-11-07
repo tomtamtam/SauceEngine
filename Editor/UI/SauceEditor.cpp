@@ -188,7 +188,7 @@ private:
         DrawInspector();
         DrawViewport();
 
-        m_InputSystem->Endframe();
+        m_InputSystem->EndFrame();
     }
 
     void RunScene()

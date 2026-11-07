@@ -216,7 +216,7 @@ namespace Sauce
 
     void SceneSerializer::Deserialze(const std::string &path) // LOAD
     {
-    	LOG_INFO("Deserializing Scene");
+    	LOG_INFO("Deserializing Scene '" + path + "'");
         std::ifstream f(path);
         json jScene;
         f >> jScene;

@@ -44,6 +44,7 @@ namespace Sauce
         }
 
         inline TransformComponent &Transform() { return GetComponent<TransformComponent>(); }
+		std::string &Name();
 
     private:
         entt::entity m_EntityHandle;

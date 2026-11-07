@@ -1,4 +1,5 @@
 #include "InputSystem.h"
+
 #include "Input/GamepadListener.h"
 
 namespace Sauce
@@ -95,7 +96,7 @@ namespace Sauce
         m_GamepadListener.BeginFrame();
     }
 
-    void InputSystem::Endframe()
+    void InputSystem::EndFrame()
     {
         m_KeyboardListener.EndFrame();
         m_MouseListener.EndFrame();

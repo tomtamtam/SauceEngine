@@ -1,9 +1,11 @@
 #pragma once
 
 #include "GLFW/glfw3.h"
+
 #include "Input/GamepadListener.h"
 #include "Input/KeyboardListener.h"
 #include "Input/MouseListener.h"
+
 #include "glm/ext/vector_float2.hpp"
 
 namespace Sauce
@@ -35,7 +37,7 @@ namespace Sauce
         bool IsGamepadConnected(int jid) const;
 
         void BeginFrame();
-        void Endframe();
+        void EndFrame();
 
         void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
         void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);

@@ -199,8 +199,23 @@ target_link_libraries(SauceEngine PUBLIC sauce_opengl)
 
 # UI Editor
 add_executable(sauce-editor
-    ${CMAKE_SOURCE_DIR}/Editor/UI/SauceEditor.cpp
+    ${CMAKE_SOURCE_DIR}/Editor/UI/main.cpp
     ${CMAKE_SOURCE_DIR}/Editor/Shared/Shared.cpp
+
+    ${CMAKE_SOURCE_DIR}/Editor/UI/App/EditorApp.cpp
+    ${CMAKE_SOURCE_DIR}/Editor/UI/App/ProjectSelector.cpp
+    
+    ${CMAKE_SOURCE_DIR}/Editor/UI/Core/CommandStack.cpp
+    ${CMAKE_SOURCE_DIR}/Editor/UI/Core/Actions.cpp
+
+    ${CMAKE_SOURCE_DIR}/Editor/UI/Panels/AssetBrowserPanel.cpp
+    ${CMAKE_SOURCE_DIR}/Editor/UI/Panels/ConsolePanel.cpp
+    ${CMAKE_SOURCE_DIR}/Editor/UI/Panels/FPSPanel.cpp
+    ${CMAKE_SOURCE_DIR}/Editor/UI/Panels/InspectorPanel.cpp
+    ${CMAKE_SOURCE_DIR}/Editor/UI/Panels/RunWindowPanel.cpp
+    ${CMAKE_SOURCE_DIR}/Editor/UI/Panels/SceneHierarchyPanel.cpp
+    ${CMAKE_SOURCE_DIR}/Editor/UI/Panels/ToolBarPanel.cpp
+    ${CMAKE_SOURCE_DIR}/Editor/UI/Panels/ViewportPanel.cpp
 
     ${CMAKE_SOURCE_DIR}/Engine/src/Platform/Linux/ImGui/Renderer.cpp
 

@@ -23,6 +23,7 @@ constexpr float F_FAR {1000.0f};
 using json = nlohmann::json;
 
 class Editor;
+class EditorApp;
 
 namespace Sauce
 {
@@ -49,8 +50,8 @@ namespace Sauce
         void OnResize(uint32_t width, uint32_t height);
 
 		std::optional<AssetSystem> p_AssetSystem;
-    private:
         entt::registry m_Registry;
+    private:
         UUID m_ID;
         std::string m_Name;
         std::shared_ptr<IRenderer> m_Renderer;
@@ -58,9 +59,6 @@ namespace Sauce
         uint32_t m_WindowWidth, m_WindowHeight;
         json m_Assets;
 
-        friend class Entity;
-        friend class ScriptableEntity;
         friend class SceneSerializer;
-        friend class ::Editor;
     };
 }

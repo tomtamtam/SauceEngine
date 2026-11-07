@@ -87,7 +87,7 @@ namespace Sauce
                 m_Renderer->Clear();
                 m_CurrentScene->Update(m_DT);
                 m_Renderer->Draw();
-                m_InputSystem->Endframe();
+                m_InputSystem->EndFrame();
             }
 
             m_EndTime = glfwGetTime();

@@ -1,9 +1,9 @@
 #include <filesystem>
 
-#include "Core/ProjectSelector.h"
+#include "App/EditorApp.h"
+#include "App/ProjectSelector.h"
 
-#include "Editor/UI/Core/Context.h"
-#include "Editor/UI/Core/EditorApp.h"
+#include "Core/Context.h"
 
 void Edit(const std::string &path);
 
